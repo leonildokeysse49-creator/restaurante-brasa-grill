@@ -22,13 +22,11 @@ function formatarPreco(valor) {
     return new Intl.NumberFormat("pt-MZ").format(valor) + " MT";
 }
 
-
 function recriarIcones() {
     if (typeof lucide !== "undefined") {
         lucide.createIcons();
     }
 }
-
 
 function formatarData(timestamp) {
 
@@ -53,7 +51,6 @@ function formatarData(timestamp) {
     }
 
 }
-
 
 function saudacaoPorHora() {
 
@@ -134,7 +131,6 @@ function verificarLogin() {
 
 }
 
-
 function mostrarLogin() {
 
     ecraLogin.hidden = false;
@@ -146,7 +142,6 @@ function mostrarLogin() {
     recriarIcones();
 
 }
-
 
 function mostrarBoasVindas(nome) {
 
@@ -161,7 +156,6 @@ function mostrarBoasVindas(nome) {
     recriarIcones();
 
 }
-
 
 function entrarNoPainel(nome) {
 
@@ -178,7 +172,6 @@ function entrarNoPainel(nome) {
     recriarIcones();
 
 }
-
 
 if (formLogin) {
 
@@ -213,7 +206,6 @@ if (formLogin) {
     });
 
 }
-
 
 if (btnSair) {
 
@@ -300,7 +292,7 @@ function iniciarPainel() {
 
 
 /* =========================================================
-   7. FILTRAR POR PERÍODO
+   7. FILTROS
    ========================================================= */
 
 function filtrarPorPeriodo(pedidos, periodo) {
@@ -347,11 +339,6 @@ function filtrarPorPeriodo(pedidos, periodo) {
 
 }
 
-
-/* =========================================================
-   8. FILTRAR POR TIPO
-   ========================================================= */
-
 function filtrarPorTipo(pedidos, tipo) {
 
     if (tipo === "todos") return pedidos;
@@ -359,11 +346,6 @@ function filtrarPorTipo(pedidos, tipo) {
     return pedidos.filter(p => p.tipoEntrega === tipo);
 
 }
-
-
-/* =========================================================
-   9. FILTRAR POR PESQUISA
-   ========================================================= */
 
 function filtrarPorPesquisa(pedidos, termo) {
 
@@ -382,11 +364,6 @@ function filtrarPorPesquisa(pedidos, termo) {
     });
 
 }
-
-
-/* =========================================================
-   10. APLICAR TODOS OS FILTROS
-   ========================================================= */
 
 function obterPedidosFiltrados() {
 
@@ -407,7 +384,7 @@ function obterPedidosFiltrados() {
 
 
 /* =========================================================
-   11. RESUMO DO DIA
+   8. RESUMO DO DIA
    ========================================================= */
 
 function renderizarResumoDia() {
@@ -455,7 +432,7 @@ function renderizarResumoDia() {
 
 
 /* =========================================================
-   12. ESTATÍSTICAS
+   9. ESTATÍSTICAS
    ========================================================= */
 
 function renderizarEstatisticas() {
@@ -469,6 +446,7 @@ function renderizarEstatisticas() {
         aceite: 0,
         em_preparacao: 0,
         pronto: 0,
+        a_caminho: 0,
         entregue: 0
     };
 
@@ -482,112 +460,129 @@ function renderizarEstatisticas() {
     const elAceite = document.querySelector("#contAceite");
     const elPrep = document.querySelector("#contPreparacao");
     const elPronto = document.querySelector("#contPronto");
+    const elACaminho = document.querySelector("#contACaminho");
     const elEntregue = document.querySelector("#contEntregue");
 
     if (elNovo) elNovo.textContent = cont.novo;
     if (elAceite) elAceite.textContent = cont.aceite;
     if (elPrep) elPrep.textContent = cont.em_preparacao;
     if (elPronto) elPronto.textContent = cont.pronto;
+    if (elACaminho) elACaminho.textContent = cont.a_caminho;
     if (elEntregue) elEntregue.textContent = cont.entregue;
 
 }
 
 
 /* =========================================================
-   13. AVISAR CLIENTE POR WHATSAPP
+   10. AVISAR CLIENTE POR WHATSAPP — LÓGICA CORRETA
    ========================================================= */
 
-function avisarCliente(pedidoId) {
+function avisarCliente(pedidoId, momento) {
+
+    // momento = "pronto" | "a_caminho"
 
     const pedido = pedidosAtuais.find(p => p.id === pedidoId);
     if (!pedido) return;
 
-    // Limpar telemóvel
     const tel = (pedido.telemovel || "").replace(/\D/g, "");
     if (!tel) {
         alert("⚠️ Este pedido não tem telemóvel registado.");
         return;
     }
 
-    // Garantir prefixo 258
     let numeroWhats = tel;
     if (!numeroWhats.startsWith("258")) {
         numeroWhats = "258" + numeroWhats;
     }
 
-    // Lista de produtos
     const listaProdutos = (pedido.produtos || []).map(p =>
         `• ${p.quantidade}x ${p.nome}`
     ).join("\n");
 
-    // Mensagem base
-    const cabecalho = [
-        "*🔥 BRASA GRILL*",
-        "",
-        "*✅ O seu pedido está PRONTO!*",
-        ""
-    ];
+    const total = formatarPreco(pedido.total);
 
-    const corpo = [
-        `Olá ${pedido.nome},`,
-        ""
-    ];
+    const cabecalho = "*🔥 BRASA GRILL*\n";
 
-    const detalhes = [
-        "",
-        "*📦 O que pediu:*",
-        listaProdutos,
-        "",
-        `*💰 Total:* ${formatarPreco(pedido.total)}`,
-        ""
-    ];
+    let titulo = "";
+    let corpo = "";
+    let extra = "";
+    let rodape = "\nObrigado pela preferência! 🙏";
 
-    const rodape = [
-        "",
-        "Obrigado pela preferência! 🙏"
-    ];
+    /* ---------- MOMENTO 1: PRONTO ---------- */
 
-    let mensagemFinal;
+    if (momento === "pronto") {
 
-    if (pedido.tipoEntrega === "recolha") {
+        titulo = "\n*✅ O seu pedido está PRONTO!*\n";
 
-        mensagemFinal = [
-            ...cabecalho,
-            ...corpo,
-            "O seu pedido está pronto para recolha.",
-            ...detalhes,
-            "*📍 Venha buscar em:*",
-            "Brasa Grill — Alto Maé",
+        if (pedido.tipoEntrega === "recolha") {
+
+            corpo = `Olá ${pedido.nome},\no seu pedido está pronto para recolha.\n`;
+
+            extra = [
+                "",
+                "*📦 O que pediu:*",
+                listaProdutos,
+                "",
+                `*💰 Total:* ${total}`,
+                "",
+                "*📍 Recolha em:*",
+                "Brasa Grill — Alto Maé",
+                "",
+                "*🕒 Horário:* Todos os dias, 7h às 23h"
+            ].join("\n");
+
+        } else {
+
+            corpo = `Olá ${pedido.nome},\no seu pedido está pronto e será enviado para a sua morada em breve.\n`;
+
+            extra = [
+                "",
+                "*📦 O que pediu:*",
+                listaProdutos,
+                "",
+                `*💰 Total:* ${total}`,
+                "",
+                `*📍 Morada:* ${pedido.morada || "—"}`,
+                "",
+                "*🕒 Aguarde a chegada do estafeta.*"
+            ].join("\n");
+
+        }
+
+    }
+
+    /* ---------- MOMENTO 2: A CAMINHO ---------- */
+
+    if (momento === "a_caminho") {
+
+        titulo = "\n*🛵 O seu pedido está A CAMINHO!*\n";
+
+        corpo = `Olá ${pedido.nome},\no seu pedido acabou de sair do restaurante.\n`;
+
+        extra = [
             "",
-            "*🕒 Horário:* Todos os dias, 7h às 23h",
-            ...rodape
-        ].join("\n");
-
-    } else {
-
-        mensagemFinal = [
-            ...cabecalho,
-            "*🛵 Está a caminho da sua morada.*",
-            ...corpo,
-            "O seu pedido acabou de sair do restaurante.",
-            ...detalhes,
-            `*📍 Morada:* ${pedido.morada || "—"}`,
+            "*📦 O que pediu:*",
+            listaProdutos,
             "",
-            "*🕒 Chega em breve.*",
-            ...rodape
+            `*💰 Total:* ${total}`,
+            "",
+            `*📍 Vai para:* ${pedido.morada || "—"}`,
+            "",
+            "*🕒 Chega em breve.*"
         ].join("\n");
 
     }
 
-    // Abrir WhatsApp
-    const url = `https://wa.me/${numeroWhats}?text=${encodeURIComponent(mensagemFinal)}`;
+    const mensagem = cabecalho + titulo + "\n" + corpo + extra + rodape;
+
+    const url = `https://wa.me/${numeroWhats}?text=${encodeURIComponent(mensagem)}`;
     window.open(url, "_blank");
 
 }
 
 
 /* =========================================================
-   14. RENDERIZAR PEDIDOS
+   11. RENDERIZAR PEDIDOS
    ========================================================= */
 
 function renderizarPedidos() {
@@ -629,6 +624,7 @@ function renderizarPedidos() {
             aceite: "✅ Aceite",
             em_preparacao: "👨‍🍳 Em preparação",
             pronto: "📦 Pronto",
+            a_caminho: "🛵 A caminho",
             entregue: "✔️ Entregue",
             recusado: "❌ Recusado"
         }[pedido.estado] || pedido.estado;
@@ -675,6 +671,95 @@ function renderizarPedidos() {
                     <span>Pagamento:</span>
                     <span>${metodos[pedido.metodoPagamento] || pedido.metodoPagamento}</span>
                 </div>
+            `;
+        }
+
+
+        /* ==========================================
+           BOTÕES DE AÇÃO
+           ========================================== */
+
+        let botoesHTML = "";
+
+        // NOVO
+        if (pedido.estado === "novo") {
+            botoesHTML = `
+                <button class="btn-acao btn-aceitar" data-acao="aceite" data-id="${pedido.id}">
+                    <i data-lucide="check"></i> Aceitar
+                </button>
+                <button class="btn-acao btn-recusar" data-acao="recusado" data-id="${pedido.id}">
+                    <i data-lucide="x"></i> Recusar
+                </button>
+            `;
+        }
+
+        // ACEITE
+        else if (pedido.estado === "aceite") {
+            botoesHTML = `
+                <button class="btn-acao btn-preparar" data-acao="em_preparacao" data-id="${pedido.id}">
+                    <i data-lucide="chef-hat"></i> Preparar
+                </button>
+            `;
+        }
+
+        // EM PREPARAÇÃO
+        else if (pedido.estado === "em_preparacao") {
+            botoesHTML = `
+                <button class="btn-acao btn-pronto" data-acao="pronto" data-id="${pedido.id}">
+                    <i data-lucide="package"></i> Pronto
+                </button>
+            `;
+        }
+
+        // PRONTO
+        else if (pedido.estado === "pronto") {
+
+            if (pedido.tipoEntrega === "recolha") {
+
+                // RECOLHA: só avisar "Venha buscar"
+                botoesHTML = `
+                    <button class="btn-acao btn-avisar" data-avisar="pronto" data-id="${pedido.id}">
+                        <i data-lucide="message-circle"></i> Avisar cliente
+                    </button>
+                    <button class="btn-acao btn-entregar" data-acao="entregue" data-id="${pedido.id}">
+                        <i data-lucide="check-check"></i> Entregue
+                    </button>
+                `;
+
+            } else {
+
+                // ENTREGA: primeiro "Saiu para entrega", depois "A caminho"
+                botoesHTML = `
+                    <button class="btn-acao btn-avisar" data-avisar="pronto" data-id="${pedido.id}">
+                        <i data-lucide="message-circle"></i> Avisar cliente
+                    </button>
+                    <button class="btn-acao btn-caminho" data-acao="a_caminho" data-id="${pedido.id}">
+                        <i data-lucide="bike"></i> Saiu para entrega
+                    </button>
+                `;
+
+            }
+
+        }
+
+        // A CAMINHO
+        else if (pedido.estado === "a_caminho") {
+            botoesHTML = `
+                <button class="btn-acao btn-avisar" data-avisar="a_caminho" data-id="${pedido.id}">
+                    <i data-lucide="message-circle"></i> Avisar cliente
+                </button>
+                <button class="btn-acao btn-entregar" data-acao="entregue" data-id="${pedido.id}">
+                    <i data-lucide="check-check"></i> Entregue
+                </button>
+            `;
+        }
+
+        // ENTREGUE ou RECUSADO
+        else if (pedido.estado === "entregue" || pedido.estado === "recusado") {
+            botoesHTML = `
+                <button class="btn-acao btn-apagar" data-acao="apagar" data-id="${pedido.id}">
+                    <i data-lucide="trash-2"></i> Apagar
+                </button>
             `;
         }
 
@@ -732,43 +817,7 @@ function renderizarPedidos() {
                 </div>
 
                 <div class="pedido-acoes">
-
-                    ${pedido.estado === "novo" ? `
-                        <button class="btn-acao btn-aceitar" data-acao="aceite" data-id="${pedido.id}">
-                            <i data-lucide="check"></i> Aceitar
-                        </button>
-                        <button class="btn-acao btn-recusar" data-acao="recusado" data-id="${pedido.id}">
-                            <i data-lucide="x"></i> Recusar
-                        </button>
-                    ` : ""}
-
-                    ${pedido.estado === "aceite" ? `
-                        <button class="btn-acao btn-preparar" data-acao="em_preparacao" data-id="${pedido.id}">
-                            <i data-lucide="chef-hat"></i> Preparar
-                        </button>
-                    ` : ""}
-
-                    ${pedido.estado === "em_preparacao" ? `
-                        <button class="btn-acao btn-pronto" data-acao="pronto" data-id="${pedido.id}">
-                            <i data-lucide="package"></i> Pronto
-                        </button>
-                    ` : ""}
-
-                    ${pedido.estado === "pronto" ? `
-                        <button class="btn-acao btn-avisar" data-avisar="${pedido.id}">
-                            <i data-lucide="message-circle"></i> Avisar cliente
-                        </button>
-                        <button class="btn-acao btn-entregar" data-acao="entregue" data-id="${pedido.id}">
-                            <i data-lucide="check-check"></i> Entregue
-                        </button>
-                    ` : ""}
-
-                    ${pedido.estado === "entregue" || pedido.estado === "recusado" ? `
-                        <button class="btn-acao btn-apagar" data-acao="apagar" data-id="${pedido.id}">
-                            <i data-lucide="trash-2"></i> Apagar
-                        </button>
-                    ` : ""}
-
+                    ${botoesHTML}
                 </div>
 
             </article>
@@ -782,7 +831,7 @@ function renderizarPedidos() {
 
 
 /* =========================================================
-   15. AÇÕES NOS PEDIDOS
+   12. AÇÕES NOS PEDIDOS
    ========================================================= */
 
 listaPedidos.addEventListener("click", async function (e) {
@@ -790,7 +839,7 @@ listaPedidos.addEventListener("click", async function (e) {
     // Botão "Avisar cliente"
     const btnAvisar = e.target.closest("[data-avisar]");
     if (btnAvisar) {
-        avisarCliente(btnAvisar.dataset.avisar);
+        avisarCliente(btnAvisar.dataset.id, btnAvisar.dataset.avisar);
         return;
     }
 
@@ -825,7 +874,7 @@ listaPedidos.addEventListener("click", async function (e) {
 
 
 /* =========================================================
-   16. EVENTOS DOS FILTROS
+   13. EVENTOS DOS FILTROS
    ========================================================= */
 
 btnFiltros.forEach(btn => {
@@ -836,7 +885,6 @@ btnFiltros.forEach(btn => {
         renderizarPedidos();
     });
 });
-
 
 btnPeriodos.forEach(btn => {
     btn.addEventListener("click", function () {
@@ -849,7 +897,6 @@ btnPeriodos.forEach(btn => {
     });
 });
 
-
 btnTipos.forEach(btn => {
     btn.addEventListener("click", function () {
         tipoAtual = this.dataset.tipo;
@@ -859,7 +906,6 @@ btnTipos.forEach(btn => {
         renderizarPedidos();
     });
 });
-
 
 estatCards.forEach(card => {
     card.addEventListener("click", function () {
@@ -881,7 +927,7 @@ estatCards.forEach(card => {
 
 
 /* =========================================================
-   17. PESQUISA
+   14. PESQUISA
    ========================================================= */
 
 if (inputPesquisa) {
@@ -916,7 +962,7 @@ if (btnLimparPesquisa) {
 
 
 /* =========================================================
-   18. INICIAR
+   15. INICIAR
    ========================================================= */
 
 verificarLogin();

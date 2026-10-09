@@ -24,6 +24,7 @@
     --azul: #3b82f6;
     --laranja: #f97316;
     --roxo: #a855f7;
+    --ciano: #06b6d4;
 
     --raio: 12px;
     --transicao: 0.25s ease;
@@ -953,6 +954,10 @@ a {
     border-left-color: var(--roxo);
 }
 
+.pedido.estado-a_caminho {
+    border-left-color: var(--ciano);
+}
+
 .pedido.estado-entregue {
     border-left-color: var(--verde);
     opacity: 0.65;
@@ -1025,8 +1030,9 @@ a {
 .pedido-estado.aceite        { background: rgba(59, 130, 246, 0.2); color: var(--azul); }
 .pedido-estado.em_preparacao { background: rgba(249, 115, 22, 0.2); color: var(--laranja); }
 .pedido-estado.pronto        { background: rgba(168, 85, 247, 0.2); color: var(--roxo); }
+.pedido-estado.a_caminho     { background: rgba(6, 182, 212, 0.2);  color: var(--ciano); }
 .pedido-estado.entregue      { background: rgba(37, 211, 102, 0.2); color: var(--verde); }
-.pedido-estado.recusado      { background: rgba(255, 68, 68, 0.2); color: var(--vermelho); }
+.pedido-estado.recusado      { background: rgba(255, 68, 68, 0.2);  color: var(--vermelho); }
 
 
 .pedido-info {
@@ -1171,15 +1177,26 @@ a {
 .btn-aceitar   { background: var(--azul); color: #fff; }
 .btn-preparar  { background: var(--laranja); color: #fff; }
 .btn-pronto    { background: var(--roxo); color: #fff; }
+.btn-caminho   { background: var(--ciano); color: #fff; }
 .btn-entregar  { background: var(--verde); color: #fff; }
 .btn-recusar   { background: rgba(255, 68, 68, 0.2); color: var(--vermelho); border: 1px solid rgba(255, 68, 68, 0.4); }
 .btn-apagar    { background: transparent; color: #ff6b6b; border: 1px solid rgba(255, 107, 107, 0.4); }
-.btn-avisar    { background: #25d366; color: #ffffff; }
+
+.btn-avisar {
+    background: var(--verde);
+    color: #ffffff;
+}
 
 .btn-avisar:hover {
     background: #1da851;
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(37, 211, 102, 0.35);
+}
+
+.btn-caminho:hover {
+    background: #0891b2;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(6, 182, 212, 0.35);
 }
 
 

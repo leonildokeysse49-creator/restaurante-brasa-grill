@@ -12,7 +12,6 @@
 
     <link rel="stylesheet" href="admin.css">
 
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 
 </head>
@@ -21,9 +20,7 @@
 <body>
 
 
-    <!-- ==================================================
-         ECRÃ DE LOGIN
-         ================================================== -->
+    <!-- ECRÃ DE LOGIN -->
 
     <div id="ecraLogin" class="ecra-login">
 
@@ -65,9 +62,7 @@
 
 
 
-    <!-- ==================================================
-         ECRÃ DE BOAS-VINDAS
-         ================================================== -->
+    <!-- ECRÃ DE BOAS-VINDAS -->
 
     <div id="ecraBoasVindas" class="ecra-boas-vindas" hidden>
 
@@ -77,17 +72,11 @@
                 <i data-lucide="check-circle"></i>
             </div>
 
-            <h1 class="boas-vindas-titulo">
-                Login efetuado!
-            </h1>
+            <h1 class="boas-vindas-titulo">Login efetuado!</h1>
 
-            <p class="boas-vindas-sub">
-                Bem-vindo de volta,
-            </p>
+            <p class="boas-vindas-sub">Bem-vindo de volta,</p>
 
-            <p class="boas-vindas-nome" id="boasVindasNome">
-                Administrador
-            </p>
+            <p class="boas-vindas-nome" id="boasVindasNome">Administrador</p>
 
             <div class="boas-vindas-loader"></div>
 
@@ -97,26 +86,19 @@
 
 
 
-    <!-- ==================================================
-         PAINEL
-         ================================================== -->
+    <!-- PAINEL -->
 
     <div id="painel" class="painel" hidden>
 
 
-        <!-- CABEÇALHO -->
-
         <header class="painel-header">
 
             <div class="painel-header-info">
-
                 <h1>
                     <i data-lucide="flame"></i>
                     Brasa Grill
                 </h1>
-
                 <p id="saudacaoPainel">Painel de pedidos em tempo real</p>
-
             </div>
 
             <div class="painel-header-acoes">
@@ -137,9 +119,7 @@
 
 
 
-        <!-- ==========================================
-             RESUMO DO DIA
-             ========================================== -->
+        <!-- RESUMO DO DIA -->
 
         <section class="resumo-dia">
 
@@ -192,54 +172,32 @@
 
 
 
-        <!-- ==========================================
-             FILTRO POR PERÍODO
-             ========================================== -->
+        <!-- FILTRO POR PERÍODO -->
 
         <section class="filtros-periodo">
 
             <span class="filtros-label">Período:</span>
 
-            <button type="button" class="btn-periodo ativo" data-periodo="hoje">
-                Hoje
-            </button>
-
-            <button type="button" class="btn-periodo" data-periodo="ontem">
-                Ontem
-            </button>
-
-            <button type="button" class="btn-periodo" data-periodo="7dias">
-                7 dias
-            </button>
-
-            <button type="button" class="btn-periodo" data-periodo="mes">
-                Este mês
-            </button>
-
-            <button type="button" class="btn-periodo" data-periodo="tudo">
-                Tudo
-            </button>
+            <button type="button" class="btn-periodo ativo" data-periodo="hoje">Hoje</button>
+            <button type="button" class="btn-periodo" data-periodo="ontem">Ontem</button>
+            <button type="button" class="btn-periodo" data-periodo="7dias">7 dias</button>
+            <button type="button" class="btn-periodo" data-periodo="mes">Este mês</button>
+            <button type="button" class="btn-periodo" data-periodo="tudo">Tudo</button>
 
         </section>
 
 
 
-        <!-- ==========================================
-             FILTRO POR TIPO
-             ========================================== -->
+        <!-- FILTRO POR TIPO -->
 
         <section class="filtros-tipo">
 
             <span class="filtros-label">Tipo:</span>
 
-            <button type="button" class="btn-tipo ativo" data-tipo="todos">
-                Todos
-            </button>
-
+            <button type="button" class="btn-tipo ativo" data-tipo="todos">Todos</button>
             <button type="button" class="btn-tipo" data-tipo="entrega">
                 <i data-lucide="truck"></i> Entrega
             </button>
-
             <button type="button" class="btn-tipo" data-tipo="recolha">
                 <i data-lucide="store"></i> Recolha
             </button>
@@ -248,9 +206,7 @@
 
 
 
-        <!-- ==========================================
-             BARRA DE PESQUISA
-             ========================================== -->
+        <!-- BARRA DE PESQUISA -->
 
         <section class="barra-pesquisa">
 
@@ -305,6 +261,12 @@
                 <span>Prontos</span>
             </div>
 
+            <div class="estat-card" data-filtro="a_caminho">
+                <i data-lucide="bike"></i>
+                <strong id="contACaminho">0</strong>
+                <span>A caminho</span>
+            </div>
+
             <div class="estat-card" data-filtro="entregue">
                 <i data-lucide="check-check"></i>
                 <strong id="contEntregue">0</strong>
@@ -319,33 +281,14 @@
 
         <section class="filtros">
 
-            <button type="button" class="btn-filtro ativo" data-filtro="todos">
-                Todos
-            </button>
-
-            <button type="button" class="btn-filtro" data-filtro="novo">
-                Novos
-            </button>
-
-            <button type="button" class="btn-filtro" data-filtro="aceite">
-                Aceites
-            </button>
-
-            <button type="button" class="btn-filtro" data-filtro="em_preparacao">
-                Em preparação
-            </button>
-
-            <button type="button" class="btn-filtro" data-filtro="pronto">
-                Prontos
-            </button>
-
-            <button type="button" class="btn-filtro" data-filtro="entregue">
-                Entregues
-            </button>
-
-            <button type="button" class="btn-filtro" data-filtro="recusado">
-                Recusados
-            </button>
+            <button type="button" class="btn-filtro ativo" data-filtro="todos">Todos</button>
+            <button type="button" class="btn-filtro" data-filtro="novo">Novos</button>
+            <button type="button" class="btn-filtro" data-filtro="aceite">Aceites</button>
+            <button type="button" class="btn-filtro" data-filtro="em_preparacao">Em preparação</button>
+            <button type="button" class="btn-filtro" data-filtro="pronto">Prontos</button>
+            <button type="button" class="btn-filtro" data-filtro="a_caminho">A caminho</button>
+            <button type="button" class="btn-filtro" data-filtro="entregue">Entregues</button>
+            <button type="button" class="btn-filtro" data-filtro="recusado">Recusados</button>
 
         </section>
 
@@ -367,9 +310,7 @@
 
 
 
-    <!-- ==================================================
-         FIREBASE SDK
-         ================================================== -->
+    <!-- FIREBASE SDK -->
 
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>

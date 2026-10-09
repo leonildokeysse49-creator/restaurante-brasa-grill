@@ -49,8 +49,6 @@
 
         <nav aria-label="Navegação principal">
 
-            <!-- LOGÓTIPO + NOME -->
-
             <a
                 href="#inicio"
                 aria-label="Brasa Grill - Página inicial"
@@ -72,37 +70,22 @@
             </a>
 
 
-            <!-- MENU PRINCIPAL -->
-
             <ul>
-
                 <li><a href="#inicio">Início</a></li>
                 <li><a href="#menu">Menu</a></li>
                 <li><a href="#sobre">Sobre</a></li>
                 <li><a href="#contacto">Contacto</a></li>
-
             </ul>
 
-
-            <!-- BOTÃO DO CARRINHO -->
 
             <button
                 id="btnCarrinho"
                 type="button"
                 aria-label="Abrir pedido"
             >
-
                 <i data-lucide="shopping-cart"></i>
-
                 <span class="btn-label">Pedido</span>
-
-                <span
-                    id="contadorCarrinho"
-                    aria-live="polite"
-                >
-                    0
-                </span>
-
+                <span id="contadorCarrinho" aria-live="polite">0</span>
             </button>
 
         </nav>
@@ -111,41 +94,27 @@
 
 
 
-    <!-- ==================================================
-         CONTEÚDO PRINCIPAL
-         ================================================== -->
-
     <main>
 
 
         <!-- ==================================================
-             INÍCIO — com fundo de brasa
+             INÍCIO
              ================================================== -->
 
-        <section
-            id="inicio"
-            aria-labelledby="titulo-inicio"
-        >
+        <section id="inicio" aria-labelledby="titulo-inicio">
 
             <div class="hero-fundo" aria-hidden="true"></div>
 
             <div class="hero-conteudo">
 
-                <p class="hero-etiqueta">
-                    DO ESPETO À MESA
-                </p>
+                <p class="hero-etiqueta">DO ESPETO À MESA</p>
 
-
-                <h1 id="titulo-inicio">
-                    Brasa Grill
-                </h1>
-
+                <h1 id="titulo-inicio">Brasa Grill</h1>
 
                 <p class="hero-descricao">
                     Sabor, qualidade e produtos
                     preparados na brasa para si.
                 </p>
-
 
                 <a href="#menu" class="hero-cta">
                     <i data-lucide="utensils"></i>
@@ -162,29 +131,16 @@
              MENU
              ================================================== -->
 
-        <section
-            id="menu"
-            aria-labelledby="titulo-menu"
-        >
+        <section id="menu" aria-labelledby="titulo-menu">
 
-            <h2 id="titulo-menu">
-                Nosso Menu
-            </h2>
+            <h2 id="titulo-menu">Nosso Menu</h2>
 
+            <p>Escolha os seus produtos e monte o seu pedido.</p>
 
-            <p>
-                Escolha os seus produtos e
-                monte o seu pedido.
-            </p>
-
-
-            <!-- PESQUISA -->
 
             <div class="pesquisa-wrapper">
 
-                <label for="pesquisa">
-                    Pesquisar produto
-                </label>
+                <label for="pesquisa">Pesquisar produto</label>
 
                 <div class="pesquisa-input">
 
@@ -203,12 +159,7 @@
             </div>
 
 
-            <!-- CATEGORIAS -->
-
-            <div
-                id="categorias"
-                aria-label="Categorias do menu"
-            >
+            <div id="categorias" aria-label="Categorias do menu">
 
                 <button type="button" data-categoria="todos" aria-pressed="true" class="ativo">
                     <i data-lucide="layout-grid"></i> Todos
@@ -253,13 +204,7 @@
             </div>
 
 
-            <!-- CATÁLOGO -->
-
-            <div
-                id="catalogo"
-                aria-live="polite"
-                aria-busy="false"
-            ></div>
+            <div id="catalogo" aria-live="polite" aria-busy="false"></div>
 
         </section>
 
@@ -269,22 +214,15 @@
              SOBRE
              ================================================== -->
 
-        <section
-            id="sobre"
-            aria-labelledby="titulo-sobre"
-        >
+        <section id="sobre" aria-labelledby="titulo-sobre">
 
-            <h2 id="titulo-sobre">
-                Sobre a Brasa Grill
-            </h2>
-
+            <h2 id="titulo-sobre">Sobre a Brasa Grill</h2>
 
             <p>
                 A Brasa Grill apresenta um menu
                 com diferentes opções preparadas
                 para proporcionar sabor e qualidade.
             </p>
-
 
             <p>
                 Consulte o nosso menu, escolha os
@@ -300,15 +238,9 @@
              CONTACTO
              ================================================== -->
 
-        <section
-            id="contacto"
-            aria-labelledby="titulo-contacto"
-        >
+        <section id="contacto" aria-labelledby="titulo-contacto">
 
-            <h2 id="titulo-contacto">
-                Contacto
-            </h2>
-
+            <h2 id="titulo-contacto">Contacto</h2>
 
             <p>
                 Estamos disponíveis para si.
@@ -317,69 +249,50 @@
             </p>
 
 
-            <!-- DADOS DE CONTACTO -->
-
             <div class="contacto-info">
 
                 <div class="contacto-item">
-                    <span class="contacto-icone">
-                        <i data-lucide="phone"></i>
-                    </span>
+                    <span class="contacto-icone"><i data-lucide="phone"></i></span>
                     <div>
                         <strong>Telefone / WhatsApp</strong>
                         <a href="tel:+258853217149">+258 85 321 7149</a>
                     </div>
                 </div>
 
-
                 <div class="contacto-item">
-                    <span class="contacto-icone">
-                        <i data-lucide="mail"></i>
-                    </span>
+                    <span class="contacto-icone"><i data-lucide="mail"></i></span>
                     <div>
                         <strong>Email</strong>
                         <a href="mailto:leonildokeysse49@gmail.com">leonildokeysse49@gmail.com</a>
                     </div>
                 </div>
 
-
                 <div class="contacto-item">
-                    <span class="contacto-icone">
-                        <i data-lucide="map-pin"></i>
-                    </span>
+                    <span class="contacto-icone"><i data-lucide="map-pin"></i></span>
                     <div>
                         <strong>Localização</strong>
                         <span>Alto Maé</span>
                     </div>
                 </div>
 
-
                 <div class="contacto-item">
-                    <span class="contacto-icone">
-                        <i data-lucide="clock"></i>
-                    </span>
+                    <span class="contacto-icone"><i data-lucide="clock"></i></span>
                     <div>
                         <strong>Horário</strong>
                         <span>Todos os dias: 7h às 23h</span>
                     </div>
                 </div>
 
-
                 <div class="contacto-item">
-                    <span class="contacto-icone">
-                        <i data-lucide="camera"></i>
-                    </span>
+                    <span class="contacto-icone"><i data-lucide="camera"></i></span>
                     <div>
                         <strong>Instagram</strong>
                         <a href="https://instagram.com/keysse_pv" target="_blank" rel="noopener">@keysse_pv</a>
                     </div>
                 </div>
 
-
                 <div class="contacto-item">
-                    <span class="contacto-icone">
-                        <i data-lucide="radio"></i>
-                    </span>
+                    <span class="contacto-icone"><i data-lucide="radio"></i></span>
                     <div>
                         <strong>TikTok</strong>
                         <a href="https://tiktok.com/@keysse_mz" target="_blank" rel="noopener">@keysse_mz</a>
@@ -389,71 +302,36 @@
             </div>
 
 
-            <!-- FORMULÁRIO DE CONTACTO -->
-
-            <form
-                id="formContacto"
-                class="form-contacto"
-                novalidate
-            >
+            <form id="formContacto" class="form-contacto" novalidate>
 
                 <h3>
                     <i data-lucide="send"></i>
                     Envie-nos uma mensagem
                 </h3>
 
-
                 <div class="form-linha">
-
                     <label for="nome">
                         Nome
-                        <input
-                            type="text"
-                            id="nome"
-                            name="nome"
-                            placeholder="O seu nome"
-                            required
-                        >
+                        <input type="text" id="nome" name="nome" placeholder="O seu nome" required>
                     </label>
-
                 </div>
 
-
                 <div class="form-linha form-linha-dupla">
-
                     <label for="emailForm">
                         Email <small>(opcional)</small>
-                        <input
-                            type="email"
-                            id="emailForm"
-                            name="email"
-                            placeholder="oseuemail@exemplo.com"
-                        >
+                        <input type="email" id="emailForm" name="email" placeholder="oseuemail@exemplo.com">
                     </label>
-
 
                     <label for="telefoneForm">
                         Telefone <small>(opcional)</small>
-                        <input
-                            type="tel"
-                            id="telefoneForm"
-                            name="telefone"
-                            placeholder="+258 84 000 0000"
-                        >
+                        <input type="tel" id="telefoneForm" name="telefone" placeholder="+258 84 000 0000">
                     </label>
-
                 </div>
 
-
                 <div class="form-linha">
-
                     <label for="assunto">
                         Assunto
-                        <select
-                            id="assunto"
-                            name="assunto"
-                            required
-                        >
+                        <select id="assunto" name="assunto" required>
                             <option value="">Escolha o assunto…</option>
                             <option value="Pedido">Fazer um pedido</option>
                             <option value="Reserva">Reservar mesa</option>
@@ -463,47 +341,25 @@
                             <option value="Outro">Outro assunto</option>
                         </select>
                     </label>
-
                 </div>
-
 
                 <div class="form-linha">
-
                     <label for="mensagem">
                         Mensagem
-                        <textarea
-                            id="mensagem"
-                            name="mensagem"
-                            rows="5"
-                            placeholder="Escreva a sua mensagem…"
-                            required
-                        ></textarea>
+                        <textarea id="mensagem" name="mensagem" rows="5" placeholder="Escreva a sua mensagem…" required></textarea>
                     </label>
-
                 </div>
 
-
                 <div class="form-acoes">
-
-                    <button
-                        type="submit"
-                        class="btn-enviar btn-whatsapp"
-                        data-enviar="whatsapp"
-                    >
+                    <button type="submit" class="btn-enviar btn-whatsapp" data-enviar="whatsapp">
                         <i data-lucide="message-circle"></i>
                         Enviar por WhatsApp
                     </button>
 
-
-                    <button
-                        type="submit"
-                        class="btn-enviar btn-email"
-                        data-enviar="email"
-                    >
+                    <button type="submit" class="btn-enviar btn-email" data-enviar="email">
                         <i data-lucide="mail"></i>
                         Enviar por Email
                     </button>
-
                 </div>
 
             </form>
@@ -515,81 +371,41 @@
 
 
     <!-- ==================================================
-         CARRINHO / PEDIDO
+         CARRINHO
          ================================================== -->
 
-    <aside
-        id="carrinho"
-        aria-labelledby="titulo-carrinho"
-        hidden
-    >
+    <aside id="carrinho" aria-labelledby="titulo-carrinho" hidden>
 
         <div class="carrinho-topo">
-
-            <h2 id="titulo-carrinho">
-                Seu pedido
-            </h2>
-
-
-            <button
-                id="btnFecharCarrinho"
-                type="button"
-                aria-label="Fechar carrinho"
-                class="btn-fechar"
-            >
+            <h2 id="titulo-carrinho">Seu pedido</h2>
+            <button id="btnFecharCarrinho" type="button" aria-label="Fechar carrinho" class="btn-fechar">
                 <i data-lucide="x"></i>
             </button>
-
         </div>
-
 
         <div id="itensCarrinho"></div>
 
-
         <p>
-
             Total:
-
-            <strong id="totalCarrinho">
-                0 MT
-            </strong>
-
+            <strong id="totalCarrinho">0 MT</strong>
         </p>
 
-
-        <button
-            id="btnFinalizar"
-            type="button"
-            class="btn-finalizar"
-        >
+        <button id="btnFinalizar" type="button" class="btn-finalizar">
             <i data-lucide="check-circle"></i>
             Finalizar pedido
         </button>
 
-
-        <button
-            id="btnWhatsApp"
-            type="button"
-        >
+        <button id="btnWhatsApp" type="button">
             <i data-lucide="message-circle"></i>
             Enviar pedido pelo WhatsApp
         </button>
 
-
-        <button
-            id="btnLimpar"
-            type="button"
-        >
+        <button id="btnLimpar" type="button">
             <i data-lucide="trash-2"></i>
             Limpar pedido
         </button>
 
-
-        <button
-            id="btnVoltar"
-            type="button"
-            class="btn-voltar"
-        >
+        <button id="btnVoltar" type="button" class="btn-voltar">
             <i data-lucide="arrow-left"></i>
             Voltar ao menu
         </button>
@@ -622,12 +438,7 @@
                     Finalizar pedido
                 </h2>
 
-                <button
-                    type="button"
-                    class="btn-fechar"
-                    data-fechar-modal
-                    aria-label="Fechar"
-                >
+                <button type="button" class="btn-fechar" data-fechar-modal aria-label="Fechar">
                     <i data-lucide="x"></i>
                 </button>
 
@@ -635,106 +446,265 @@
 
 
             <div class="modal-checkout-resumo">
-
                 <p>
                     Total a pagar:
-                    <strong id="modalTotal">
-                        0 MT
-                    </strong>
+                    <strong id="modalTotal">0 MT</strong>
                 </p>
-
             </div>
 
 
             <form id="formCheckout" class="modal-checkout-form">
 
-                <div class="form-linha">
 
-                    <label for="checkoutNome">
-                        Nome *
-                        <input
-                            type="text"
-                            id="checkoutNome"
-                            name="checkoutNome"
-                            placeholder="O seu nome"
-                            required
-                        >
-                    </label>
+                <!-- PASSO 1 — COMO QUER RECEBER -->
+
+                <div class="checkout-secao">
+
+                    <h3 class="checkout-subtitulo">
+                        <i data-lucide="package"></i>
+                        Como quer receber?
+                    </h3>
+
+                    <div class="checkout-opcoes">
+
+                        <label class="checkout-opcao">
+
+                            <input
+                                type="radio"
+                                name="tipoEntrega"
+                                value="entrega"
+                                checked
+                            >
+
+                            <div class="checkout-opcao-conteudo">
+
+                                <strong>
+                                    <i data-lucide="truck"></i>
+                                    Quero entrega
+                                </strong>
+
+                                <span>
+                                    Entregamos na sua morada
+                                </span>
+
+                            </div>
+
+                        </label>
+
+
+                        <label class="checkout-opcao">
+
+                            <input
+                                type="radio"
+                                name="tipoEntrega"
+                                value="recolha"
+                            >
+
+                            <div class="checkout-opcao-conteudo">
+
+                                <strong>
+                                    <i data-lucide="store"></i>
+                                    Vou buscar
+                                </strong>
+
+                                <span>
+                                    Recolho no restaurante
+                                </span>
+
+                            </div>
+
+                        </label>
+
+                    </div>
 
                 </div>
 
 
-                <div class="form-linha">
+                <!-- PASSO 2 — DADOS DO CLIENTE -->
 
-                    <label for="checkoutTelemovel">
-                        Telemóvel *
-                        <input
-                            type="tel"
-                            id="checkoutTelemovel"
-                            name="checkoutTelemovel"
-                            placeholder="+258 84 000 0000"
-                            required
-                        >
-                    </label>
+                <div class="checkout-secao">
 
-                </div>
+                    <h3 class="checkout-subtitulo">
+                        <i data-lucide="user"></i>
+                        Dados do cliente
+                    </h3>
 
+                    <div class="form-linha">
+                        <label for="checkoutNome">
+                            Nome completo *
+                            <input type="text" id="checkoutNome" name="checkoutNome" placeholder="O seu nome" required>
+                        </label>
+                    </div>
 
-                <div class="form-linha">
+                    <div class="form-linha">
+                        <label for="checkoutTelemovel">
+                            Telemóvel / WhatsApp *
+                            <input type="tel" id="checkoutTelemovel" name="checkoutTelemovel" placeholder="+258 84 000 0000" required>
+                        </label>
+                    </div>
 
-                    <label for="checkoutEmail">
-                        Email <small>(opcional)</small>
-                        <input
-                            type="email"
-                            id="checkoutEmail"
-                            name="checkoutEmail"
-                            placeholder="oseuemail@exemplo.com"
-                        >
-                    </label>
-
-                </div>
-
-
-                <div class="form-linha">
-
-                    <label for="checkoutMorada">
-                        Morada de entrega <small>(opcional)</small>
-                        <input
-                            type="text"
-                            id="checkoutMorada"
-                            name="checkoutMorada"
-                            placeholder="Bairro, rua, nº da casa"
-                        >
-                    </label>
+                    <div class="form-linha">
+                        <label for="checkoutEmail">
+                            Email <small>(opcional)</small>
+                            <input type="email" id="checkoutEmail" name="checkoutEmail" placeholder="oseuemail@exemplo.com">
+                        </label>
+                    </div>
 
                 </div>
 
 
-                <div class="form-linha">
+                <!-- PASSO 3 — MORADA (só se entrega) -->
 
-                    <label for="checkoutObs">
-                        Observações <small>(opcional)</small>
+                <div class="checkout-secao" id="secaoMorada">
+
+                    <h3 class="checkout-subtitulo">
+                        <i data-lucide="map-pin"></i>
+                        Morada de entrega
+                    </h3>
+
+                    <div class="form-linha">
+                        <label for="checkoutZona">
+                            Zona *
+                            <select id="checkoutZona" name="checkoutZona" required>
+                                <option value="">Escolha a sua zona…</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div class="form-linha">
+                        <label for="checkoutMorada">
+                            Endereço completo *
+                            <input type="text" id="checkoutMorada" name="checkoutMorada" placeholder="Bairro, rua, número da casa">
+                        </label>
+                    </div>
+
+                    <div class="form-linha">
+                        <label for="checkoutReferencia">
+                            Ponto de referência <small>(opcional)</small>
+                            <input type="text" id="checkoutReferencia" name="checkoutReferencia" placeholder="Ex: próximo da escola, ao lado da farmácia">
+                        </label>
+                    </div>
+
+                    <div id="resumoTaxa" class="checkout-resumo-taxa" hidden>
+
+                        <div class="taxa-linha">
+                            <span>Taxa base</span>
+                            <span id="taxaBase">0 MT</span>
+                        </div>
+
+                        <div class="taxa-linha" id="linhaAjusteHora" hidden>
+                            <span id="motivoHora">Hora de pico</span>
+                            <span id="valorHora">0 MT</span>
+                        </div>
+
+                        <div class="taxa-linha" id="linhaAjusteDisp" hidden>
+                            <span id="motivoDisp">Poucos estafetas</span>
+                            <span id="valorDisp">0 MT</span>
+                        </div>
+
+                        <div class="taxa-total">
+                            <span>Taxa de entrega</span>
+                            <span id="taxaTotal">0 MT</span>
+                        </div>
+
+                        <div class="taxa-tempo">
+                            <i data-lucide="clock"></i>
+                            <span id="tempoEstimado">Tempo estimado: 20-30 min</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PASSO 4 — PAGAMENTO -->
+
+                <div class="checkout-secao">
+
+                    <h3 class="checkout-subtitulo">
+                        <i data-lucide="credit-card"></i>
+                        Método de pagamento
+                    </h3>
+
+                    <div class="checkout-opcoes">
+
+                        <label class="checkout-opcao">
+                            <input type="radio" name="metodoPagamento" value="mpesa" checked>
+                            <div class="checkout-opcao-conteudo">
+                                <strong>M-Pesa</strong>
+                                <span>Pague via M-Pesa</span>
+                            </div>
+                        </label>
+
+                        <label class="checkout-opcao">
+                            <input type="radio" name="metodoPagamento" value="emola">
+                            <div class="checkout-opcao-conteudo">
+                                <strong>e-Mola</strong>
+                                <span>Pague via e-Mola</span>
+                            </div>
+                        </label>
+
+                        <label class="checkout-opcao">
+                            <input type="radio" name="metodoPagamento" value="numerario">
+                            <div class="checkout-opcao-conteudo">
+                                <strong>Numerário</strong>
+                                <span>Pague na entrega</span>
+                            </div>
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PASSO 5 — OBSERVAÇÕES -->
+
+                <div class="checkout-secao">
+
+                    <h3 class="checkout-subtitulo">
+                        <i data-lucide="message-square"></i>
+                        Observações
+                    </h3>
+
+                    <div class="form-linha">
                         <textarea
                             id="checkoutObs"
                             name="checkoutObs"
                             rows="3"
                             placeholder="Ex: sem cebola, ponto da carne, etc."
                         ></textarea>
-                    </label>
+                    </div>
+
+                </div>
+
+
+                <!-- RESUMO FINAL -->
+
+                <div class="checkout-resumo-final">
+
+                    <div class="resumo-linha">
+                        <span>Subtotal</span>
+                        <span id="resumoSubtotal">0 MT</span>
+                    </div>
+
+                    <div class="resumo-linha" id="resumoLinhaTaxa">
+                        <span>Taxa de entrega</span>
+                        <span id="resumoTaxa">0 MT</span>
+                    </div>
+
+                    <div class="resumo-linha resumo-linha--total">
+                        <span>Total a pagar</span>
+                        <strong id="resumoTotal">0 MT</strong>
+                    </div>
 
                 </div>
 
 
                 <div class="modal-checkout-acoes">
-
-                    <button
-                        type="submit"
-                        class="btn-confirmar-pedido"
-                    >
+                    <button type="submit" class="btn-confirmar-pedido">
                         <i data-lucide="send"></i>
                         Confirmar pedido
                     </button>
-
                 </div>
 
             </form>
@@ -754,26 +724,21 @@
         <div class="rodape-conteudo">
 
             <div class="rodape-coluna">
-
                 <h3 class="rodape-titulo">
                     <i data-lucide="flame"></i>
                     Brasa Grill
                 </h3>
-
                 <p class="rodape-descricao">
                     Grelhados na brasa, burgers, pizzas
                     e muito mais. Preparado com paixão
                     para si.
                 </p>
-
             </div>
 
 
             <div class="rodape-coluna">
 
-                <h4 class="rodape-subtitulo">
-                    Contactos
-                </h4>
+                <h4 class="rodape-subtitulo">Contactos</h4>
 
                 <ul class="rodape-lista">
 
@@ -804,41 +769,21 @@
 
             <div class="rodape-coluna">
 
-                <h4 class="rodape-subtitulo">
-                    Redes Sociais
-                </h4>
+                <h4 class="rodape-subtitulo">Redes Sociais</h4>
 
                 <div class="rodape-redes">
 
-                    <a
-                        href="https://instagram.com/keysse_pv"
-                        target="_blank"
-                        rel="noopener"
-                        class="rede-social"
-                        aria-label="Instagram Brasa Grill"
-                    >
+                    <a href="https://instagram.com/keysse_pv" target="_blank" rel="noopener" class="rede-social" aria-label="Instagram">
                         <i data-lucide="camera"></i>
                         <span>@keysse_pv</span>
                     </a>
 
-                    <a
-                        href="https://tiktok.com/@keysse_mz"
-                        target="_blank"
-                        rel="noopener"
-                        class="rede-social"
-                        aria-label="TikTok Brasa Grill"
-                    >
+                    <a href="https://tiktok.com/@keysse_mz" target="_blank" rel="noopener" class="rede-social" aria-label="TikTok">
                         <i data-lucide="radio"></i>
                         <span>@keysse_mz</span>
                     </a>
 
-                    <a
-                        href="https://wa.me/258853217149"
-                        target="_blank"
-                        rel="noopener"
-                        class="rede-social"
-                        aria-label="WhatsApp Brasa Grill"
-                    >
+                    <a href="https://wa.me/258853217149" target="_blank" rel="noopener" class="rede-social" aria-label="WhatsApp">
                         <i data-lucide="message-circle"></i>
                         <span>WhatsApp</span>
                     </a>
@@ -858,19 +803,11 @@
             </p>
 
             <p class="rodape-dev">
-
                 <i data-lucide="code-2"></i>
-
                 Desenvolvido por
-
-                <a
-                    href="https://instagram.com/keysse_pv"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
+                <a href="https://instagram.com/keysse_pv" target="_blank" rel="noopener noreferrer">
                     Leonildo Keysse
                 </a>
-
             </p>
 
         </div>
@@ -888,13 +825,8 @@
 
     <script src="firebase-config.js"></script>
     <script src="pedidos.js"></script>
+    <script src="zonas.js"></script>
     <script src="checkout.js"></script>
-
-
-
-    <!-- ==================================================
-         JAVASCRIPT PRINCIPAL
-         ================================================== -->
 
     <script src="data/catalogo.js"></script>
     <script src="script.js"></script>
