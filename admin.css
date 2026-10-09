@@ -4,7 +4,7 @@
 
 
 /* =========================================================
-   1. VARIÁVEIS (iguais às do site)
+   1. VARIÁVEIS
    ========================================================= */
 
 :root {
@@ -75,7 +75,16 @@ a {
 
 
 /* =========================================================
-   3. ECRÃ DE LOGIN
+   3. FORÇAR [hidden]
+   ========================================================= */
+
+[hidden] {
+    display: none !important;
+}
+
+
+/* =========================================================
+   4. ECRÃ DE LOGIN
    ========================================================= */
 
 .ecra-login {
@@ -224,7 +233,189 @@ a {
 
 
 /* =========================================================
-   4. PAINEL
+   5. ECRÃ DE BOAS-VINDAS
+   ========================================================= */
+
+.ecra-boas-vindas {
+
+    position: fixed;
+    inset: 0;
+
+    z-index: 9999;
+
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        radial-gradient(
+            circle at top,
+            #191919 0%,
+            #080808 45%
+        );
+
+    animation: fadeIn 0.3s ease;
+
+}
+
+.boas-vindas-caixa {
+
+    text-align: center;
+
+    max-width: 420px;
+
+    padding: 40px 30px;
+
+}
+
+.boas-vindas-icone {
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100px;
+    height: 100px;
+
+    border-radius: 50%;
+
+    background: rgba(37, 211, 102, 0.15);
+    border: 3px solid rgba(37, 211, 102, 0.4);
+
+    margin-bottom: 25px;
+
+    animation: pulseVerde 1.5s ease-in-out infinite;
+
+}
+
+.boas-vindas-icone [data-lucide] {
+
+    width: 55px;
+    height: 55px;
+
+    color: var(--verde);
+
+    margin: 0;
+
+    stroke-width: 2.5;
+
+}
+
+@keyframes pulseVerde {
+
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.08); }
+
+}
+
+.boas-vindas-titulo {
+
+    font-size: 1.7rem;
+    font-weight: 900;
+
+    color: var(--texto);
+
+    margin-bottom: 20px;
+
+    animation: slideUp 0.5s ease;
+
+}
+
+.boas-vindas-sub {
+
+    color: var(--texto-secundario);
+
+    font-size: 1rem;
+
+    margin-bottom: 8px;
+
+    animation: slideUp 0.6s ease;
+
+}
+
+.boas-vindas-nome {
+
+    font-size: 2rem;
+    font-weight: 900;
+
+    color: var(--amarelo);
+
+    margin-bottom: 35px;
+
+    animation: slideUp 0.7s ease;
+
+}
+
+.boas-vindas-loader {
+
+    width: 240px;
+    height: 5px;
+
+    background: rgba(255, 189, 22, 0.15);
+
+    border-radius: 5px;
+
+    margin: 0 auto;
+
+    overflow: hidden;
+
+    position: relative;
+
+}
+
+.boas-vindas-loader::after {
+
+    content: "";
+
+    position: absolute;
+    left: -40%;
+    top: 0;
+
+    width: 40%;
+    height: 100%;
+
+    background: var(--amarelo);
+
+    border-radius: 5px;
+
+    animation: loaderMove 2s ease-in-out forwards;
+
+}
+
+@keyframes loaderMove {
+
+    0%   { left: -40%; }
+    100% { left: 100%; }
+
+}
+
+@keyframes fadeIn {
+
+    from { opacity: 0; }
+    to   { opacity: 1; }
+
+}
+
+@keyframes slideUp {
+
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+/* =========================================================
+   6. PAINEL
    ========================================================= */
 
 .painel {
@@ -236,9 +427,6 @@ a {
     padding: 20px;
 
 }
-
-
-/* CABEÇALHO */
 
 .painel-header {
 
@@ -363,7 +551,7 @@ a {
 
 
 /* =========================================================
-   5. ESTATÍSTICAS
+   7. ESTATÍSTICAS
    ========================================================= */
 
 .estatisticas {
@@ -438,7 +626,7 @@ a {
 
 
 /* =========================================================
-   6. FILTROS
+   8. FILTROS
    ========================================================= */
 
 .filtros {
@@ -485,7 +673,7 @@ a {
 
 
 /* =========================================================
-   7. LISTA DE PEDIDOS
+   9. LISTA DE PEDIDOS
    ========================================================= */
 
 .lista-pedidos {
@@ -782,7 +970,7 @@ a {
 
 
 /* =========================================================
-   8. RESPONSIVO
+   10. RESPONSIVO
    ========================================================= */
 
 @media (max-width: 650px) {
@@ -810,6 +998,24 @@ a {
 
     .estat-card strong {
         font-size: 1.5rem;
+    }
+
+    .boas-vindas-caixa {
+        padding: 30px 20px;
+    }
+
+    .boas-vindas-nome {
+        font-size: 1.6rem;
+    }
+
+    .boas-vindas-icone {
+        width: 80px;
+        height: 80px;
+    }
+
+    .boas-vindas-icone [data-lucide] {
+        width: 45px;
+        height: 45px;
     }
 
 }

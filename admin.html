@@ -70,6 +70,38 @@
 
 
     <!-- ==================================================
+         ECRÃ DE BOAS-VINDAS (aparece 2 segundos)
+         ================================================== -->
+
+    <div id="ecraBoasVindas" class="ecra-boas-vindas" hidden>
+
+        <div class="boas-vindas-caixa">
+
+            <div class="boas-vindas-icone">
+                <i data-lucide="check-circle"></i>
+            </div>
+
+            <h1 class="boas-vindas-titulo">
+                Login efetuado!
+            </h1>
+
+            <p class="boas-vindas-sub">
+                Bem-vindo de volta,
+            </p>
+
+            <p class="boas-vindas-nome" id="boasVindasNome">
+                Administrador
+            </p>
+
+            <div class="boas-vindas-loader"></div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==================================================
          PAINEL (escondido até fazer login)
          ================================================== -->
 
@@ -87,7 +119,7 @@
                     Brasa Grill
                 </h1>
 
-                <p>Painel de pedidos em tempo real</p>
+                <p id="saudacaoPainel">Painel de pedidos em tempo real</p>
 
             </div>
 

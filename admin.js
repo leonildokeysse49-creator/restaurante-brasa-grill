@@ -7,16 +7,15 @@
    1. CONFIGURAÇÕES
    ========================================================= */
 
-// ⚠️ MUDA ESTA PALAVRA-PASSE PARA A TUA
 const ADMIN_PASSWORD = "brasa2026";
+const ADMIN_NOME = "Leonildo";
 
-// Chave onde a sessão fica guardada
 const SESSION_KEY = "brasaGrillAdmin";
+const SESSION_NOME = "brasaGrillNome";
 
 
 /* =========================================================
-   2. FUNÇÕES AUXILIARES (definidas aqui porque o script.js
-      não é carregado no painel)
+   2. FUNÇÕES AUXILIARES
    ========================================================= */
 
 function formatarPreco(valor) {
@@ -56,6 +55,17 @@ function formatarData(timestamp) {
 }
 
 
+function saudacaoPorHora() {
+
+    const hora = new Date().getHours();
+
+    if (hora >= 5 && hora < 12)  return "Bom dia";
+    if (hora >= 12 && hora < 20) return "Boa tarde";
+    return "Boa noite";
+
+}
+
+
 /* =========================================================
    3. ESTADO
    ========================================================= */
@@ -71,7 +81,10 @@ let primeiraCarga = true;
    ========================================================= */
 
 const ecraLogin = document.querySelector("#ecraLogin");
+const ecraBoasVindas = document.querySelector("#ecraBoasVindas");
+const boasVindasNome = document.querySelector("#boasVindasNome");
 const painel = document.querySelector("#painel");
+const saudacaoPainel = document.querySelector("#saudacaoPainel");
 const formLogin = document.querySelector("#formLogin");
 const passwordInput = document.querySelector("#passwordInput");
 const erroLogin = document.querySelector("#erroLogin");
@@ -91,9 +104,26 @@ function verificarLogin() {
     const logado = sessionStorage.getItem(SESSION_KEY);
 
     if (logado === "sim") {
-        mostrarPainel();
+
+        const nome = sessionStorage.getItem(SESSION_NOME) || ADMIN_NOME;
+
+        // Se já está logado, abre direto no painel (sem tela de boas-vindas)
+        ecraLogin.hidden = true;
+        ecraBoasVindas.hidden = true;
+        painel.hidden = false;
+
+        if (saudacaoPainel) {
+            saudacaoPainel.textContent =
+                `${saudacaoPorHora()}, ${nome} — Pedidos em tempo real`;
+        }
+
+        iniciarPainel();
+        recriarIcones();
+
     } else {
+
         mostrarLogin();
+
     }
 
 }
@@ -102,6 +132,7 @@ function verificarLogin() {
 function mostrarLogin() {
 
     ecraLogin.hidden = false;
+    ecraBoasVindas.hidden = true;
     painel.hidden = true;
 
     if (passwordInput) passwordInput.focus();
@@ -111,10 +142,31 @@ function mostrarLogin() {
 }
 
 
-function mostrarPainel() {
+function mostrarBoasVindas(nome) {
 
     ecraLogin.hidden = true;
+    painel.hidden = true;
+    ecraBoasVindas.hidden = false;
+
+    if (boasVindasNome) {
+        boasVindasNome.textContent = nome;
+    }
+
+    recriarIcones();
+
+}
+
+
+function entrarNoPainel(nome) {
+
+    ecraLogin.hidden = true;
+    ecraBoasVindas.hidden = true;
     painel.hidden = false;
+
+    if (saudacaoPainel) {
+        saudacaoPainel.textContent =
+            `${saudacaoPorHora()}, ${nome} — Pedidos em tempo real`;
+    }
 
     iniciarPainel();
     recriarIcones();
@@ -132,10 +184,20 @@ if (formLogin) {
 
         if (pass === ADMIN_PASSWORD) {
 
+            // Guardar sessão
             sessionStorage.setItem(SESSION_KEY, "sim");
+            sessionStorage.setItem(SESSION_NOME, ADMIN_NOME);
+
             erroLogin.hidden = true;
             passwordInput.value = "";
-            mostrarPainel();
+
+            // Mostrar ecrã de boas-vindas
+            mostrarBoasVindas(ADMIN_NOME);
+
+            // Depois de 2 segundos, entra no painel
+            setTimeout(() => {
+                entrarNoPainel(ADMIN_NOME);
+            }, 2000);
 
         } else {
 
@@ -154,7 +216,17 @@ if (btnSair) {
 
     btnSair.addEventListener("click", function () {
 
+        if (!confirm("Quer mesmo sair do painel?")) return;
+
         sessionStorage.removeItem(SESSION_KEY);
+        sessionStorage.removeItem(SESSION_NOME);
+
+        // Reset à primeira carga
+        primeiraCarga = true;
+        idsAnteriores = new Set();
+        pedidosAtuais = [];
+        filtroAtual = "todos";
+
         mostrarLogin();
 
     });
@@ -168,13 +240,11 @@ if (btnSair) {
 
 function iniciarPainel() {
 
-    // Escutar pedidos em tempo real
     db.collection("pedidos")
         .orderBy("criadoEm", "desc")
         .limit(100)
         .onSnapshot(snapshot => {
 
-            // Ligação ok
             if (indicadorLigacao) {
                 indicadorLigacao.innerHTML = '<i data-lucide="wifi"></i> Em direto';
                 indicadorLigacao.classList.remove("offline");
@@ -189,7 +259,7 @@ function iniciarPainel() {
                 });
             });
 
-            // Verificar se há pedidos novos
+            // Notificações
             if (!primeiraCarga) {
 
                 novos.forEach(pedido => {
@@ -203,12 +273,10 @@ function iniciarPainel() {
 
             }
 
-            // Atualizar estado
             idsAnteriores = new Set(novos.map(p => p.id));
             pedidosAtuais = novos;
             primeiraCarga = false;
 
-            // Renderizar
             renderizarEstatisticas();
             renderizarPedidos();
 
@@ -309,7 +377,6 @@ function renderizarPedidos() {
         `).join("");
 
 
-        // Info extra (tipo entrega + zona + pagamento)
         let infoExtra = "";
 
         if (pedido.tipoEntrega === "entrega") {
