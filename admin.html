@@ -30,13 +30,9 @@
         <div class="login-caixa">
 
             <div class="login-topo">
-
                 <i data-lucide="lock"></i>
-
                 <h1>Painel do Restaurante</h1>
-
                 <p>Brasa Grill</p>
-
             </div>
 
             <form id="formLogin">
@@ -70,7 +66,7 @@
 
 
     <!-- ==================================================
-         ECRÃ DE BOAS-VINDAS (aparece 2 segundos)
+         ECRÃ DE BOAS-VINDAS
          ================================================== -->
 
     <div id="ecraBoasVindas" class="ecra-boas-vindas" hidden>
@@ -102,7 +98,7 @@
 
 
     <!-- ==================================================
-         PAINEL (escondido até fazer login)
+         PAINEL
          ================================================== -->
 
     <div id="painel" class="painel" hidden>
@@ -141,7 +137,147 @@
 
 
 
-        <!-- ESTATÍSTICAS -->
+        <!-- ==========================================
+             RESUMO DO DIA
+             ========================================== -->
+
+        <section class="resumo-dia">
+
+            <h2 class="resumo-titulo">
+                <i data-lucide="calendar"></i>
+                Resumo do Dia
+            </h2>
+
+            <div class="resumo-grelha">
+
+                <div class="resumo-card">
+                    <i data-lucide="shopping-bag"></i>
+                    <strong id="resumoPedidos">0</strong>
+                    <span>Pedidos</span>
+                </div>
+
+                <div class="resumo-card resumo-card--destaque">
+                    <i data-lucide="banknote"></i>
+                    <strong id="resumoReceita">0 MT</strong>
+                    <span>Receita</span>
+                </div>
+
+                <div class="resumo-card">
+                    <i data-lucide="users"></i>
+                    <strong id="resumoClientes">0</strong>
+                    <span>Clientes</span>
+                </div>
+
+                <div class="resumo-card">
+                    <i data-lucide="truck"></i>
+                    <strong id="resumoEntregas">0</strong>
+                    <span>Entregas</span>
+                </div>
+
+                <div class="resumo-card">
+                    <i data-lucide="store"></i>
+                    <strong id="resumoRecolhas">0</strong>
+                    <span>Recolhas</span>
+                </div>
+
+                <div class="resumo-card">
+                    <i data-lucide="trending-up"></i>
+                    <strong id="resumoTicket">0 MT</strong>
+                    <span>Ticket Médio</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==========================================
+             FILTRO POR PERÍODO
+             ========================================== -->
+
+        <section class="filtros-periodo">
+
+            <span class="filtros-label">Período:</span>
+
+            <button type="button" class="btn-periodo ativo" data-periodo="hoje">
+                Hoje
+            </button>
+
+            <button type="button" class="btn-periodo" data-periodo="ontem">
+                Ontem
+            </button>
+
+            <button type="button" class="btn-periodo" data-periodo="7dias">
+                7 dias
+            </button>
+
+            <button type="button" class="btn-periodo" data-periodo="mes">
+                Este mês
+            </button>
+
+            <button type="button" class="btn-periodo" data-periodo="tudo">
+                Tudo
+            </button>
+
+        </section>
+
+
+
+        <!-- ==========================================
+             FILTRO POR TIPO
+             ========================================== -->
+
+        <section class="filtros-tipo">
+
+            <span class="filtros-label">Tipo:</span>
+
+            <button type="button" class="btn-tipo ativo" data-tipo="todos">
+                Todos
+            </button>
+
+            <button type="button" class="btn-tipo" data-tipo="entrega">
+                <i data-lucide="truck"></i> Entrega
+            </button>
+
+            <button type="button" class="btn-tipo" data-tipo="recolha">
+                <i data-lucide="store"></i> Recolha
+            </button>
+
+        </section>
+
+
+
+        <!-- ==========================================
+             BARRA DE PESQUISA
+             ========================================== -->
+
+        <section class="barra-pesquisa">
+
+            <i data-lucide="search"></i>
+
+            <input
+                type="search"
+                id="pesquisaPedidos"
+                placeholder="Pesquisar por nome, telemóvel ou nº do pedido…"
+                autocomplete="off"
+            >
+
+            <button
+                type="button"
+                id="limparPesquisa"
+                class="btn-limpar-pesquisa"
+                aria-label="Limpar pesquisa"
+                hidden
+            >
+                <i data-lucide="x"></i>
+            </button>
+
+        </section>
+
+
+
+        <!-- ESTATÍSTICAS POR ESTADO -->
 
         <section class="estatisticas">
 
@@ -179,7 +315,7 @@
 
 
 
-        <!-- FILTROS -->
+        <!-- FILTROS POR ESTADO -->
 
         <section class="filtros">
 

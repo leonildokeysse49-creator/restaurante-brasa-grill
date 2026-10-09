@@ -551,7 +551,214 @@ a {
 
 
 /* =========================================================
-   7. ESTATÍSTICAS
+   7. RESUMO DO DIA
+   ========================================================= */
+
+.resumo-dia {
+    margin-bottom: 25px;
+}
+
+.resumo-titulo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+    color: var(--amarelo);
+    font-size: 0.95rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.resumo-titulo [data-lucide] {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+}
+
+.resumo-grelha {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+}
+
+.resumo-card {
+    padding: 16px 14px;
+    background: var(--preto-claro);
+    border: 1px solid var(--borda);
+    border-radius: 12px;
+    text-align: center;
+    transition: all var(--transicao);
+}
+
+.resumo-card:hover {
+    border-color: var(--amarelo);
+    transform: translateY(-2px);
+}
+
+.resumo-card--destaque {
+    background: rgba(255, 189, 22, 0.05);
+    border-color: rgba(255, 189, 22, 0.3);
+}
+
+.resumo-card [data-lucide] {
+    width: 22px;
+    height: 22px;
+    color: var(--amarelo);
+    margin-bottom: 8px;
+}
+
+.resumo-card strong {
+    display: block;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--texto);
+    line-height: 1.1;
+    margin-bottom: 4px;
+}
+
+.resumo-card--destaque strong {
+    color: var(--amarelo);
+    font-size: 1.5rem;
+}
+
+.resumo-card span {
+    color: var(--texto-secundario);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+
+/* =========================================================
+   8. FILTROS — PERÍODO E TIPO
+   ========================================================= */
+
+.filtros-periodo,
+.filtros-tipo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.filtros-label {
+    color: var(--texto-secundario);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-right: 5px;
+}
+
+.btn-periodo,
+.btn-tipo {
+    padding: 8px 14px;
+    background: var(--preto-claro);
+    color: var(--texto-secundario);
+    border: 1px solid var(--borda);
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.82rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all var(--transicao);
+    cursor: pointer;
+}
+
+.btn-periodo:hover,
+.btn-tipo:hover {
+    border-color: var(--amarelo);
+    color: var(--amarelo);
+}
+
+.btn-periodo.ativo,
+.btn-tipo.ativo {
+    background: var(--amarelo);
+    border-color: var(--amarelo);
+    color: #000000;
+}
+
+.btn-tipo [data-lucide] {
+    width: 14px;
+    height: 14px;
+    margin: 0;
+}
+
+
+/* =========================================================
+   9. BARRA DE PESQUISA
+   ========================================================= */
+
+.barra-pesquisa {
+    position: relative;
+    max-width: 500px;
+    margin-bottom: 20px;
+}
+
+.barra-pesquisa [data-lucide] {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--texto-secundario);
+    pointer-events: none;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+}
+
+#pesquisaPedidos {
+    width: 100%;
+    padding: 13px 45px 13px 45px;
+    background: var(--preto-claro);
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+    color: var(--texto);
+    font-size: 0.9rem;
+    outline: none;
+    transition: all var(--transicao);
+}
+
+#pesquisaPedidos::placeholder {
+    color: #777777;
+}
+
+#pesquisaPedidos:focus {
+    border-color: var(--amarelo);
+    box-shadow: 0 0 0 3px rgba(255, 189, 22, 0.12);
+}
+
+.btn-limpar-pesquisa {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: 0;
+    color: var(--texto-secundario);
+    cursor: pointer;
+    padding: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-limpar-pesquisa [data-lucide] {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+}
+
+.btn-limpar-pesquisa:hover {
+    color: var(--amarelo);
+}
+
+
+/* =========================================================
+   10. ESTATÍSTICAS
    ========================================================= */
 
 .estatisticas {
@@ -626,7 +833,7 @@ a {
 
 
 /* =========================================================
-   8. FILTROS
+   11. FILTROS POR ESTADO
    ========================================================= */
 
 .filtros {
@@ -673,7 +880,7 @@ a {
 
 
 /* =========================================================
-   9. LISTA DE PEDIDOS
+   12. LISTA DE PEDIDOS
    ========================================================= */
 
 .lista-pedidos {
@@ -970,7 +1177,7 @@ a {
 
 
 /* =========================================================
-   10. RESPONSIVO
+   13. RESPONSIVO
    ========================================================= */
 
 @media (max-width: 650px) {
@@ -1016,6 +1223,37 @@ a {
     .boas-vindas-icone [data-lucide] {
         width: 45px;
         height: 45px;
+    }
+
+    /* Resumo do dia em mobile */
+    .resumo-grelha {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .resumo-card strong {
+        font-size: 1.1rem;
+    }
+
+    .resumo-card--destaque strong {
+        font-size: 1.3rem;
+    }
+
+    /* Filtros com scroll horizontal */
+    .filtros-periodo,
+    .filtros-tipo {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 5px;
+    }
+
+    .btn-periodo,
+    .btn-tipo {
+        flex: 0 0 auto;
+    }
+
+    /* Pesquisa em mobile */
+    .barra-pesquisa {
+        max-width: 100%;
     }
 
 }

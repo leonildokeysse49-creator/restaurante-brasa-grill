@@ -72,6 +72,9 @@ function saudacaoPorHora() {
 
 let pedidosAtuais = [];
 let filtroAtual = "todos";
+let periodoAtual = "hoje";
+let tipoAtual = "todos";
+let pesquisaAtual = "";
 let idsAnteriores = new Set();
 let primeiraCarga = true;
 
@@ -93,6 +96,10 @@ const listaPedidos = document.querySelector("#listaPedidos");
 const indicadorLigacao = document.querySelector("#indicadorLigacao");
 const btnFiltros = document.querySelectorAll(".btn-filtro");
 const estatCards = document.querySelectorAll(".estat-card");
+const btnPeriodos = document.querySelectorAll(".btn-periodo");
+const btnTipos = document.querySelectorAll(".btn-tipo");
+const inputPesquisa = document.querySelector("#pesquisaPedidos");
+const btnLimparPesquisa = document.querySelector("#limparPesquisa");
 
 
 /* =========================================================
@@ -107,7 +114,6 @@ function verificarLogin() {
 
         const nome = sessionStorage.getItem(SESSION_NOME) || ADMIN_NOME;
 
-        // Se já está logado, abre direto no painel (sem tela de boas-vindas)
         ecraLogin.hidden = true;
         ecraBoasVindas.hidden = true;
         painel.hidden = false;
@@ -184,17 +190,14 @@ if (formLogin) {
 
         if (pass === ADMIN_PASSWORD) {
 
-            // Guardar sessão
             sessionStorage.setItem(SESSION_KEY, "sim");
             sessionStorage.setItem(SESSION_NOME, ADMIN_NOME);
 
             erroLogin.hidden = true;
             passwordInput.value = "";
 
-            // Mostrar ecrã de boas-vindas
             mostrarBoasVindas(ADMIN_NOME);
 
-            // Depois de 2 segundos, entra no painel
             setTimeout(() => {
                 entrarNoPainel(ADMIN_NOME);
             }, 2000);
@@ -221,11 +224,13 @@ if (btnSair) {
         sessionStorage.removeItem(SESSION_KEY);
         sessionStorage.removeItem(SESSION_NOME);
 
-        // Reset à primeira carga
         primeiraCarga = true;
         idsAnteriores = new Set();
         pedidosAtuais = [];
         filtroAtual = "todos";
+        periodoAtual = "hoje";
+        tipoAtual = "todos";
+        pesquisaAtual = "";
 
         mostrarLogin();
 
@@ -242,7 +247,7 @@ function iniciarPainel() {
 
     db.collection("pedidos")
         .orderBy("criadoEm", "desc")
-        .limit(100)
+        .limit(200)
         .onSnapshot(snapshot => {
 
             if (indicadorLigacao) {
@@ -259,7 +264,6 @@ function iniciarPainel() {
                 });
             });
 
-            // Notificações
             if (!primeiraCarga) {
 
                 novos.forEach(pedido => {
@@ -277,6 +281,7 @@ function iniciarPainel() {
             pedidosAtuais = novos;
             primeiraCarga = false;
 
+            renderizarResumoDia();
             renderizarEstatisticas();
             renderizarPedidos();
 
@@ -295,10 +300,169 @@ function iniciarPainel() {
 
 
 /* =========================================================
-   7. ESTATÍSTICAS
+   7. FILTRAR POR PERÍODO
+   ========================================================= */
+
+function filtrarPorPeriodo(pedidos, periodo) {
+
+    if (periodo === "tudo") return pedidos;
+
+    const agora = new Date();
+    const hoje = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate());
+
+    return pedidos.filter(p => {
+
+        if (!p.criadoEm) return false;
+
+        const data = p.criadoEm.toDate ? p.criadoEm.toDate() : new Date(p.criadoEm);
+
+        switch (periodo) {
+
+            case "hoje":
+                return data >= hoje;
+
+            case "ontem": {
+                const ontem = new Date(hoje);
+                ontem.setDate(ontem.getDate() - 1);
+                return data >= ontem && data < hoje;
+            }
+
+            case "7dias": {
+                const seteDias = new Date(hoje);
+                seteDias.setDate(seteDias.getDate() - 7);
+                return data >= seteDias;
+            }
+
+            case "mes": {
+                const inicioMes = new Date(agora.getFullYear(), agora.getMonth(), 1);
+                return data >= inicioMes;
+            }
+
+            default:
+                return true;
+
+        }
+
+    });
+
+}
+
+
+/* =========================================================
+   8. FILTRAR POR TIPO
+   ========================================================= */
+
+function filtrarPorTipo(pedidos, tipo) {
+
+    if (tipo === "todos") return pedidos;
+
+    return pedidos.filter(p => p.tipoEntrega === tipo);
+
+}
+
+
+/* =========================================================
+   9. FILTRAR POR PESQUISA
+   ========================================================= */
+
+function filtrarPorPesquisa(pedidos, termo) {
+
+    if (!termo) return pedidos;
+
+    const t = termo.toLowerCase().trim();
+
+    return pedidos.filter(p => {
+
+        const nome = (p.nome || "").toLowerCase();
+        const tel = (p.telemovel || "").toLowerCase();
+        const id = (p.id || "").toLowerCase();
+
+        return nome.includes(t) || tel.includes(t) || id.includes(t);
+
+    });
+
+}
+
+
+/* =========================================================
+   10. APLICAR TODOS OS FILTROS
+   ========================================================= */
+
+function obterPedidosFiltrados() {
+
+    let lista = [...pedidosAtuais];
+
+    lista = filtrarPorPeriodo(lista, periodoAtual);
+    lista = filtrarPorTipo(lista, tipoAtual);
+
+    if (filtroAtual !== "todos") {
+        lista = lista.filter(p => p.estado === filtroAtual);
+    }
+
+    lista = filtrarPorPesquisa(lista, pesquisaAtual);
+
+    return lista;
+
+}
+
+
+/* =========================================================
+   11. RESUMO DO DIA
+   ========================================================= */
+
+function renderizarResumoDia() {
+
+    const hoje = new Date();
+    const inicioHoje = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
+
+    const pedidosHoje = pedidosAtuais.filter(p => {
+        if (!p.criadoEm) return false;
+        const data = p.criadoEm.toDate ? p.criadoEm.toDate() : new Date(p.criadoEm);
+        return data >= inicioHoje;
+    });
+
+    const pedidosValidos = pedidosHoje.filter(p => p.estado !== "recusado");
+
+    const totalPedidos = pedidosValidos.length;
+    const receita = pedidosValidos.reduce((soma, p) => soma + (p.total || 0), 0);
+
+    const clientesUnicos = new Set(
+        pedidosValidos.map(p => p.telemovel).filter(Boolean)
+    ).size;
+
+    const entregas = pedidosValidos.filter(p => p.tipoEntrega === "entrega").length;
+    const recolhas = pedidosValidos.filter(p => p.tipoEntrega === "recolha").length;
+
+    const ticketMedio = totalPedidos > 0
+        ? Math.round(receita / totalPedidos)
+        : 0;
+
+    const elPedidos = document.querySelector("#resumoPedidos");
+    const elReceita = document.querySelector("#resumoReceita");
+    const elClientes = document.querySelector("#resumoClientes");
+    const elEntregas = document.querySelector("#resumoEntregas");
+    const elRecolhas = document.querySelector("#resumoRecolhas");
+    const elTicket = document.querySelector("#resumoTicket");
+
+    if (elPedidos) elPedidos.textContent = totalPedidos;
+    if (elReceita) elReceita.textContent = formatarPreco(receita);
+    if (elClientes) elClientes.textContent = clientesUnicos;
+    if (elEntregas) elEntregas.textContent = entregas;
+    if (elRecolhas) elRecolhas.textContent = recolhas;
+    if (elTicket) elTicket.textContent = formatarPreco(ticketMedio);
+
+}
+
+
+/* =========================================================
+   12. ESTATÍSTICAS
    ========================================================= */
 
 function renderizarEstatisticas() {
+
+    let base = [...pedidosAtuais];
+    base = filtrarPorPeriodo(base, periodoAtual);
+    base = filtrarPorTipo(base, tipoAtual);
 
     const cont = {
         novo: 0,
@@ -308,7 +472,7 @@ function renderizarEstatisticas() {
         entregue: 0
     };
 
-    pedidosAtuais.forEach(p => {
+    base.forEach(p => {
         if (cont[p.estado] !== undefined) {
             cont[p.estado]++;
         }
@@ -330,23 +494,31 @@ function renderizarEstatisticas() {
 
 
 /* =========================================================
-   8. RENDERIZAR PEDIDOS
+   13. RENDERIZAR PEDIDOS
    ========================================================= */
 
 function renderizarPedidos() {
 
-    let pedidosFiltrados = pedidosAtuais;
-
-    if (filtroAtual !== "todos") {
-        pedidosFiltrados = pedidosAtuais.filter(p => p.estado === filtroAtual);
-    }
+    const pedidosFiltrados = obterPedidosFiltrados();
 
     if (pedidosFiltrados.length === 0) {
+
+        let msg = "Nenhum pedido";
+
+        if (pesquisaAtual) {
+            msg += ` para "${pesquisaAtual}"`;
+        } else if (filtroAtual !== "todos") {
+            msg += ` no estado "${filtroAtual}"`;
+        } else if (tipoAtual !== "todos") {
+            msg += ` do tipo "${tipoAtual}"`;
+        } else {
+            msg += ` no período "${periodoAtual}"`;
+        }
 
         listaPedidos.innerHTML = `
             <div class="sem-pedidos">
                 <i data-lucide="inbox"></i>
-                <p>Nenhum pedido ${filtroAtual !== "todos" ? `no estado "${filtroAtual}"` : ""} de momento.</p>
+                <p>${msg}.</p>
             </div>
         `;
 
@@ -514,7 +686,7 @@ function renderizarPedidos() {
 
 
 /* =========================================================
-   9. AÇÕES NOS PEDIDOS
+   14. AÇÕES NOS PEDIDOS
    ========================================================= */
 
 listaPedidos.addEventListener("click", async function (e) {
@@ -549,27 +721,43 @@ listaPedidos.addEventListener("click", async function (e) {
 
 
 /* =========================================================
-   10. FILTROS
+   15. EVENTOS DOS FILTROS
    ========================================================= */
 
 btnFiltros.forEach(btn => {
-
     btn.addEventListener("click", function () {
-
         filtroAtual = this.dataset.filtro;
-
         btnFiltros.forEach(b => b.classList.remove("ativo"));
         this.classList.add("ativo");
-
         renderizarPedidos();
-
     });
+});
 
+
+btnPeriodos.forEach(btn => {
+    btn.addEventListener("click", function () {
+        periodoAtual = this.dataset.periodo;
+        btnPeriodos.forEach(b => b.classList.remove("ativo"));
+        this.classList.add("ativo");
+        renderizarResumoDia();
+        renderizarEstatisticas();
+        renderizarPedidos();
+    });
+});
+
+
+btnTipos.forEach(btn => {
+    btn.addEventListener("click", function () {
+        tipoAtual = this.dataset.tipo;
+        btnTipos.forEach(b => b.classList.remove("ativo"));
+        this.classList.add("ativo");
+        renderizarEstatisticas();
+        renderizarPedidos();
+    });
 });
 
 
 estatCards.forEach(card => {
-
     card.addEventListener("click", function () {
 
         filtroAtual = this.dataset.filtro;
@@ -585,12 +773,46 @@ estatCards.forEach(card => {
         renderizarPedidos();
 
     });
-
 });
 
 
 /* =========================================================
-   11. INICIAR
+   16. PESQUISA
+   ========================================================= */
+
+if (inputPesquisa) {
+
+    inputPesquisa.addEventListener("input", function () {
+
+        pesquisaAtual = this.value;
+
+        if (btnLimparPesquisa) {
+            btnLimparPesquisa.hidden = !pesquisaAtual;
+        }
+
+        renderizarPedidos();
+
+    });
+
+}
+
+if (btnLimparPesquisa) {
+
+    btnLimparPesquisa.addEventListener("click", function () {
+
+        pesquisaAtual = "";
+        if (inputPesquisa) inputPesquisa.value = "";
+        this.hidden = true;
+
+        renderizarPedidos();
+
+    });
+
+}
+
+
+/* =========================================================
+   17. INICIAR
    ========================================================= */
 
 verificarLogin();
