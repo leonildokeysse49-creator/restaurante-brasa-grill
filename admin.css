@@ -1174,6 +1174,13 @@ a {
 .btn-entregar  { background: var(--verde); color: #fff; }
 .btn-recusar   { background: rgba(255, 68, 68, 0.2); color: var(--vermelho); border: 1px solid rgba(255, 68, 68, 0.4); }
 .btn-apagar    { background: transparent; color: #ff6b6b; border: 1px solid rgba(255, 107, 107, 0.4); }
+.btn-avisar    { background: #25d366; color: #ffffff; }
+
+.btn-avisar:hover {
+    background: #1da851;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(37, 211, 102, 0.35);
+}
 
 
 /* =========================================================
@@ -1225,7 +1232,6 @@ a {
         height: 45px;
     }
 
-    /* Resumo do dia em mobile */
     .resumo-grelha {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -1238,7 +1244,6 @@ a {
         font-size: 1.3rem;
     }
 
-    /* Filtros com scroll horizontal */
     .filtros-periodo,
     .filtros-tipo {
         overflow-x: auto;
@@ -1251,7 +1256,6 @@ a {
         flex: 0 0 auto;
     }
 
-    /* Pesquisa em mobile */
     .barra-pesquisa {
         max-width: 100%;
     }

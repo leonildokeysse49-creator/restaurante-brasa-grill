@@ -494,7 +494,100 @@ function renderizarEstatisticas() {
 
 
 /* =========================================================
-   13. RENDERIZAR PEDIDOS
+   13. AVISAR CLIENTE POR WHATSAPP
+   ========================================================= */
+
+function avisarCliente(pedidoId) {
+
+    const pedido = pedidosAtuais.find(p => p.id === pedidoId);
+    if (!pedido) return;
+
+    // Limpar telemóvel
+    const tel = (pedido.telemovel || "").replace(/\D/g, "");
+    if (!tel) {
+        alert("⚠️ Este pedido não tem telemóvel registado.");
+        return;
+    }
+
+    // Garantir prefixo 258
+    let numeroWhats = tel;
+    if (!numeroWhats.startsWith("258")) {
+        numeroWhats = "258" + numeroWhats;
+    }
+
+    // Lista de produtos
+    const listaProdutos = (pedido.produtos || []).map(p =>
+        `• ${p.quantidade}x ${p.nome}`
+    ).join("\n");
+
+    // Mensagem base
+    const cabecalho = [
+        "*🔥 BRASA GRILL*",
+        "",
+        "*✅ O seu pedido está PRONTO!*",
+        ""
+    ];
+
+    const corpo = [
+        `Olá ${pedido.nome},`,
+        ""
+    ];
+
+    const detalhes = [
+        "",
+        "*📦 O que pediu:*",
+        listaProdutos,
+        "",
+        `*💰 Total:* ${formatarPreco(pedido.total)}`,
+        ""
+    ];
+
+    const rodape = [
+        "",
+        "Obrigado pela preferência! 🙏"
+    ];
+
+    let mensagemFinal;
+
+    if (pedido.tipoEntrega === "recolha") {
+
+        mensagemFinal = [
+            ...cabecalho,
+            ...corpo,
+            "O seu pedido está pronto para recolha.",
+            ...detalhes,
+            "*📍 Venha buscar em:*",
+            "Brasa Grill — Alto Maé",
+            "",
+            "*🕒 Horário:* Todos os dias, 7h às 23h",
+            ...rodape
+        ].join("\n");
+
+    } else {
+
+        mensagemFinal = [
+            ...cabecalho,
+            "*🛵 Está a caminho da sua morada.*",
+            ...corpo,
+            "O seu pedido acabou de sair do restaurante.",
+            ...detalhes,
+            `*📍 Morada:* ${pedido.morada || "—"}`,
+            "",
+            "*🕒 Chega em breve.*",
+            ...rodape
+        ].join("\n");
+
+    }
+
+    // Abrir WhatsApp
+    const url = `https://wa.me/${numeroWhats}?text=${encodeURIComponent(mensagemFinal)}`;
+    window.open(url, "_blank");
+
+}
+
+
+/* =========================================================
+   14. RENDERIZAR PEDIDOS
    ========================================================= */
 
 function renderizarPedidos() {
@@ -662,6 +755,9 @@ function renderizarPedidos() {
                     ` : ""}
 
                     ${pedido.estado === "pronto" ? `
+                        <button class="btn-acao btn-avisar" data-avisar="${pedido.id}">
+                            <i data-lucide="message-circle"></i> Avisar cliente
+                        </button>
                         <button class="btn-acao btn-entregar" data-acao="entregue" data-id="${pedido.id}">
                             <i data-lucide="check-check"></i> Entregue
                         </button>
@@ -686,11 +782,19 @@ function renderizarPedidos() {
 
 
 /* =========================================================
-   14. AÇÕES NOS PEDIDOS
+   15. AÇÕES NOS PEDIDOS
    ========================================================= */
 
 listaPedidos.addEventListener("click", async function (e) {
 
+    // Botão "Avisar cliente"
+    const btnAvisar = e.target.closest("[data-avisar]");
+    if (btnAvisar) {
+        avisarCliente(btnAvisar.dataset.avisar);
+        return;
+    }
+
+    // Botões de ação
     const btn = e.target.closest("[data-acao]");
     if (!btn) return;
 
@@ -721,7 +825,7 @@ listaPedidos.addEventListener("click", async function (e) {
 
 
 /* =========================================================
-   15. EVENTOS DOS FILTROS
+   16. EVENTOS DOS FILTROS
    ========================================================= */
 
 btnFiltros.forEach(btn => {
@@ -777,7 +881,7 @@ estatCards.forEach(card => {
 
 
 /* =========================================================
-   16. PESQUISA
+   17. PESQUISA
    ========================================================= */
 
 if (inputPesquisa) {
@@ -812,7 +916,7 @@ if (btnLimparPesquisa) {
 
 
 /* =========================================================
-   17. INICIAR
+   18. INICIAR
    ========================================================= */
 
 verificarLogin();
