@@ -15,7 +15,49 @@ const SESSION_KEY = "brasaGrillAdmin";
 
 
 /* =========================================================
-   2. ESTADO
+   2. FUNÇÕES AUXILIARES (definidas aqui porque o script.js
+      não é carregado no painel)
+   ========================================================= */
+
+function formatarPreco(valor) {
+    return new Intl.NumberFormat("pt-MZ").format(valor) + " MT";
+}
+
+
+function recriarIcones() {
+    if (typeof lucide !== "undefined") {
+        lucide.createIcons();
+    }
+}
+
+
+function formatarData(timestamp) {
+
+    if (!timestamp) return "—";
+
+    try {
+
+        const data = timestamp.toDate
+            ? timestamp.toDate()
+            : new Date(timestamp);
+
+        const dia = String(data.getDate()).padStart(2, "0");
+        const mes = String(data.getMonth() + 1).padStart(2, "0");
+        const ano = data.getFullYear();
+        const hora = String(data.getHours()).padStart(2, "0");
+        const minuto = String(data.getMinutes()).padStart(2, "0");
+
+        return `${dia}/${mes}/${ano} às ${hora}:${minuto}`;
+
+    } catch (e) {
+        return "—";
+    }
+
+}
+
+
+/* =========================================================
+   3. ESTADO
    ========================================================= */
 
 let pedidosAtuais = [];
@@ -25,7 +67,7 @@ let primeiraCarga = true;
 
 
 /* =========================================================
-   3. ELEMENTOS
+   4. ELEMENTOS
    ========================================================= */
 
 const ecraLogin = document.querySelector("#ecraLogin");
@@ -41,7 +83,7 @@ const estatCards = document.querySelectorAll(".estat-card");
 
 
 /* =========================================================
-   4. LOGIN / LOGOUT
+   5. LOGIN / LOGOUT
    ========================================================= */
 
 function verificarLogin() {
@@ -62,7 +104,8 @@ function mostrarLogin() {
     ecraLogin.hidden = false;
     painel.hidden = true;
 
-    passwordInput.focus();
+    if (passwordInput) passwordInput.focus();
+
     recriarIcones();
 
 }
@@ -79,40 +122,48 @@ function mostrarPainel() {
 }
 
 
-formLogin.addEventListener("submit", function (e) {
+if (formLogin) {
 
-    e.preventDefault();
+    formLogin.addEventListener("submit", function (e) {
 
-    const pass = passwordInput.value;
+        e.preventDefault();
 
-    if (pass === ADMIN_PASSWORD) {
+        const pass = passwordInput.value;
 
-        sessionStorage.setItem(SESSION_KEY, "sim");
-        erroLogin.hidden = true;
-        passwordInput.value = "";
-        mostrarPainel();
+        if (pass === ADMIN_PASSWORD) {
 
-    } else {
+            sessionStorage.setItem(SESSION_KEY, "sim");
+            erroLogin.hidden = true;
+            passwordInput.value = "";
+            mostrarPainel();
 
-        erroLogin.hidden = false;
-        passwordInput.value = "";
-        passwordInput.focus();
+        } else {
 
-    }
+            erroLogin.hidden = false;
+            passwordInput.value = "";
+            passwordInput.focus();
 
-});
+        }
+
+    });
+
+}
 
 
-btnSair.addEventListener("click", function () {
+if (btnSair) {
 
-    sessionStorage.removeItem(SESSION_KEY);
-    mostrarLogin();
+    btnSair.addEventListener("click", function () {
 
-});
+        sessionStorage.removeItem(SESSION_KEY);
+        mostrarLogin();
+
+    });
+
+}
 
 
 /* =========================================================
-   5. INICIAR PAINEL
+   6. INICIAR PAINEL
    ========================================================= */
 
 function iniciarPainel() {
@@ -124,8 +175,10 @@ function iniciarPainel() {
         .onSnapshot(snapshot => {
 
             // Ligação ok
-            indicadorLigacao.innerHTML = '<i data-lucide="wifi"></i> Em direto';
-            indicadorLigacao.classList.remove("offline");
+            if (indicadorLigacao) {
+                indicadorLigacao.innerHTML = '<i data-lucide="wifi"></i> Em direto';
+                indicadorLigacao.classList.remove("offline");
+            }
 
             const novos = [];
 
@@ -138,8 +191,6 @@ function iniciarPainel() {
 
             // Verificar se há pedidos novos
             if (!primeiraCarga) {
-
-                const idsAtuais = new Set(novos.map(p => p.id));
 
                 novos.forEach(pedido => {
 
@@ -165,8 +216,10 @@ function iniciarPainel() {
 
             console.error("❌ Erro na ligação ao Firestore:", erro);
 
-            indicadorLigacao.innerHTML = '<i data-lucide="wifi-off"></i> Sem ligação';
-            indicadorLigacao.classList.add("offline");
+            if (indicadorLigacao) {
+                indicadorLigacao.innerHTML = '<i data-lucide="wifi-off"></i> Sem ligação';
+                indicadorLigacao.classList.add("offline");
+            }
 
         });
 
@@ -174,7 +227,7 @@ function iniciarPainel() {
 
 
 /* =========================================================
-   6. ESTATÍSTICAS
+   7. ESTATÍSTICAS
    ========================================================= */
 
 function renderizarEstatisticas() {
@@ -193,17 +246,23 @@ function renderizarEstatisticas() {
         }
     });
 
-    document.querySelector("#contNovo").textContent = cont.novo;
-    document.querySelector("#contAceite").textContent = cont.aceite;
-    document.querySelector("#contPreparacao").textContent = cont.em_preparacao;
-    document.querySelector("#contPronto").textContent = cont.pronto;
-    document.querySelector("#contEntregue").textContent = cont.entregue;
+    const elNovo = document.querySelector("#contNovo");
+    const elAceite = document.querySelector("#contAceite");
+    const elPrep = document.querySelector("#contPreparacao");
+    const elPronto = document.querySelector("#contPronto");
+    const elEntregue = document.querySelector("#contEntregue");
+
+    if (elNovo) elNovo.textContent = cont.novo;
+    if (elAceite) elAceite.textContent = cont.aceite;
+    if (elPrep) elPrep.textContent = cont.em_preparacao;
+    if (elPronto) elPronto.textContent = cont.pronto;
+    if (elEntregue) elEntregue.textContent = cont.entregue;
 
 }
 
 
 /* =========================================================
-   7. RENDERIZAR PEDIDOS
+   8. RENDERIZAR PEDIDOS
    ========================================================= */
 
 function renderizarPedidos() {
@@ -231,6 +290,7 @@ function renderizarPedidos() {
     listaPedidos.innerHTML = pedidosFiltrados.map(pedido => {
 
         const data = formatarData(pedido.criadoEm);
+
         const estadoTexto = {
             novo: "🆕 Novo",
             aceite: "✅ Aceite",
@@ -240,12 +300,52 @@ function renderizarPedidos() {
             recusado: "❌ Recusado"
         }[pedido.estado] || pedido.estado;
 
+
         const produtosHTML = (pedido.produtos || []).map(p => `
             <li>
                 <span>${p.quantidade}× ${p.nome}</span>
                 <span>${formatarPreco(p.subtotal)}</span>
             </li>
         `).join("");
+
+
+        // Info extra (tipo entrega + zona + pagamento)
+        let infoExtra = "";
+
+        if (pedido.tipoEntrega === "entrega") {
+            infoExtra += `
+                <div>
+                    <span>Entrega:</span>
+                    <span>${pedido.zona || "—"}</span>
+                </div>
+                <div>
+                    <span>Morada:</span>
+                    <span>${pedido.morada || "—"}</span>
+                </div>
+            `;
+        } else if (pedido.tipoEntrega === "recolha") {
+            infoExtra += `
+                <div>
+                    <span>Tipo:</span>
+                    <span>Recolha no restaurante</span>
+                </div>
+            `;
+        }
+
+        if (pedido.metodoPagamento) {
+            const metodos = {
+                mpesa: "M-Pesa",
+                emola: "e-Mola",
+                numerario: "Numerário"
+            };
+            infoExtra += `
+                <div>
+                    <span>Pagamento:</span>
+                    <span>${metodos[pedido.metodoPagamento] || pedido.metodoPagamento}</span>
+                </div>
+            `;
+        }
+
 
         return `
             <article class="pedido estado-${pedido.estado}" data-id="${pedido.id}">
@@ -276,12 +376,7 @@ function renderizarPedidos() {
                         </div>
                     ` : ""}
 
-                    ${pedido.morada ? `
-                        <div>
-                            <span>Morada:</span>
-                            <span>${pedido.morada}</span>
-                        </div>
-                    ` : ""}
+                    ${infoExtra}
 
                 </div>
 
@@ -352,7 +447,7 @@ function renderizarPedidos() {
 
 
 /* =========================================================
-   8. AÇÕES NOS PEDIDOS
+   9. AÇÕES NOS PEDIDOS
    ========================================================= */
 
 listaPedidos.addEventListener("click", async function (e) {
@@ -387,7 +482,7 @@ listaPedidos.addEventListener("click", async function (e) {
 
 
 /* =========================================================
-   9. FILTROS
+   10. FILTROS
    ========================================================= */
 
 btnFiltros.forEach(btn => {
@@ -428,10 +523,9 @@ estatCards.forEach(card => {
 
 
 /* =========================================================
-   10. INICIAR
+   11. INICIAR
    ========================================================= */
 
 verificarLogin();
 
-// Atualizar ícones após carregar
 window.addEventListener("load", recriarIcones);
