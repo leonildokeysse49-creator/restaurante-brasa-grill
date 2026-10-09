@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="pt-MZ">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Brasa Grill — consulte o nosso menu, escolha os seus produtos e faça o seu pedido."
+    >
+
+    <meta
+        name="theme-color"
+        content="#080808"
+    >
+
+    <title>Brasa Grill</title>
+
+    <link
+        rel="stylesheet"
+        href="styles.css"
+    >
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==================================================
+         CABEÇALHO
+         ================================================== -->
+
+    <header>
+
+        <nav aria-label="Navegação principal">
+
+            <!-- LOGÓTIPO + NOME -->
+
+            <a
+                href="#inicio"
+                aria-label="Brasa Grill - Página inicial"
+                class="marca"
+            >
+
+                <img
+                    src="assets/images/logo.png"
+                    alt="Logotipo Brasa Grill"
+                    class="marca-logo"
+                    onerror="this.style.display='none'"
+                >
+
+                <span>
+                    <i data-lucide="flame"></i>
+                    Brasa Grill
+                </span>
+
+            </a>
+
+
+            <!-- MENU PRINCIPAL -->
+
+            <ul>
+
+                <li><a href="#inicio">Início</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+
+            </ul>
+
+
+            <!-- BOTÃO DO CARRINHO -->
+
+            <button
+                id="btnCarrinho"
+                type="button"
+                aria-label="Abrir pedido"
+            >
+
+                <i data-lucide="shopping-cart"></i>
+
+                <span class="btn-label">Pedido</span>
+
+                <span
+                    id="contadorCarrinho"
+                    aria-live="polite"
+                >
+                    0
+                </span>
+
+            </button>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- ==================================================
+         CONTEÚDO PRINCIPAL
+         ================================================== -->
+
+    <main>
+
+
+        <!-- ==================================================
+             INÍCIO — com fundo de brasa
+             ================================================== -->
+
+        <section
+            id="inicio"
+            aria-labelledby="titulo-inicio"
+        >
+
+            <div class="hero-fundo" aria-hidden="true"></div>
+
+            <div class="hero-conteudo">
+
+                <p class="hero-etiqueta">
+                    DO ESPETO À MESA
+                </p>
+
+
+                <h1 id="titulo-inicio">
+                    Brasa Grill
+                </h1>
+
+
+                <p class="hero-descricao">
+                    Sabor, qualidade e produtos
+                    preparados na brasa para si.
+                </p>
+
+
+                <a href="#menu" class="hero-cta">
+                    <i data-lucide="utensils"></i>
+                    Ver o nosso menu
+                </a>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==================================================
+             MENU
+             ================================================== -->
+
+        <section
+            id="menu"
+            aria-labelledby="titulo-menu"
+        >
+
+            <h2 id="titulo-menu">
+                Nosso Menu
+            </h2>
+
+
+            <p>
+                Escolha os seus produtos e
+                monte o seu pedido.
+            </p>
+
+
+            <!-- PESQUISA -->
+
+            <div class="pesquisa-wrapper">
+
+                <label for="pesquisa">
+                    Pesquisar produto
+                </label>
+
+                <div class="pesquisa-input">
+
+                    <i data-lucide="search"></i>
+
+                    <input
+                        type="search"
+                        id="pesquisa"
+                        name="pesquisa"
+                        placeholder="Ex.: Burger, Pizza, Frango..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- CATEGORIAS -->
+
+            <div
+                id="categorias"
+                aria-label="Categorias do menu"
+            >
+
+                <button type="button" data-categoria="todos" aria-pressed="true" class="ativo">
+                    <i data-lucide="layout-grid"></i> Todos
+                </button>
+
+                <button type="button" data-categoria="promocao" aria-pressed="false">
+                    <i data-lucide="gift"></i> Promoções
+                </button>
+
+                <button type="button" data-categoria="burger" aria-pressed="false">
+                    <i data-lucide="sandwich"></i> Burgers
+                </button>
+
+                <button type="button" data-categoria="pizza" aria-pressed="false">
+                    <i data-lucide="pizza"></i> Pizza
+                </button>
+
+                <button type="button" data-categoria="frango" aria-pressed="false">
+                    <i data-lucide="drumstick"></i> Frango
+                </button>
+
+                <button type="button" data-categoria="sandes" aria-pressed="false">
+                    <i data-lucide="utensils"></i> Sandes
+                </button>
+
+                <button type="button" data-categoria="prego" aria-pressed="false">
+                    <i data-lucide="hot-dog"></i> Prego & Rolls
+                </button>
+
+                <button type="button" data-categoria="batata" aria-pressed="false">
+                    <i data-lucide="fries"></i> Batata
+                </button>
+
+                <button type="button" data-categoria="bebidas" aria-pressed="false">
+                    <i data-lucide="cup-soda"></i> Bebidas
+                </button>
+
+                <button type="button" data-categoria="sobremesa" aria-pressed="false">
+                    <i data-lucide="ice-cream-cone"></i> Sobremesas
+                </button>
+
+            </div>
+
+
+            <!-- CATÁLOGO -->
+
+            <div
+                id="catalogo"
+                aria-live="polite"
+                aria-busy="false"
+            ></div>
+
+        </section>
+
+
+
+        <!-- ==================================================
+             SOBRE
+             ================================================== -->
+
+        <section
+            id="sobre"
+            aria-labelledby="titulo-sobre"
+        >
+
+            <h2 id="titulo-sobre">
+                Sobre a Brasa Grill
+            </h2>
+
+
+            <p>
+                A Brasa Grill apresenta um menu
+                com diferentes opções preparadas
+                para proporcionar sabor e qualidade.
+            </p>
+
+
+            <p>
+                Consulte o nosso menu, escolha os
+                produtos que pretende e envie o seu
+                pedido diretamente pelo WhatsApp.
+            </p>
+
+        </section>
+
+
+
+        <!-- ==================================================
+             CONTACTO
+             ================================================== -->
+
+        <section
+            id="contacto"
+            aria-labelledby="titulo-contacto"
+        >
+
+            <h2 id="titulo-contacto">
+                Contacto
+            </h2>
+
+
+            <p>
+                Estamos disponíveis para si.
+                Entre em contacto por qualquer um dos canais abaixo
+                ou envie-nos uma mensagem através do formulário.
+            </p>
+
+
+            <!-- DADOS DE CONTACTO -->
+
+            <div class="contacto-info">
+
+                <div class="contacto-item">
+                    <span class="contacto-icone">
+                        <i data-lucide="phone"></i>
+                    </span>
+                    <div>
+                        <strong>Telefone / WhatsApp</strong>
+                        <a href="tel:+258853217149">+258 85 321 7149</a>
+                    </div>
+                </div>
+
+
+                <div class="contacto-item">
+                    <span class="contacto-icone">
+                        <i data-lucide="mail"></i>
+                    </span>
+                    <div>
+                        <strong>Email</strong>
+                        <a href="mailto:leonildokeysse49@gmail.com">leonildokeysse49@gmail.com</a>
+                    </div>
+                </div>
+
+
+                <div class="contacto-item">
+                    <span class="contacto-icone">
+                        <i data-lucide="map-pin"></i>
+                    </span>
+                    <div>
+                        <strong>Localização</strong>
+                        <span>Alto Maé</span>
+                    </div>
+                </div>
+
+
+                <div class="contacto-item">
+                    <span class="contacto-icone">
+                        <i data-lucide="clock"></i>
+                    </span>
+                    <div>
+                        <strong>Horário</strong>
+                        <span>Todos os dias: 7h às 23h</span>
+                    </div>
+                </div>
+
+
+                <div class="contacto-item">
+                    <span class="contacto-icone">
+                        <i data-lucide="instagram"></i>
+                    </span>
+                    <div>
+                        <strong>Instagram</strong>
+                        <a href="https://instagram.com/keysse_pv" target="_blank" rel="noopener">@keysse_pv</a>
+                    </div>
+                </div>
+
+
+                <div class="contacto-item">
+                    <span class="contacto-icone">
+                        <i data-lucide="music"></i>
+                    </span>
+                    <div>
+                        <strong>TikTok</strong>
+                        <a href="https://tiktok.com/@keysse_mz" target="_blank" rel="noopener">@keysse_mz</a>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- FORMULÁRIO DE CONTACTO -->
+
+            <form
+                id="formContacto"
+                class="form-contacto"
+                novalidate
+            >
+
+                <h3>
+                    <i data-lucide="send"></i>
+                    Envie-nos uma mensagem
+                </h3>
+
+
+                <div class="form-linha">
+
+                    <label for="nome">
+                        Nome
+                        <input
+                            type="text"
+                            id="nome"
+                            name="nome"
+                            placeholder="O seu nome"
+                            required
+                        >
+                    </label>
+
+                </div>
+
+
+                <div class="form-linha form-linha-dupla">
+
+                    <label for="emailForm">
+                        Email <small>(opcional)</small>
+                        <input
+                            type="email"
+                            id="emailForm"
+                            name="email"
+                            placeholder="oseuemail@exemplo.com"
+                        >
+                    </label>
+
+
+                    <label for="telefoneForm">
+                        Telefone <small>(opcional)</small>
+                        <input
+                            type="tel"
+                            id="telefoneForm"
+                            name="telefone"
+                            placeholder="+258 84 000 0000"
+                        >
+                    </label>
+
+                </div>
+
+
+                <div class="form-linha">
+
+                    <label for="assunto">
+                        Assunto
+                        <select
+                            id="assunto"
+                            name="assunto"
+                            required
+                        >
+                            <option value="">Escolha o assunto…</option>
+                            <option value="Pedido">Fazer um pedido</option>
+                            <option value="Reserva">Reservar mesa</option>
+                            <option value="Informacao">Pedir informação</option>
+                            <option value="Sugestao">Sugestão</option>
+                            <option value="Reclamacao">Reclamação</option>
+                            <option value="Outro">Outro assunto</option>
+                        </select>
+                    </label>
+
+                </div>
+
+
+                <div class="form-linha">
+
+                    <label for="mensagem">
+                        Mensagem
+                        <textarea
+                            id="mensagem"
+                            name="mensagem"
+                            rows="5"
+                            placeholder="Escreva a sua mensagem…"
+                            required
+                        ></textarea>
+                    </label>
+
+                </div>
+
+
+                <div class="form-acoes">
+
+                    <button
+                        type="submit"
+                        class="btn-enviar btn-whatsapp"
+                        data-enviar="whatsapp"
+                    >
+                        <i data-lucide="message-circle"></i>
+                        Enviar por WhatsApp
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="btn-enviar btn-email"
+                        data-enviar="email"
+                    >
+                        <i data-lucide="mail"></i>
+                        Enviar por Email
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- ==================================================
+         CARRINHO / PEDIDO
+         ================================================== -->
+
+    <aside
+        id="carrinho"
+        aria-labelledby="titulo-carrinho"
+        hidden
+    >
+
+        <div class="carrinho-topo">
+
+            <h2 id="titulo-carrinho">
+                Seu pedido
+            </h2>
+
+
+            <button
+                id="btnFecharCarrinho"
+                type="button"
+                aria-label="Fechar carrinho"
+                class="btn-fechar"
+            >
+                <i data-lucide="x"></i>
+            </button>
+
+        </div>
+
+
+        <div id="itensCarrinho"></div>
+
+
+        <p>
+
+            Total:
+
+            <strong id="totalCarrinho">
+                0 MT
+            </strong>
+
+        </p>
+
+
+        <button
+            id="btnWhatsApp"
+            type="button"
+        >
+            <i data-lucide="message-circle"></i>
+            Enviar pedido pelo WhatsApp
+        </button>
+
+
+        <button
+            id="btnLimpar"
+            type="button"
+        >
+            <i data-lucide="trash-2"></i>
+            Limpar pedido
+        </button>
+
+
+        <button
+            id="btnVoltar"
+            type="button"
+            class="btn-voltar"
+        >
+            <i data-lucide="arrow-left"></i>
+            Voltar ao menu
+        </button>
+
+    </aside>
+
+
+
+    <!-- ==================================================
+         RODAPÉ
+         ================================================== -->
+
+    <footer>
+
+        <p>
+            © <span id="anoAtual">2026</span>
+            Brasa Grill — Alto Maé
+        </p>
+
+    </footer>
+
+
+
+    <!-- ==================================================
+         JAVASCRIPT
+         ================================================== -->
+
+    <script src="data/catalogo.js"></script>
+    <script src="script.js"></script>
+
+
+</body>
+
+</html>

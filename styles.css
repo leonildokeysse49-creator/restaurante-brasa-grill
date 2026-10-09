@@ -1,0 +1,2240 @@
+/* =========================================================
+   BRASA GRILL
+   STYLES.CSS
+   ========================================================= */
+
+
+/* =========================================================
+   1. VARIÁVEIS
+   ========================================================= */
+
+:root {
+
+    --preto: #080808;
+    --preto-claro: #111111;
+    --cinza: #1a1a1a;
+    --cinza-claro: #242424;
+    --texto: #ffffff;
+    --texto-secundario: #bdbdbd;
+    --amarelo: #ffbd16;
+    --amarelo-claro: #ffd45c;
+    --borda: #303030;
+    --vermelho: #d62828;
+    --largura-maxima: 1200px;
+    --espaco-pequeno: 10px;
+    --espaco-medio: 20px;
+    --espaco-grande: 40px;
+    --raio: 12px;
+    --transicao: 0.25s ease;
+
+}
+
+
+/* =========================================================
+   2. RESET
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at top,
+            #191919 0%,
+            var(--preto) 45%
+        );
+
+    color: var(--texto);
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    line-height: 1.6;
+
+}
+
+
+/* =========================================================
+   3. ELEMENTOS GERAIS
+   ========================================================= */
+
+img {
+
+    display: block;
+    max-width: 100%;
+
+}
+
+
+button,
+input {
+
+    font: inherit;
+
+}
+
+
+button {
+
+    cursor: pointer;
+
+}
+
+
+a {
+
+    color: inherit;
+    text-decoration: none;
+
+}
+
+
+ul {
+
+    list-style: none;
+
+}
+
+
+section {
+
+    width: min(
+        100% - 40px,
+        var(--largura-maxima)
+    );
+
+    margin-inline: auto;
+
+    padding-block: 80px;
+
+}
+
+
+/* =========================================================
+   4. ACESSIBILIDADE / FOCO
+   ========================================================= */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+
+    outline: 3px solid var(--amarelo);
+    outline-offset: 4px;
+
+}
+
+
+/* =========================================================
+   5. CABEÇALHO
+   ========================================================= */
+
+header {
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    background:
+        rgba(8, 8, 8, 0.94);
+
+    border-bottom:
+        1px solid var(--borda);
+
+    backdrop-filter: blur(12px);
+
+}
+
+
+header nav {
+
+    width: min(
+        100% - 40px,
+        var(--largura-maxima)
+    );
+
+    min-height: 76px;
+
+    margin-inline: auto;
+
+    display: flex;
+    align-items: center;
+
+    gap: 30px;
+
+}
+
+
+/* LOGÓTIPO */
+
+header nav > a {
+
+    color: var(--amarelo);
+    font-size: 1.35rem;
+    font-weight: 800;
+    white-space: nowrap;
+
+}
+
+
+header nav > a:hover {
+
+    color: var(--amarelo-claro);
+
+}
+
+
+/* MENU */
+
+header nav ul {
+
+    display: flex;
+    align-items: center;
+
+    gap: 25px;
+
+    margin-left: auto;
+
+}
+
+
+header nav ul a {
+
+    color: var(--texto-secundario);
+    font-weight: 600;
+
+    transition: color var(--transicao);
+
+}
+
+
+header nav ul a:hover {
+
+    color: var(--amarelo);
+
+}
+
+
+/* =========================================================
+   6. BOTÃO CARRINHO
+   ========================================================= */
+
+#btnCarrinho {
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    border: 1px solid var(--amarelo);
+    border-radius: 999px;
+
+    padding: 10px 16px;
+
+    background: var(--amarelo);
+    color: #000000;
+
+    font-weight: 800;
+
+    transition:
+        transform var(--transicao),
+        background var(--transicao);
+
+}
+
+
+#btnCarrinho:hover {
+
+    background: var(--amarelo-claro);
+    transform: translateY(-2px);
+
+}
+
+
+#contadorCarrinho {
+
+    min-width: 24px;
+    height: 24px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #000000;
+    color: var(--amarelo);
+
+    font-size: 0.8rem;
+
+}
+
+
+/* =========================================================
+   7. INÍCIO / HERO — MELHORADO
+   ========================================================= */
+
+#inicio {
+
+    min-height: 85vh;
+
+    display: flex;
+    align-items: center;
+
+    padding-top: 120px;
+    padding-bottom: 120px;
+
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+
+}
+
+
+/* Conteúdo do hero acima do fundo */
+.hero-conteudo {
+
+    position: relative;
+    z-index: 2;
+
+    max-width: 720px;
+
+}
+
+
+/* Etiqueta dourada em pílula */
+#inicio .hero-etiqueta {
+
+    display: inline-block;
+
+    color: var(--amarelo);
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+
+    font-size: 0.85rem;
+
+    padding: 6px 14px;
+
+    border: 1px solid rgba(255, 189, 22, 0.4);
+    border-radius: 999px;
+
+    background: rgba(255, 189, 22, 0.05);
+
+    margin-bottom: 20px;
+
+}
+
+
+/* Título principal */
+#titulo-inicio {
+
+    font-size: clamp(3rem, 10vw, 7.5rem);
+    line-height: 0.92;
+    font-weight: 900;
+    letter-spacing: -2px;
+
+    color: var(--texto);
+
+    margin-bottom: 25px;
+
+    text-shadow:
+        0 0 40px rgba(0, 0, 0, 0.6),
+        0 0 80px rgba(255, 189, 22, 0.15);
+
+}
+
+
+#inicio h1::first-letter {
+
+    color: var(--amarelo);
+
+}
+
+
+/* Descrição */
+#inicio .hero-descricao {
+
+    max-width: 560px;
+
+    color: #e6e6e6;
+    font-size: 1.15rem;
+    line-height: 1.55;
+
+    margin-bottom: 35px;
+
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+
+}
+
+
+/* Botão CTA */
+#inicio .hero-cta {
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    padding: 16px 30px;
+
+    border-radius: 10px;
+
+    background: var(--amarelo);
+    color: #000000;
+
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 0.3px;
+
+    box-shadow:
+        0 8px 24px rgba(255, 189, 22, 0.25);
+
+    transition:
+        transform var(--transicao),
+        background var(--transicao),
+        box-shadow var(--transicao);
+
+}
+
+
+#inicio .hero-cta:hover {
+
+    background: var(--amarelo-claro);
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 12px 32px rgba(255, 189, 22, 0.4);
+
+}
+
+
+#inicio .hero-cta [data-lucide] {
+
+    width: 18px;
+    height: 18px;
+    margin: 0;
+
+}
+
+
+/* =========================================================
+   8. TÍTULOS DAS SECÇÕES
+   ========================================================= */
+
+section h2 {
+
+    margin-bottom: 15px;
+
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.1;
+
+}
+
+
+section h2::after {
+
+    content: "";
+
+    display: block;
+
+    width: 60px;
+    height: 4px;
+
+    margin-top: 12px;
+
+    border-radius: 10px;
+
+    background: var(--amarelo);
+
+}
+
+
+/* =========================================================
+   9. MENU
+   ========================================================= */
+
+#menu > p {
+
+    color: var(--texto-secundario);
+    margin-bottom: 30px;
+
+}
+
+
+/* =========================================================
+   10. PESQUISA
+   ========================================================= */
+
+#menu > div:first-of-type {
+
+    margin-bottom: 25px;
+
+}
+
+
+#menu label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-weight: 700;
+
+}
+
+
+#pesquisa {
+
+    width: 100%;
+    max-width: 650px;
+
+    padding: 15px 18px;
+
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+
+    background: var(--preto-claro);
+    color: var(--texto);
+
+    outline: none;
+
+    transition:
+        border-color var(--transicao),
+        box-shadow var(--transicao);
+
+}
+
+
+#pesquisa::placeholder {
+
+    color: #777777;
+
+}
+
+
+#pesquisa:focus {
+
+    border-color: var(--amarelo);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255, 189, 22, 0.12);
+
+}
+
+
+/* =========================================================
+   11. CATEGORIAS
+   ========================================================= */
+
+#categorias {
+
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-bottom: 35px;
+
+}
+
+
+#categorias button {
+
+    padding: 10px 18px;
+
+    border: 1px solid var(--borda);
+    border-radius: 999px;
+
+    background: var(--preto-claro);
+    color: var(--texto-secundario);
+
+    font-weight: 700;
+
+    transition:
+        color var(--transicao),
+        background var(--transicao),
+        border-color var(--transicao),
+        transform var(--transicao);
+
+}
+
+
+#categorias button:hover {
+
+    border-color: var(--amarelo);
+    color: var(--amarelo);
+
+    transform: translateY(-2px);
+
+}
+
+
+#categorias button.ativo {
+
+    background: var(--amarelo);
+    border-color: var(--amarelo);
+
+    color: #000000;
+
+}
+
+
+/* =========================================================
+   12. CATÁLOGO (container principal)
+   ========================================================= */
+
+#catalogo {
+
+    display: block;
+
+}
+
+
+/* =========================================================
+   13. BLOCO DE CATEGORIA
+   ========================================================= */
+
+.categoria-bloco {
+
+    margin-bottom: 60px;
+
+}
+
+
+.categoria-bloco:last-child {
+
+    margin-bottom: 0;
+
+}
+
+
+.categoria-titulo {
+
+    display: inline-flex;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+
+    border-bottom: 3px solid var(--amarelo);
+
+    color: var(--texto);
+
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+    font-weight: 900;
+    letter-spacing: 1px;
+
+}
+
+
+.categoria-titulo [data-lucide] {
+    width: 22px;
+    height: 22px;
+    color: var(--amarelo);
+    margin: 0;
+}
+
+
+.categoria-grelha {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(260px, 1fr)
+        );
+
+    gap: 20px;
+
+}
+
+
+/* =========================================================
+   14. CARD DO PRODUTO
+   ========================================================= */
+
+.produto {
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 22px;
+
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+
+    background:
+        linear-gradient(
+            145deg,
+            #171717,
+            #0d0d0d
+        );
+
+    box-shadow:
+        0 10px 30px
+        rgba(0, 0, 0, 0.25);
+
+    transition:
+        transform var(--transicao),
+        border-color var(--transicao),
+        box-shadow var(--transicao);
+
+}
+
+
+.produto:hover {
+
+    transform: translateY(-6px);
+
+    border-color:
+        rgba(255, 189, 22, 0.6);
+
+    box-shadow:
+        0 18px 40px
+        rgba(0, 0, 0, 0.4);
+
+}
+
+
+.produto-conteudo {
+
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+
+}
+
+
+.produto-nome {
+
+    margin-bottom: 10px;
+
+    color: var(--texto);
+
+    font-size: 1.15rem;
+    font-weight: 800;
+    line-height: 1.25;
+
+}
+
+
+.produto-descricao {
+
+    flex: 1;
+
+    margin-bottom: 18px;
+
+    color: var(--texto-secundario);
+    font-size: 0.9rem;
+    line-height: 1.55;
+
+}
+
+
+/* =========================================================
+   15. NENHUM PRODUTO
+   ========================================================= */
+
+.sem-produtos {
+
+    padding: 50px 20px;
+
+    border: 1px dashed var(--borda);
+    border-radius: var(--raio);
+
+    text-align: center;
+
+}
+
+
+.sem-produtos h3 {
+
+    margin-bottom: 8px;
+
+}
+
+
+.sem-produtos p {
+
+    color: var(--texto-secundario);
+
+}
+
+
+/* =========================================================
+   16. SOBRE
+   ========================================================= */
+
+#sobre {
+
+    border-top: 1px solid var(--borda);
+
+}
+
+
+#sobre p {
+
+    max-width: 800px;
+
+    margin-top: 15px;
+
+    color: var(--texto-secundario);
+    font-size: 1.05rem;
+
+}
+
+
+/* =========================================================
+   17. CONTACTO
+   ========================================================= */
+
+#contacto {
+
+    border-top: 1px solid var(--borda);
+
+}
+
+
+#contacto p {
+
+    max-width: 700px;
+
+    margin-bottom: 25px;
+
+    color: var(--texto-secundario);
+
+}
+
+
+#contacto a {
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 14px 22px;
+
+    border-radius: 8px;
+
+    background: var(--amarelo);
+    color: #000000;
+
+    font-weight: 800;
+
+    transition:
+        background var(--transicao),
+        transform var(--transicao);
+
+}
+
+
+#contacto a:hover {
+
+    background: var(--amarelo-claro);
+    transform: translateY(-2px);
+
+}
+
+
+/* =========================================================
+   18. CARRINHO
+   ========================================================= */
+
+#carrinho {
+
+    position: fixed;
+    z-index: 2000;
+
+    top: 0;
+    right: 0;
+
+    width: min(430px, 100%);
+    height: 100vh;
+
+    overflow-y: auto;
+
+    padding: 30px;
+
+    background: #101010;
+
+    border-left: 1px solid var(--borda);
+
+    box-shadow:
+        -20px 0 50px
+        rgba(0, 0, 0, 0.45);
+
+}
+
+
+#carrinho[hidden] {
+
+    display: none;
+
+}
+
+
+#carrinho h2 {
+
+    margin-bottom: 25px;
+
+}
+
+
+#carrinho > p {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 25px;
+    padding-top: 20px;
+
+    border-top: 1px solid var(--borda);
+
+}
+
+
+#totalCarrinho {
+
+    color: var(--amarelo);
+    font-size: 1.25rem;
+
+}
+
+
+/* =========================================================
+   19. ITENS DO CARRINHO
+   ========================================================= */
+
+#itensCarrinho {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 15px;
+
+}
+
+
+.item-carrinho {
+
+    display: grid;
+    grid-template-columns: 1fr auto;
+
+    gap: 12px;
+
+    padding: 15px;
+
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+
+    background: var(--preto-claro);
+
+}
+
+
+.item-carrinho strong {
+
+    display: block;
+
+}
+
+
+.item-carrinho p {
+
+    margin-top: 3px;
+
+    color: var(--texto-secundario);
+    font-size: 0.85rem;
+
+}
+
+
+/* =========================================================
+   20. QUANTIDADE
+   ========================================================= */
+
+.quantidade {
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+}
+
+
+.quantidade button {
+
+    width: 32px;
+    height: 32px;
+
+    border: 1px solid var(--borda);
+    border-radius: 7px;
+
+    background: var(--cinza);
+    color: var(--texto);
+
+    font-size: 1.1rem;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+.quantidade button:hover {
+
+    border-color: var(--amarelo);
+    color: var(--amarelo);
+
+}
+
+
+.quantidade span {
+
+    min-width: 24px;
+
+    text-align: center;
+
+    font-weight: 800;
+
+}
+
+
+/* =========================================================
+   21. BOTÃO REMOVER
+   ========================================================= */
+
+.item-carrinho [data-remover] {
+
+    grid-column: 1 / -1;
+
+    border: 0;
+    background: transparent;
+
+    color: #ff6b6b;
+
+    font-size: 0.85rem;
+    text-align: left;
+
+}
+
+
+.item-carrinho [data-remover]:hover {
+
+    color: #ff9999;
+    text-decoration: underline;
+
+}
+
+
+/* =========================================================
+   22. CARRINHO VAZIO
+   ========================================================= */
+
+.carrinho-vazio {
+
+    padding: 35px 15px;
+
+    text-align: center;
+
+    color: var(--texto-secundario);
+
+}
+
+
+.carrinho-vazio h3 {
+
+    color: var(--texto);
+    margin-bottom: 8px;
+
+}
+
+
+/* =========================================================
+   23. BOTÕES DO CARRINHO
+   ========================================================= */
+
+#btnWhatsApp,
+#btnLimpar {
+
+    width: 100%;
+
+    margin-top: 15px;
+    padding: 14px;
+
+    border-radius: 8px;
+
+    font-weight: 800;
+
+}
+
+
+#btnWhatsApp {
+
+    border: 1px solid var(--amarelo);
+    background: var(--amarelo);
+    color: #000000;
+
+}
+
+
+#btnWhatsApp:hover {
+
+    background: var(--amarelo-claro);
+
+}
+
+
+#btnLimpar {
+
+    border: 1px solid var(--borda);
+    background: transparent;
+    color: var(--texto-secundario);
+
+}
+
+
+#btnLimpar:hover {
+
+    border-color: #ff6b6b;
+    color: #ff6b6b;
+
+}
+
+
+/* =========================================================
+   24. RODAPÉ
+   ========================================================= */
+
+footer {
+
+    padding: 30px 20px;
+
+    border-top: 1px solid var(--borda);
+
+    background: #050505;
+
+    text-align: center;
+
+}
+
+
+footer p {
+
+    color: var(--texto-secundario);
+    font-size: 0.9rem;
+
+}
+
+
+/* =========================================================
+   25. TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    header nav {
+
+        flex-wrap: wrap;
+
+        padding-block: 15px;
+        gap: 15px;
+
+    }
+
+    header nav ul {
+
+        order: 3;
+        width: 100%;
+
+        justify-content: center;
+
+        margin-left: 0;
+        padding-top: 5px;
+
+    }
+
+    #inicio {
+
+        min-height: 70vh;
+
+    }
+
+    .categoria-grelha {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+    }
+
+}
+
+
+/* =========================================================
+   26. TELEMÓVEL
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    section {
+
+        width: min(
+            100% - 24px,
+            var(--largura-maxima)
+        );
+
+        padding-block: 60px;
+
+    }
+
+    header nav {
+
+        width: min(
+            100% - 24px,
+            var(--largura-maxima)
+        );
+
+    }
+
+    header nav > a {
+
+        font-size: 1.1rem;
+
+    }
+
+    header nav ul {
+
+        gap: 14px;
+
+        overflow-x: auto;
+
+        justify-content: flex-start;
+
+        padding-bottom: 5px;
+
+    }
+
+    header nav ul a {
+
+        font-size: 0.9rem;
+        white-space: nowrap;
+
+    }
+
+    #btnCarrinho {
+
+        margin-left: auto;
+        padding: 8px 12px;
+        font-size: 0.9rem;
+
+    }
+
+    #inicio {
+
+        min-height: 80vh;
+        padding-top: 100px;
+        padding-bottom: 80px;
+
+    }
+
+    #titulo-inicio {
+
+        font-size: clamp(3rem, 18vw, 5rem);
+
+    }
+
+    #inicio .hero-descricao {
+
+        font-size: 1rem;
+
+    }
+
+    #inicio .hero-cta {
+
+        padding: 14px 24px;
+        font-size: 0.95rem;
+
+    }
+
+    #categorias {
+
+        flex-wrap: nowrap;
+        overflow-x: auto;
+
+        padding-bottom: 8px;
+
+    }
+
+    #categorias button {
+
+        flex: 0 0 auto;
+
+    }
+
+    .categoria-grelha {
+
+        grid-template-columns: 1fr;
+        gap: 15px;
+
+    }
+
+    .categoria-titulo {
+
+        font-size: 1.2rem;
+
+    }
+
+    .produto {
+
+        padding: 18px;
+
+    }
+
+    #carrinho {
+
+        width: 100%;
+        padding: 22px;
+
+    }
+
+}
+
+
+/* =========================================================
+   27. REDUZIR MOVIMENTO
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+
+        scroll-behavior: auto;
+
+    }
+
+    *,
+    *::before,
+    *::after {
+
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+
+    }
+
+}
+
+
+/* =========================================================
+   28. LOGOTIPO NA NAV
+   ========================================================= */
+
+header nav .marca {
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    color: var(--amarelo);
+    font-size: 1.35rem;
+    font-weight: 800;
+
+    white-space: nowrap;
+
+}
+
+
+header nav .marca-logo {
+
+    width: 40px;
+    height: 40px;
+
+    object-fit: contain;
+
+    border-radius: 6px;
+
+}
+
+
+/* =========================================================
+   29. FOTO DE DESTAQUE NO INÍCIO
+   ========================================================= */
+
+.foto-destaque {
+
+    width: 100%;
+    max-width: 700px;
+
+    margin-top: 40px;
+
+    border-radius: var(--raio);
+    overflow: hidden;
+
+    border: 1px solid var(--borda);
+
+}
+
+
+.foto-destaque img {
+
+    width: 100%;
+    height: auto;
+
+    display: block;
+
+}
+
+
+/* =========================================================
+   30. PRODUTO — FOOTER, PREÇO E BOTÕES (EMPILHADOS)
+   ========================================================= */
+
+.produto-footer {
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 12px;
+
+    margin-top: auto;
+    padding-top: 15px;
+
+    border-top: 1px dashed var(--borda);
+
+}
+
+
+.produto-preco {
+
+    color: var(--amarelo);
+
+    font-size: 1.15rem;
+    font-weight: 900;
+
+    white-space: nowrap;
+
+}
+
+
+/* Botões empilhados — um por baixo do outro */
+.produto-acoes {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    width: 100%;
+
+}
+
+
+.produto-footer .btn-pedir,
+.produto-footer .btn-adicionar {
+
+    width: 100%;
+
+    padding: 11px 14px;
+
+    border-radius: 8px;
+
+    font-weight: 800;
+    font-size: 0.88rem;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    white-space: nowrap;
+
+    transition: all var(--transicao);
+
+}
+
+
+.produto-footer .btn-pedir {
+
+    background: transparent;
+    border: 1px solid var(--amarelo);
+    color: var(--amarelo);
+
+}
+
+
+.produto-footer .btn-pedir:hover {
+
+    background: var(--amarelo);
+    color: #000000;
+
+}
+
+
+.produto-footer .btn-adicionar {
+
+    background: var(--amarelo);
+    color: #000000;
+
+    border: 0;
+
+}
+
+
+.produto-footer .btn-adicionar:hover {
+
+    background: var(--amarelo-claro);
+    transform: translateY(-2px);
+
+}
+
+
+.produto-footer .btn-pedir [data-lucide],
+.produto-footer .btn-adicionar [data-lucide] {
+
+    width: 16px;
+    height: 16px;
+
+    margin: 0;
+
+    flex-shrink: 0;
+
+}
+
+
+/* =========================================================
+   31. CARRINHO — TOPO COM BOTÃO FECHAR
+   ========================================================= */
+
+.carrinho-topo {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+
+    border-bottom: 1px solid var(--borda);
+
+}
+
+
+.carrinho-topo h2 {
+
+    margin: 0;
+
+}
+
+
+.btn-fechar {
+
+    width: 36px;
+    height: 36px;
+
+    border-radius: 50%;
+    border: 1px solid var(--borda);
+
+    background: transparent;
+    color: var(--texto);
+
+    font-size: 1.1rem;
+    font-weight: bold;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: all var(--transicao);
+
+}
+
+
+.btn-fechar:hover {
+
+    border-color: var(--amarelo);
+    color: var(--amarelo);
+
+    transform: rotate(90deg);
+
+}
+
+
+/* =========================================================
+   32. ITEM DO CARRINHO — 2 botões
+   ========================================================= */
+
+.item-acoes {
+
+    grid-column: 1 / -1;
+
+    display: flex;
+    gap: 10px;
+
+    margin-top: 5px;
+
+}
+
+
+.item-acoes .btn-pedir-item {
+
+    flex: 1;
+
+    border: 1px solid var(--amarelo);
+    background: transparent;
+    color: var(--amarelo);
+
+    padding: 8px;
+    border-radius: 6px;
+
+    font-size: 0.8rem;
+    font-weight: 800;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    transition: all var(--transicao);
+
+}
+
+
+.item-acoes .btn-pedir-item:hover {
+
+    background: var(--amarelo);
+    color: #000000;
+
+}
+
+
+.item-acoes .btn-remover {
+
+    flex: 1;
+
+    border: 1px solid var(--borda);
+    background: transparent;
+    color: var(--texto-secundario);
+
+    padding: 8px;
+    border-radius: 6px;
+
+    font-size: 0.8rem;
+    font-weight: 700;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    transition: all var(--transicao);
+
+}
+
+
+.item-acoes .btn-remover:hover {
+
+    border-color: #ff6b6b;
+    color: #ff6b6b;
+
+}
+
+
+/* =========================================================
+   33. BOTÃO VOLTAR AO MENU
+   ========================================================= */
+
+.btn-voltar {
+
+    width: 100%;
+
+    margin-top: 10px;
+    padding: 14px;
+
+    border-radius: 8px;
+
+    border: 1px solid var(--borda);
+    background: transparent;
+    color: var(--texto-secundario);
+
+    font-weight: 800;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    transition: all var(--transicao);
+
+}
+
+
+.btn-voltar:hover {
+
+    border-color: var(--amarelo);
+    color: var(--amarelo);
+
+}
+
+
+/* =========================================================
+   34. BLOCO DE CONTACTO COM DADOS REAIS
+   ========================================================= */
+
+.contacto-info {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(260px, 1fr)
+        );
+
+    gap: 18px;
+
+    margin: 30px 0 45px;
+
+}
+
+
+.contacto-item {
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 14px;
+
+    padding: 18px;
+
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+
+    background: var(--preto-claro);
+
+    transition: all var(--transicao);
+
+}
+
+
+.contacto-item:hover {
+
+    border-color: var(--amarelo);
+    transform: translateY(-3px);
+
+}
+
+
+.contacto-icone {
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 189, 22, 0.1);
+    border: 1px solid rgba(255, 189, 22, 0.3);
+
+    flex-shrink: 0;
+
+}
+
+
+.contacto-icone [data-lucide] {
+
+    width: 20px;
+    height: 20px;
+
+    color: var(--amarelo);
+
+    margin: 0;
+
+}
+
+
+.contacto-item strong {
+
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: var(--amarelo);
+
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+}
+
+
+.contacto-item a,
+.contacto-item span {
+
+    color: var(--texto);
+    font-size: 0.95rem;
+
+    word-break: break-word;
+
+}
+
+
+.contacto-item a:hover {
+
+    color: var(--amarelo);
+    text-decoration: underline;
+
+}
+
+
+/* =========================================================
+   35. FORMULÁRIO DE CONTACTO
+   ========================================================= */
+
+.form-contacto {
+
+    max-width: 700px;
+
+    padding: 30px;
+
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+
+    background: var(--preto-claro);
+
+}
+
+
+.form-contacto h3 {
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 25px;
+
+    color: var(--amarelo);
+
+    font-size: 1.3rem;
+    font-weight: 800;
+
+}
+
+
+.form-contacto h3 [data-lucide] {
+
+    width: 22px;
+    height: 22px;
+
+    color: var(--amarelo);
+
+    margin: 0;
+
+}
+
+
+.form-linha {
+
+    margin-bottom: 18px;
+
+}
+
+
+.form-linha-dupla {
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 15px;
+
+}
+
+
+.form-contacto label {
+
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: var(--texto-secundario);
+
+    font-size: 0.9rem;
+    font-weight: 700;
+
+}
+
+
+.form-contacto label small {
+
+    color: #777777;
+    font-weight: 400;
+
+}
+
+
+.form-contacto input,
+.form-contacto select,
+.form-contacto textarea {
+
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+
+    background: var(--preto);
+    color: var(--texto);
+
+    font-family: inherit;
+    font-size: 0.95rem;
+
+    outline: none;
+
+    transition: all var(--transicao);
+
+    resize: vertical;
+
+}
+
+
+.form-contacto input:focus,
+.form-contacto select:focus,
+.form-contacto textarea:focus {
+
+    border-color: var(--amarelo);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255, 189, 22, 0.12);
+
+}
+
+
+.form-acoes {
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 12px;
+
+    margin-top: 10px;
+
+}
+
+
+.btn-enviar {
+
+    padding: 14px;
+
+    border: 0;
+    border-radius: 8px;
+
+    font-weight: 800;
+    font-size: 0.95rem;
+
+    cursor: pointer;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    transition: all var(--transicao);
+
+}
+
+
+.btn-whatsapp {
+
+    background: #25d366;
+    color: #ffffff;
+
+}
+
+
+.btn-whatsapp:hover {
+
+    background: #1da851;
+    transform: translateY(-2px);
+
+}
+
+
+.btn-email {
+
+    background: var(--amarelo);
+    color: #000000;
+
+}
+
+
+.btn-email:hover {
+
+    background: var(--amarelo-claro);
+    transform: translateY(-2px);
+
+}
+
+
+/* =========================================================
+   36. ÍCONES LUCIDE — REGRAS GERAIS
+   ========================================================= */
+
+[data-lucide] {
+
+    width: 18px;
+    height: 18px;
+
+    stroke-width: 2;
+
+    vertical-align: middle;
+
+    flex-shrink: 0;
+
+}
+
+
+header nav .marca [data-lucide] {
+
+    width: 20px;
+    height: 20px;
+
+    color: var(--amarelo);
+
+    margin: 0;
+
+}
+
+
+button [data-lucide],
+a [data-lucide] {
+
+    display: inline-block;
+
+    vertical-align: middle;
+
+    margin-right: 6px;
+
+}
+
+
+button [data-lucide]:last-child,
+a [data-lucide]:last-child {
+
+    margin-right: 0;
+
+}
+
+
+/* =========================================================
+   37. PESQUISA COM ÍCONE DENTRO
+   ========================================================= */
+
+.pesquisa-wrapper {
+
+    margin-bottom: 25px;
+
+}
+
+
+.pesquisa-input {
+
+    position: relative;
+
+    max-width: 650px;
+
+}
+
+
+.pesquisa-input [data-lucide] {
+
+    position: absolute;
+
+    left: 15px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: var(--texto-secundario);
+
+    pointer-events: none;
+
+    width: 18px;
+    height: 18px;
+
+    margin: 0;
+
+}
+
+
+.pesquisa-input #pesquisa {
+
+    padding-left: 45px;
+    max-width: 100%;
+
+}
+
+
+/* =========================================================
+   38. RESPONSIVO — Contacto, Form e Cards
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    .form-linha-dupla {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .form-acoes {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .form-contacto {
+
+        padding: 22px;
+
+    }
+
+    .btn-label {
+
+        display: none;
+
+    }
+
+    .categoria-titulo [data-lucide] {
+
+        width: 18px;
+        height: 18px;
+
+    }
+
+}
+
+
+/* =========================================================
+   39. FUNDO DO HERO (imagem na brasa) — MELHORADO
+   ========================================================= */
+
+.hero-fundo {
+
+    position: absolute;
+    inset: 0;
+
+    background-image: url("assets/images/hero-fundo.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    z-index: 0;
+    pointer-events: none;
+
+    /* leve zoom lento para dar vida */
+    animation: heroZoom 20s ease-in-out infinite alternate;
+
+}
+
+
+.hero-fundo::after {
+
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+
+        /* Escurecimento à esquerda para o texto respirar */
+        linear-gradient(
+            90deg,
+            rgba(8, 8, 8, 0.85) 0%,
+            rgba(8, 8, 8, 0.55) 45%,
+            rgba(8, 8, 8, 0.35) 100%
+        ),
+
+        /* Escurecimento vertical */
+        linear-gradient(
+            180deg,
+            rgba(8, 8, 8, 0.4) 0%,
+            rgba(8, 8, 8, 0.2) 40%,
+            rgba(8, 8, 8, 0.85) 100%
+        );
+
+}
+
+
+/* Fade suave para o preto em baixo */
+#inicio::after {
+
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 140px;
+
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        var(--preto)
+    );
+
+    z-index: 1;
+    pointer-events: none;
+
+}
+
+
+/* Animação do fundo (zoom lento) */
+@keyframes heroZoom {
+
+    0%   { transform: scale(1);    }
+    100% { transform: scale(1.08); }
+
+}
+
+
+/* Respeita quem prefere menos animações */
+@media (prefers-reduced-motion: reduce) {
+
+    .hero-fundo {
+        animation: none;
+    }
+
+}
