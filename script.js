@@ -23,15 +23,15 @@ const CONFIG = {
    ========================================================= */
 
 const ORDEM_CATEGORIAS = [
-    { id: "promocao",  titulo: "Promoções",         icone: "gift" },
-    { id: "burger",    titulo: "Burgers",           icone: "sandwich" },
-    { id: "pizza",     titulo: "Pizzas",            icone: "pizza" },
-    { id: "frango",    titulo: "Frango & Asinhas",  icone: "drumstick" },
-    { id: "sandes",    titulo: "Sandes & Tostas",   icone: "utensils" },
-    { id: "prego",     titulo: "Prego, Rolls & Wrap", icone: "hot-dog" },
-    { id: "batata",    titulo: "Batata & Extras",   icone: "fries" },
-    { id: "bebidas",   titulo: "Bebidas",           icone: "cup-soda" },
-    { id: "sobremesa", titulo: "Sobremesas",        icone: "ice-cream-cone" }
+    { id: "promocao",  titulo: "Promoções",            icone: "gift" },
+    { id: "burger",    titulo: "Burgers",              icone: "sandwich" },
+    { id: "pizza",     titulo: "Pizzas",               icone: "pizza" },
+    { id: "frango",    titulo: "Frango & Asinhas",     icone: "drumstick" },
+    { id: "sandes",    titulo: "Sandes & Tostas",      icone: "utensils" },
+    { id: "prego",     titulo: "Prego, Rolls & Wrap",  icone: "sandwich" },
+    { id: "batata",    titulo: "Batata & Extras",      icone: "utensils" },
+    { id: "bebidas",   titulo: "Bebidas",              icone: "cup-soda" },
+    { id: "sobremesa", titulo: "Sobremesas",           icone: "ice-cream-cone" }
 ];
 
 
