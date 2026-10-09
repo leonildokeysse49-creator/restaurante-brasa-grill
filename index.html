@@ -32,7 +32,6 @@
         href="checkout.css"
     >
 
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 
 </head>
@@ -97,10 +96,6 @@
     <main>
 
 
-        <!-- ==================================================
-             INÍCIO
-             ================================================== -->
-
         <section id="inicio" aria-labelledby="titulo-inicio">
 
             <div class="hero-fundo" aria-hidden="true"></div>
@@ -126,10 +121,6 @@
         </section>
 
 
-
-        <!-- ==================================================
-             MENU
-             ================================================== -->
 
         <section id="menu" aria-labelledby="titulo-menu">
 
@@ -209,10 +200,6 @@
 
 
 
-        <!-- ==================================================
-             SOBRE
-             ================================================== -->
-
         <section id="sobre" aria-labelledby="titulo-sobre">
 
             <h2 id="titulo-sobre">Sobre a Brasa Grill</h2>
@@ -232,10 +219,6 @@
         </section>
 
 
-
-        <!-- ==================================================
-             CONTACTO
-             ================================================== -->
 
         <section id="contacto" aria-labelledby="titulo-contacto">
 
@@ -369,10 +352,6 @@
 
 
 
-    <!-- ==================================================
-         CARRINHO
-         ================================================== -->
-
     <aside id="carrinho" aria-labelledby="titulo-carrinho" hidden>
 
         <div class="carrinho-topo">
@@ -413,10 +392,6 @@
 
 
 
-    <!-- ==================================================
-         MODAL DE CHECKOUT
-         ================================================== -->
-
     <div
         id="modalCheckout"
         class="modal-checkout"
@@ -455,8 +430,6 @@
             <form id="formCheckout" class="modal-checkout-form">
 
 
-                <!-- PASSO 1 — COMO QUER RECEBER -->
-
                 <div class="checkout-secao">
 
                     <h3 class="checkout-subtitulo">
@@ -467,59 +440,31 @@
                     <div class="checkout-opcoes">
 
                         <label class="checkout-opcao">
-
-                            <input
-                                type="radio"
-                                name="tipoEntrega"
-                                value="entrega"
-                                checked
-                            >
-
+                            <input type="radio" name="tipoEntrega" value="entrega" checked>
                             <div class="checkout-opcao-conteudo">
-
                                 <strong>
                                     <i data-lucide="truck"></i>
                                     Quero entrega
                                 </strong>
-
-                                <span>
-                                    Entregamos na sua morada
-                                </span>
-
+                                <span>Entregamos na sua morada</span>
                             </div>
-
                         </label>
 
-
                         <label class="checkout-opcao">
-
-                            <input
-                                type="radio"
-                                name="tipoEntrega"
-                                value="recolha"
-                            >
-
+                            <input type="radio" name="tipoEntrega" value="recolha">
                             <div class="checkout-opcao-conteudo">
-
                                 <strong>
                                     <i data-lucide="store"></i>
                                     Vou buscar
                                 </strong>
-
-                                <span>
-                                    Recolho no restaurante
-                                </span>
-
+                                <span>Recolho no restaurante</span>
                             </div>
-
                         </label>
 
                     </div>
 
                 </div>
 
-
-                <!-- PASSO 2 — DADOS DO CLIENTE -->
 
                 <div class="checkout-secao">
 
@@ -552,23 +497,12 @@
                 </div>
 
 
-                <!-- PASSO 3 — MORADA (só se entrega) -->
-
                 <div class="checkout-secao" id="secaoMorada">
 
                     <h3 class="checkout-subtitulo">
                         <i data-lucide="map-pin"></i>
                         Morada de entrega
                     </h3>
-
-                    <div class="form-linha">
-                        <label for="checkoutZona">
-                            Zona *
-                            <select id="checkoutZona" name="checkoutZona">
-                                <option value="">Escolha a sua zona…</option>
-                            </select>
-                        </label>
-                    </div>
 
                     <div class="form-linha">
                         <label for="checkoutMorada">
@@ -579,44 +513,34 @@
 
                     <div class="form-linha">
                         <label for="checkoutReferencia">
-                            Ponto de referência <small>(opcional)</small>
-                            <input type="text" id="checkoutReferencia" name="checkoutReferencia" placeholder="Ex: próximo da escola, ao lado da farmácia">
+                            Ponto de referência
+                            <input type="text" id="checkoutReferencia" name="checkoutReferencia" placeholder="Ex: porta azul, ao lado da farmácia">
                         </label>
                     </div>
 
-                    <div id="resumoTaxa" class="checkout-resumo-taxa" hidden>
+                    <div class="checkout-gps">
 
-                        <div class="taxa-linha">
-                            <span>Taxa base</span>
-                            <span id="taxaBase">0 MT</span>
-                        </div>
+                        <button type="button" id="btnUsarLocalizacao" class="btn-localizacao">
+                            <i data-lucide="map-pin"></i>
+                            Usar a minha localização
+                        </button>
 
-                        <div class="taxa-linha" id="linhaAjusteHora" hidden>
-                            <span id="motivoHora">Hora de pico</span>
-                            <span id="valorHora">0 MT</span>
-                        </div>
+                        <p id="estadoLocalizacao" class="estado-localizacao">
+                            Partilhe a localização para o motorista chegar mais rápido.
+                        </p>
 
-                        <div class="taxa-linha" id="linhaAjusteDisp" hidden>
-                            <span id="motivoDisp">Poucos estafetas</span>
-                            <span id="valorDisp">0 MT</span>
-                        </div>
+                    </div>
 
-                        <div class="taxa-total">
-                            <span>Taxa de entrega</span>
-                            <span id="taxaTotal">0 MT</span>
-                        </div>
-
-                        <div class="taxa-tempo">
-                            <i data-lucide="clock"></i>
-                            <span id="tempoEstimado">Tempo estimado: 20-30 min</span>
-                        </div>
-
+                    <div class="checkout-aviso-taxa">
+                        <i data-lucide="info"></i>
+                        <span>
+                            A taxa de entrega será combinada
+                            diretamente pelo WhatsApp.
+                        </span>
                     </div>
 
                 </div>
 
-
-                <!-- PASSO 4 — PAGAMENTO -->
 
                 <div class="checkout-secao">
 
@@ -656,8 +580,6 @@
                 </div>
 
 
-                <!-- PASSO 5 — OBSERVAÇÕES -->
-
                 <div class="checkout-secao">
 
                     <h3 class="checkout-subtitulo">
@@ -666,29 +588,17 @@
                     </h3>
 
                     <div class="form-linha">
-                        <textarea
-                            id="checkoutObs"
-                            name="checkoutObs"
-                            rows="3"
-                            placeholder="Ex: sem cebola, ponto da carne, etc."
-                        ></textarea>
+                        <textarea id="checkoutObs" name="checkoutObs" rows="3" placeholder="Ex: sem cebola, ponto da carne, etc."></textarea>
                     </div>
 
                 </div>
 
-
-                <!-- RESUMO FINAL -->
 
                 <div class="checkout-resumo-final">
 
                     <div class="resumo-linha">
                         <span>Subtotal</span>
                         <span id="resumoSubtotal">0 MT</span>
-                    </div>
-
-                    <div class="resumo-linha" id="resumoLinhaTaxa">
-                        <span>Taxa de entrega</span>
-                        <span id="resumoTaxa">0 MT</span>
                     </div>
 
                     <div class="resumo-linha resumo-linha--total">
@@ -713,10 +623,6 @@
     </div>
 
 
-
-    <!-- ==================================================
-         RODAPÉ
-         ================================================== -->
 
     <footer class="rodape">
 
@@ -815,16 +721,11 @@
 
 
 
-    <!-- ==================================================
-         FIREBASE SDK
-         ================================================== -->
-
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
     <script src="firebase-config.js"></script>
     <script src="pedidos.js"></script>
-    <script src="zonas.js"></script>
     <script src="checkout.js"></script>
 
     <script src="data/catalogo.js"></script>

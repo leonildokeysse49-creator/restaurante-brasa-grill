@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-MZ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080808">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Estafeta — Brasa Grill</title>
+    <link rel="stylesheet" href="estafeta.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+
+<body>
+
+    <div id="ecraLogin" class="ecra-login">
+        <div class="login-caixa">
+            <div class="login-topo">
+                <i data-lucide="bike"></i>
+                <h1>Área do Estafeta</h1>
+                <p>Brasa Grill</p>
+            </div>
+
+            <form id="formLogin">
+                <div class="form-linha">
+                    <label for="telemovelInput">Telemóvel
+                        <input type="tel" id="telemovelInput" placeholder="84 123 4567" autocomplete="tel" required>
+                    </label>
+                </div>
+
+                <div class="form-linha">
+                    <label for="passwordInput">Palavra-passe
+                        <input type="password" id="passwordInput" placeholder="Introduza a palavra-passe" autocomplete="current-password" required>
+                    </label>
+                </div>
+
+                <p id="erroLogin" class="erro-login" hidden>❌ Credenciais incorretas</p>
+
+                <button type="submit" class="btn-entrar"><i data-lucide="log-in"></i> Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="painel" class="painel" hidden>
+
+        <header class="painel-header">
+            <div class="painel-header-info">
+                <h1><i data-lucide="bike"></i> <span id="nomeEstafeta">Estafeta</span></h1>
+                <p>Área de entregas</p>
+            </div>
+            <div class="painel-header-acoes">
+                <span id="indicadorLigacao" class="indicador-ligacao"><i data-lucide="wifi"></i> A ligar…</span>
+                <button id="btnSair" type="button" class="btn-sair"><i data-lucide="log-out"></i> Sair</button>
+            </div>
+        </header>
+
+        <section class="estado-card">
+            <div class="estado-info">
+                <span id="estadoAtual">Offline</span>
+                <small>Estado atual</small>
+            </div>
+            <button id="btnEstado" type="button" class="btn-estado">Ficar online</button>
+        </section>
+
+        <section class="resumo-dia">
+            <div class="resumo-card">
+                <i data-lucide="package"></i>
+                <strong id="totalEntregas">0</strong>
+                <span>Entregas</span>
+            </div>
+            <div class="resumo-card resumo-card--destaque">
+                <i data-lucide="banknote"></i>
+                <strong id="ganhosHoje">0 MT</strong>
+                <span>Ganhos hoje</span>
+            </div>
+        </section>
+
+        <section class="pedidos-seccao">
+            <h2 class="seccao-titulo"><i data-lucide="package"></i> Pedidos atribuídos</h2>
+            <div id="listaPedidos" class="lista-pedidos">
+                <div class="sem-pedidos"><i data-lucide="inbox"></i><p>Nenhum pedido atribuído.</p></div>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="pedidos.js"></script>
+    <script src="estafeta.js"></script>
+
+</body>
+</html>

@@ -40,11 +40,9 @@
     box-sizing: border-box;
 }
 
-
 html {
     scroll-behavior: smooth;
 }
-
 
 body {
 
@@ -74,42 +72,27 @@ body {
    ========================================================= */
 
 img {
-
     display: block;
     max-width: 100%;
-
 }
-
 
 button,
 input {
-
     font: inherit;
-
 }
-
 
 button {
-
     cursor: pointer;
-
 }
-
 
 a {
-
     color: inherit;
     text-decoration: none;
-
 }
-
 
 ul {
-
     list-style: none;
-
 }
-
 
 section {
 
@@ -149,16 +132,13 @@ header {
     top: 0;
     z-index: 1000;
 
-    background:
-        rgba(8, 8, 8, 0.94);
+    background: rgba(8, 8, 8, 0.94);
 
-    border-bottom:
-        1px solid var(--borda);
+    border-bottom: 1px solid var(--borda);
 
     backdrop-filter: blur(12px);
 
 }
-
 
 header nav {
 
@@ -178,9 +158,6 @@ header nav {
 
 }
 
-
-/* LOGÓTIPO */
-
 header nav > a {
 
     color: var(--amarelo);
@@ -190,15 +167,9 @@ header nav > a {
 
 }
 
-
 header nav > a:hover {
-
     color: var(--amarelo-claro);
-
 }
-
-
-/* MENU */
 
 header nav ul {
 
@@ -211,7 +182,6 @@ header nav ul {
 
 }
 
-
 header nav ul a {
 
     color: var(--texto-secundario);
@@ -221,11 +191,8 @@ header nav ul a {
 
 }
 
-
 header nav ul a:hover {
-
     color: var(--amarelo);
-
 }
 
 
@@ -257,14 +224,12 @@ header nav ul a:hover {
 
 }
 
-
 #btnCarrinho:hover {
 
     background: var(--amarelo-claro);
     transform: translateY(-2px);
 
 }
-
 
 #contadorCarrinho {
 
@@ -286,7 +251,7 @@ header nav ul a:hover {
 
 
 /* =========================================================
-   7. INÍCIO / HERO — MELHORADO
+   7. INÍCIO / HERO
    ========================================================= */
 
 #inicio {
@@ -305,8 +270,6 @@ header nav ul a:hover {
 
 }
 
-
-/* Conteúdo do hero acima do fundo */
 .hero-conteudo {
 
     position: relative;
@@ -316,8 +279,6 @@ header nav ul a:hover {
 
 }
 
-
-/* Etiqueta dourada em pílula */
 #inicio .hero-etiqueta {
 
     display: inline-block;
@@ -340,8 +301,6 @@ header nav ul a:hover {
 
 }
 
-
-/* Título principal */
 #titulo-inicio {
 
     font-size: clamp(3rem, 10vw, 7.5rem);
@@ -359,15 +318,10 @@ header nav ul a:hover {
 
 }
 
-
 #inicio h1::first-letter {
-
     color: var(--amarelo);
-
 }
 
-
-/* Descrição */
 #inicio .hero-descricao {
 
     max-width: 560px;
@@ -382,8 +336,6 @@ header nav ul a:hover {
 
 }
 
-
-/* Botão CTA */
 #inicio .hero-cta {
 
     display: inline-flex;
@@ -413,7 +365,6 @@ header nav ul a:hover {
 
 }
 
-
 #inicio .hero-cta:hover {
 
     background: var(--amarelo-claro);
@@ -425,13 +376,10 @@ header nav ul a:hover {
 
 }
 
-
 #inicio .hero-cta [data-lucide] {
-
     width: 18px;
     height: 18px;
     margin: 0;
-
 }
 
 
@@ -447,7 +395,6 @@ section h2 {
     line-height: 1.1;
 
 }
-
 
 section h2::after {
 
@@ -484,11 +431,8 @@ section h2::after {
    ========================================================= */
 
 #menu > div:first-of-type {
-
     margin-bottom: 25px;
-
 }
-
 
 #menu label {
 
@@ -499,7 +443,6 @@ section h2::after {
     font-weight: 700;
 
 }
-
 
 #pesquisa {
 
@@ -522,13 +465,9 @@ section h2::after {
 
 }
 
-
 #pesquisa::placeholder {
-
     color: #777777;
-
 }
-
 
 #pesquisa:focus {
 
@@ -556,7 +495,6 @@ section h2::after {
 
 }
 
-
 #categorias button {
 
     padding: 10px 18px;
@@ -577,7 +515,6 @@ section h2::after {
 
 }
 
-
 #categorias button:hover {
 
     border-color: var(--amarelo);
@@ -586,7 +523,6 @@ section h2::after {
     transform: translateY(-2px);
 
 }
-
 
 #categorias button.ativo {
 
@@ -599,13 +535,11 @@ section h2::after {
 
 
 /* =========================================================
-   12. CATÁLOGO (container principal)
+   12. CATÁLOGO
    ========================================================= */
 
 #catalogo {
-
     display: block;
-
 }
 
 
@@ -614,18 +548,12 @@ section h2::after {
    ========================================================= */
 
 .categoria-bloco {
-
     margin-bottom: 60px;
-
 }
-
 
 .categoria-bloco:last-child {
-
     margin-bottom: 0;
-
 }
-
 
 .categoria-titulo {
 
@@ -647,14 +575,12 @@ section h2::after {
 
 }
 
-
 .categoria-titulo [data-lucide] {
     width: 22px;
     height: 22px;
     color: var(--amarelo);
     margin: 0;
 }
-
 
 .categoria-grelha {
 
@@ -703,7 +629,6 @@ section h2::after {
 
 }
 
-
 .produto:hover {
 
     transform: translateY(-6px);
@@ -717,7 +642,6 @@ section h2::after {
 
 }
 
-
 .produto-conteudo {
 
     display: flex;
@@ -726,7 +650,6 @@ section h2::after {
     flex: 1;
 
 }
-
 
 .produto-nome {
 
@@ -739,7 +662,6 @@ section h2::after {
     line-height: 1.25;
 
 }
-
 
 .produto-descricao {
 
@@ -769,18 +691,12 @@ section h2::after {
 
 }
 
-
 .sem-produtos h3 {
-
     margin-bottom: 8px;
-
 }
 
-
 .sem-produtos p {
-
     color: var(--texto-secundario);
-
 }
 
 
@@ -789,11 +705,8 @@ section h2::after {
    ========================================================= */
 
 #sobre {
-
     border-top: 1px solid var(--borda);
-
 }
-
 
 #sobre p {
 
@@ -812,11 +725,8 @@ section h2::after {
    ========================================================= */
 
 #contacto {
-
     border-top: 1px solid var(--borda);
-
 }
-
 
 #contacto p {
 
@@ -825,36 +735,6 @@ section h2::after {
     margin-bottom: 25px;
 
     color: var(--texto-secundario);
-
-}
-
-
-#contacto a {
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 14px 22px;
-
-    border-radius: 8px;
-
-    background: var(--amarelo);
-    color: #000000;
-
-    font-weight: 800;
-
-    transition:
-        background var(--transicao),
-        transform var(--transicao);
-
-}
-
-
-#contacto a:hover {
-
-    background: var(--amarelo-claro);
-    transform: translateY(-2px);
 
 }
 
@@ -888,20 +768,13 @@ section h2::after {
 
 }
 
-
 #carrinho[hidden] {
-
     display: none;
-
 }
-
 
 #carrinho h2 {
-
     margin-bottom: 25px;
-
 }
-
 
 #carrinho > p {
 
@@ -915,7 +788,6 @@ section h2::after {
     border-top: 1px solid var(--borda);
 
 }
-
 
 #totalCarrinho {
 
@@ -938,7 +810,6 @@ section h2::after {
 
 }
 
-
 .item-carrinho {
 
     display: grid;
@@ -955,13 +826,9 @@ section h2::after {
 
 }
 
-
 .item-carrinho strong {
-
     display: block;
-
 }
-
 
 .item-carrinho p {
 
@@ -986,7 +853,6 @@ section h2::after {
 
 }
 
-
 .quantidade button {
 
     width: 32px;
@@ -1006,14 +872,10 @@ section h2::after {
 
 }
 
-
 .quantidade button:hover {
-
     border-color: var(--amarelo);
     color: var(--amarelo);
-
 }
-
 
 .quantidade span {
 
@@ -1044,7 +906,6 @@ section h2::after {
 
 }
 
-
 .item-carrinho [data-remover]:hover {
 
     color: #ff9999;
@@ -1066,7 +927,6 @@ section h2::after {
     color: var(--texto-secundario);
 
 }
-
 
 .carrinho-vazio h3 {
 
@@ -1094,7 +954,6 @@ section h2::after {
 
 }
 
-
 #btnWhatsApp {
 
     border: 1px solid var(--amarelo);
@@ -1103,13 +962,9 @@ section h2::after {
 
 }
 
-
 #btnWhatsApp:hover {
-
     background: var(--amarelo-claro);
-
 }
-
 
 #btnLimpar {
 
@@ -1119,12 +974,9 @@ section h2::after {
 
 }
 
-
 #btnLimpar:hover {
-
     border-color: #ff6b6b;
     color: #ff6b6b;
-
 }
 
 
@@ -1132,23 +984,267 @@ section h2::after {
    24. RODAPÉ
    ========================================================= */
 
-footer {
+.rodape {
 
-    padding: 30px 20px;
-
-    border-top: 1px solid var(--borda);
+    padding: 50px 20px 25px;
 
     background: #050505;
 
-    text-align: center;
+    border-top: 1px solid var(--borda);
 
 }
 
+.rodape-conteudo {
 
-footer p {
+    max-width: var(--largura-maxima);
+
+    margin: 0 auto 40px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+
+    gap: 40px;
+
+}
+
+.rodape-coluna {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 15px;
+
+}
+
+.rodape-titulo {
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--amarelo);
+
+    font-size: 1.3rem;
+    font-weight: 800;
+
+    margin: 0;
+
+}
+
+.rodape-titulo [data-lucide] {
+    width: 22px;
+    height: 22px;
+    margin: 0;
+}
+
+.rodape-descricao {
 
     color: var(--texto-secundario);
+
     font-size: 0.9rem;
+
+    line-height: 1.6;
+
+    margin: 0;
+
+}
+
+.rodape-subtitulo {
+
+    color: var(--texto);
+
+    font-size: 1rem;
+    font-weight: 800;
+
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    margin: 0;
+
+}
+
+.rodape-lista {
+
+    list-style: none;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+}
+
+.rodape-lista li {
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    color: var(--texto-secundario);
+
+    font-size: 0.9rem;
+
+}
+
+.rodape-lista [data-lucide] {
+
+    width: 16px;
+    height: 16px;
+
+    color: var(--amarelo);
+
+    flex-shrink: 0;
+
+    margin: 0;
+
+}
+
+.rodape-lista a {
+
+    color: var(--texto-secundario);
+
+    transition: color var(--transicao);
+
+}
+
+.rodape-lista a:hover {
+
+    color: var(--amarelo);
+
+    text-decoration: underline;
+
+}
+
+.rodape-redes {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+}
+
+.rede-social {
+
+    display: inline-flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 10px 14px;
+
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+
+    background: var(--preto-claro);
+
+    color: var(--texto);
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: all var(--transicao);
+
+}
+
+.rede-social:hover {
+
+    border-color: var(--amarelo);
+    color: var(--amarelo);
+
+    transform: translateX(4px);
+
+}
+
+.rede-social [data-lucide] {
+
+    width: 18px;
+    height: 18px;
+
+    color: var(--amarelo);
+
+    margin: 0;
+
+}
+
+.rodape-base {
+
+    max-width: var(--largura-maxima);
+
+    margin: 0 auto;
+
+    padding-top: 25px;
+
+    border-top: 1px solid var(--borda);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 15px;
+
+}
+
+.rodape-copy {
+
+    color: var(--texto-secundario);
+
+    font-size: 0.85rem;
+
+    margin: 0;
+
+}
+
+.rodape-dev {
+
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    color: var(--texto-secundario);
+
+    font-size: 0.85rem;
+
+    margin: 0;
+
+}
+
+.rodape-dev [data-lucide] {
+
+    width: 15px;
+    height: 15px;
+
+    color: var(--amarelo);
+
+    margin: 0;
+
+}
+
+.rodape-dev a {
+
+    color: var(--amarelo);
+
+    font-weight: 800;
+
+    text-decoration: none;
+
+    transition: all var(--transicao);
+
+}
+
+.rodape-dev a:hover {
+
+    color: var(--amarelo-claro);
+
+    text-decoration: underline;
 
 }
 
@@ -1181,9 +1277,7 @@ footer p {
     }
 
     #inicio {
-
         min-height: 70vh;
-
     }
 
     .categoria-grelha {
@@ -1223,9 +1317,7 @@ footer p {
     }
 
     header nav > a {
-
         font-size: 1.1rem;
-
     }
 
     header nav ul {
@@ -1264,15 +1356,11 @@ footer p {
     }
 
     #titulo-inicio {
-
         font-size: clamp(3rem, 18vw, 5rem);
-
     }
 
     #inicio .hero-descricao {
-
         font-size: 1rem;
-
     }
 
     #inicio .hero-cta {
@@ -1292,9 +1380,7 @@ footer p {
     }
 
     #categorias button {
-
         flex: 0 0 auto;
-
     }
 
     .categoria-grelha {
@@ -1305,15 +1391,11 @@ footer p {
     }
 
     .categoria-titulo {
-
         font-size: 1.2rem;
-
     }
 
     .produto {
-
         padding: 18px;
-
     }
 
     #carrinho {
@@ -1333,9 +1415,7 @@ footer p {
 @media (prefers-reduced-motion: reduce) {
 
     html {
-
         scroll-behavior: auto;
-
     }
 
     *,
@@ -1371,7 +1451,6 @@ header nav .marca {
 
 }
 
-
 header nav .marca-logo {
 
     width: 40px;
@@ -1385,7 +1464,7 @@ header nav .marca-logo {
 
 
 /* =========================================================
-   29. FOTO DE DESTAQUE NO INÍCIO
+   29. FOTO DE DESTAQUE
    ========================================================= */
 
 .foto-destaque {
@@ -1402,7 +1481,6 @@ header nav .marca-logo {
 
 }
 
-
 .foto-destaque img {
 
     width: 100%;
@@ -1414,7 +1492,7 @@ header nav .marca-logo {
 
 
 /* =========================================================
-   30. PRODUTO — FOOTER, PREÇO E BOTÕES (EMPILHADOS)
+   30. PRODUTO — FOOTER, PREÇO E BOTÕES
    ========================================================= */
 
 .produto-footer {
@@ -1432,7 +1510,6 @@ header nav .marca-logo {
 
 }
 
-
 .produto-preco {
 
     color: var(--amarelo);
@@ -1444,8 +1521,6 @@ header nav .marca-logo {
 
 }
 
-
-/* Botões empilhados — um por baixo do outro */
 .produto-acoes {
 
     display: flex;
@@ -1456,7 +1531,6 @@ header nav .marca-logo {
     width: 100%;
 
 }
-
 
 .produto-footer .btn-pedir,
 .produto-footer .btn-adicionar {
@@ -1482,7 +1556,6 @@ header nav .marca-logo {
 
 }
 
-
 .produto-footer .btn-pedir {
 
     background: transparent;
@@ -1491,14 +1564,12 @@ header nav .marca-logo {
 
 }
 
-
 .produto-footer .btn-pedir:hover {
 
     background: var(--amarelo);
     color: #000000;
 
 }
-
 
 .produto-footer .btn-adicionar {
 
@@ -1509,14 +1580,12 @@ header nav .marca-logo {
 
 }
 
-
 .produto-footer .btn-adicionar:hover {
 
     background: var(--amarelo-claro);
     transform: translateY(-2px);
 
 }
-
 
 .produto-footer .btn-pedir [data-lucide],
 .produto-footer .btn-adicionar [data-lucide] {
@@ -1532,7 +1601,7 @@ header nav .marca-logo {
 
 
 /* =========================================================
-   31. CARRINHO — TOPO COM BOTÃO FECHAR
+   31. CARRINHO — TOPO
    ========================================================= */
 
 .carrinho-topo {
@@ -1548,13 +1617,9 @@ header nav .marca-logo {
 
 }
 
-
 .carrinho-topo h2 {
-
     margin: 0;
-
 }
-
 
 .btn-fechar {
 
@@ -1577,7 +1642,6 @@ header nav .marca-logo {
     transition: all var(--transicao);
 
 }
-
 
 .btn-fechar:hover {
 
@@ -1604,7 +1668,6 @@ header nav .marca-logo {
 
 }
 
-
 .item-acoes .btn-pedir-item {
 
     flex: 1;
@@ -1628,14 +1691,12 @@ header nav .marca-logo {
 
 }
 
-
 .item-acoes .btn-pedir-item:hover {
 
     background: var(--amarelo);
     color: #000000;
 
 }
-
 
 .item-acoes .btn-remover {
 
@@ -1659,7 +1720,6 @@ header nav .marca-logo {
     transition: all var(--transicao);
 
 }
-
 
 .item-acoes .btn-remover:hover {
 
@@ -1697,7 +1757,6 @@ header nav .marca-logo {
 
 }
 
-
 .btn-voltar:hover {
 
     border-color: var(--amarelo);
@@ -1707,7 +1766,7 @@ header nav .marca-logo {
 
 
 /* =========================================================
-   34. BLOCO DE CONTACTO COM DADOS REAIS
+   34. BLOCO DE CONTACTO
    ========================================================= */
 
 .contacto-info {
@@ -1725,7 +1784,6 @@ header nav .marca-logo {
     margin: 30px 0 45px;
 
 }
-
 
 .contacto-item {
 
@@ -1745,14 +1803,12 @@ header nav .marca-logo {
 
 }
 
-
 .contacto-item:hover {
 
     border-color: var(--amarelo);
     transform: translateY(-3px);
 
 }
-
 
 .contacto-icone {
 
@@ -1772,7 +1828,6 @@ header nav .marca-logo {
 
 }
 
-
 .contacto-icone [data-lucide] {
 
     width: 20px;
@@ -1783,7 +1838,6 @@ header nav .marca-logo {
     margin: 0;
 
 }
-
 
 .contacto-item strong {
 
@@ -1799,7 +1853,6 @@ header nav .marca-logo {
 
 }
 
-
 .contacto-item a,
 .contacto-item span {
 
@@ -1809,7 +1862,6 @@ header nav .marca-logo {
     word-break: break-word;
 
 }
-
 
 .contacto-item a:hover {
 
@@ -1836,7 +1888,6 @@ header nav .marca-logo {
 
 }
 
-
 .form-contacto h3 {
 
     display: flex;
@@ -1852,7 +1903,6 @@ header nav .marca-logo {
 
 }
 
-
 .form-contacto h3 [data-lucide] {
 
     width: 22px;
@@ -1864,13 +1914,9 @@ header nav .marca-logo {
 
 }
 
-
 .form-linha {
-
     margin-bottom: 18px;
-
 }
-
 
 .form-linha-dupla {
 
@@ -1880,7 +1926,6 @@ header nav .marca-logo {
     gap: 15px;
 
 }
-
 
 .form-contacto label {
 
@@ -1895,14 +1940,12 @@ header nav .marca-logo {
 
 }
 
-
 .form-contacto label small {
 
     color: #777777;
     font-weight: 400;
 
 }
-
 
 .form-contacto input,
 .form-contacto select,
@@ -1929,7 +1972,6 @@ header nav .marca-logo {
 
 }
 
-
 .form-contacto input:focus,
 .form-contacto select:focus,
 .form-contacto textarea:focus {
@@ -1942,7 +1984,6 @@ header nav .marca-logo {
 
 }
 
-
 .form-acoes {
 
     display: grid;
@@ -1953,7 +1994,6 @@ header nav .marca-logo {
     margin-top: 10px;
 
 }
-
 
 .btn-enviar {
 
@@ -1976,14 +2016,12 @@ header nav .marca-logo {
 
 }
 
-
 .btn-whatsapp {
 
     background: #25d366;
     color: #ffffff;
 
 }
-
 
 .btn-whatsapp:hover {
 
@@ -1992,14 +2030,12 @@ header nav .marca-logo {
 
 }
 
-
 .btn-email {
 
     background: var(--amarelo);
     color: #000000;
 
 }
-
 
 .btn-email:hover {
 
@@ -2010,7 +2046,7 @@ header nav .marca-logo {
 
 
 /* =========================================================
-   36. ÍCONES LUCIDE — REGRAS GERAIS
+   36. ÍCONES LUCIDE
    ========================================================= */
 
 [data-lucide] {
@@ -2026,7 +2062,6 @@ header nav .marca-logo {
 
 }
 
-
 header nav .marca [data-lucide] {
 
     width: 20px;
@@ -2037,7 +2072,6 @@ header nav .marca [data-lucide] {
     margin: 0;
 
 }
-
 
 button [data-lucide],
 a [data-lucide] {
@@ -2050,7 +2084,6 @@ a [data-lucide] {
 
 }
 
-
 button [data-lucide]:last-child,
 a [data-lucide]:last-child {
 
@@ -2060,15 +2093,12 @@ a [data-lucide]:last-child {
 
 
 /* =========================================================
-   37. PESQUISA COM ÍCONE DENTRO
+   37. PESQUISA COM ÍCONE
    ========================================================= */
 
 .pesquisa-wrapper {
-
     margin-bottom: 25px;
-
 }
-
 
 .pesquisa-input {
 
@@ -2077,7 +2107,6 @@ a [data-lucide]:last-child {
     max-width: 650px;
 
 }
-
 
 .pesquisa-input [data-lucide] {
 
@@ -2099,7 +2128,6 @@ a [data-lucide]:last-child {
 
 }
 
-
 .pesquisa-input #pesquisa {
 
     padding-left: 45px;
@@ -2109,47 +2137,37 @@ a [data-lucide]:last-child {
 
 
 /* =========================================================
-   38. RESPONSIVO — Contacto, Form e Cards
+   38. RESPONSIVO — Contacto e Form
    ========================================================= */
 
 @media (max-width: 650px) {
 
     .form-linha-dupla {
-
         grid-template-columns: 1fr;
-
     }
 
     .form-acoes {
-
         grid-template-columns: 1fr;
-
     }
 
     .form-contacto {
-
         padding: 22px;
-
     }
 
     .btn-label {
-
         display: none;
-
     }
 
     .categoria-titulo [data-lucide] {
-
         width: 18px;
         height: 18px;
-
     }
 
 }
 
 
 /* =========================================================
-   39. FUNDO DO HERO (imagem na brasa) — MELHORADO
+   39. FUNDO DO HERO
    ========================================================= */
 
 .hero-fundo {
@@ -2165,11 +2183,9 @@ a [data-lucide]:last-child {
     z-index: 0;
     pointer-events: none;
 
-    /* leve zoom lento para dar vida */
     animation: heroZoom 20s ease-in-out infinite alternate;
 
 }
-
 
 .hero-fundo::after {
 
@@ -2179,7 +2195,6 @@ a [data-lucide]:last-child {
 
     background:
 
-        /* Escurecimento à esquerda para o texto respirar */
         linear-gradient(
             90deg,
             rgba(8, 8, 8, 0.85) 0%,
@@ -2187,7 +2202,6 @@ a [data-lucide]:last-child {
             rgba(8, 8, 8, 0.35) 100%
         ),
 
-        /* Escurecimento vertical */
         linear-gradient(
             180deg,
             rgba(8, 8, 8, 0.4) 0%,
@@ -2197,8 +2211,6 @@ a [data-lucide]:last-child {
 
 }
 
-
-/* Fade suave para o preto em baixo */
 #inicio::after {
 
     content: "";
@@ -2220,8 +2232,6 @@ a [data-lucide]:last-child {
 
 }
 
-
-/* Animação do fundo (zoom lento) */
 @keyframes heroZoom {
 
     0%   { transform: scale(1);    }
@@ -2229,12 +2239,38 @@ a [data-lucide]:last-child {
 
 }
 
-
-/* Respeita quem prefere menos animações */
 @media (prefers-reduced-motion: reduce) {
 
     .hero-fundo {
         animation: none;
+    }
+
+}
+
+
+/* =========================================================
+   40. RESPONSIVO — RODAPÉ
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    .rodape {
+        padding: 40px 20px 20px;
+    }
+
+    .rodape-conteudo {
+        gap: 30px;
+        margin-bottom: 30px;
+    }
+
+    .rodape-base {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .rodape-dev {
+        justify-content: center;
     }
 
 }

@@ -2,285 +2,102 @@
 <html lang="pt-MZ">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#080808">
     <meta name="robots" content="noindex, nofollow">
-
     <title>Painel — Brasa Grill</title>
-
     <link rel="stylesheet" href="admin.css">
-
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-
 </head>
-
 
 <body>
 
-
-    <!-- ECRÃ DE LOGIN -->
-
     <div id="ecraLogin" class="ecra-login">
-
         <div class="login-caixa">
-
             <div class="login-topo">
                 <i data-lucide="lock"></i>
                 <h1>Painel do Restaurante</h1>
                 <p>Brasa Grill</p>
             </div>
-
             <form id="formLogin">
-
                 <label for="passwordInput">
                     Palavra-passe
-                    <input
-                        type="password"
-                        id="passwordInput"
-                        placeholder="Introduza a palavra-passe"
-                        autocomplete="current-password"
-                        required
-                    >
+                    <input type="password" id="passwordInput" placeholder="Introduza a palavra-passe" autocomplete="current-password" required>
                 </label>
-
-                <p id="erroLogin" class="erro-login" hidden>
-                    ❌ Palavra-passe incorreta
-                </p>
-
-                <button type="submit" class="btn-entrar">
-                    <i data-lucide="log-in"></i>
-                    Entrar
-                </button>
-
+                <p id="erroLogin" class="erro-login" hidden>❌ Palavra-passe incorreta</p>
+                <button type="submit" class="btn-entrar"><i data-lucide="log-in"></i> Entrar</button>
             </form>
-
         </div>
-
     </div>
-
-
-
-    <!-- ECRÃ DE BOAS-VINDAS -->
 
     <div id="ecraBoasVindas" class="ecra-boas-vindas" hidden>
-
         <div class="boas-vindas-caixa">
-
-            <div class="boas-vindas-icone">
-                <i data-lucide="check-circle"></i>
-            </div>
-
+            <div class="boas-vindas-icone"><i data-lucide="check-circle"></i></div>
             <h1 class="boas-vindas-titulo">Login efetuado!</h1>
-
             <p class="boas-vindas-sub">Bem-vindo de volta,</p>
-
             <p class="boas-vindas-nome" id="boasVindasNome">Administrador</p>
-
             <div class="boas-vindas-loader"></div>
-
         </div>
-
     </div>
-
-
-
-    <!-- PAINEL -->
 
     <div id="painel" class="painel" hidden>
 
-
         <header class="painel-header">
-
             <div class="painel-header-info">
-                <h1>
-                    <i data-lucide="flame"></i>
-                    Brasa Grill
-                </h1>
+                <h1><i data-lucide="flame"></i> Brasa Grill</h1>
                 <p id="saudacaoPainel">Painel de pedidos em tempo real</p>
             </div>
-
             <div class="painel-header-acoes">
-
-                <span id="indicadorLigacao" class="indicador-ligacao">
-                    <i data-lucide="wifi"></i>
-                    A ligar…
-                </span>
-
-                <button id="btnSair" type="button" class="btn-sair">
-                    <i data-lucide="log-out"></i>
-                    Sair
-                </button>
-
+                <span id="indicadorLigacao" class="indicador-ligacao"><i data-lucide="wifi"></i> A ligar…</span>
+                <button id="btnSair" type="button" class="btn-sair"><i data-lucide="log-out"></i> Sair</button>
             </div>
-
         </header>
 
-
-
-        <!-- RESUMO DO DIA -->
-
         <section class="resumo-dia">
-
-            <h2 class="resumo-titulo">
-                <i data-lucide="calendar"></i>
-                Resumo do Dia
-            </h2>
-
+            <h2 class="resumo-titulo"><i data-lucide="calendar"></i> Resumo de Hoje</h2>
             <div class="resumo-grelha">
-
-                <div class="resumo-card">
-                    <i data-lucide="shopping-bag"></i>
-                    <strong id="resumoPedidos">0</strong>
-                    <span>Pedidos</span>
-                </div>
-
-                <div class="resumo-card resumo-card--destaque">
-                    <i data-lucide="banknote"></i>
-                    <strong id="resumoReceita">0 MT</strong>
-                    <span>Receita</span>
-                </div>
-
-                <div class="resumo-card">
-                    <i data-lucide="users"></i>
-                    <strong id="resumoClientes">0</strong>
-                    <span>Clientes</span>
-                </div>
-
-                <div class="resumo-card">
-                    <i data-lucide="truck"></i>
-                    <strong id="resumoEntregas">0</strong>
-                    <span>Entregas</span>
-                </div>
-
-                <div class="resumo-card">
-                    <i data-lucide="store"></i>
-                    <strong id="resumoRecolhas">0</strong>
-                    <span>Recolhas</span>
-                </div>
-
-                <div class="resumo-card">
-                    <i data-lucide="trending-up"></i>
-                    <strong id="resumoTicket">0 MT</strong>
-                    <span>Ticket Médio</span>
-                </div>
-
+                <div class="resumo-card"><i data-lucide="shopping-bag"></i><strong id="resumoPedidos">0</strong><span>Pedidos</span></div>
+                <div class="resumo-card resumo-card--destaque"><i data-lucide="banknote"></i><strong id="resumoReceita">0 MT</strong><span>Receita</span></div>
+                <div class="resumo-card"><i data-lucide="users"></i><strong id="resumoClientes">0</strong><span>Clientes</span></div>
+                <div class="resumo-card"><i data-lucide="truck"></i><strong id="resumoEntregas">0</strong><span>Entregas</span></div>
+                <div class="resumo-card"><i data-lucide="store"></i><strong id="resumoRecolhas">0</strong><span>Recolhas</span></div>
+                <div class="resumo-card"><i data-lucide="trending-up"></i><strong id="resumoTicket">0 MT</strong><span>Média por Pedido</span></div>
             </div>
-
         </section>
 
-
-
-        <!-- FILTRO POR PERÍODO -->
-
         <section class="filtros-periodo">
-
             <span class="filtros-label">Período:</span>
-
             <button type="button" class="btn-periodo ativo" data-periodo="hoje">Hoje</button>
             <button type="button" class="btn-periodo" data-periodo="ontem">Ontem</button>
             <button type="button" class="btn-periodo" data-periodo="7dias">7 dias</button>
             <button type="button" class="btn-periodo" data-periodo="mes">Este mês</button>
             <button type="button" class="btn-periodo" data-periodo="tudo">Tudo</button>
-
         </section>
-
-
-
-        <!-- FILTRO POR TIPO -->
 
         <section class="filtros-tipo">
-
             <span class="filtros-label">Tipo:</span>
-
             <button type="button" class="btn-tipo ativo" data-tipo="todos">Todos</button>
-            <button type="button" class="btn-tipo" data-tipo="entrega">
-                <i data-lucide="truck"></i> Entrega
-            </button>
-            <button type="button" class="btn-tipo" data-tipo="recolha">
-                <i data-lucide="store"></i> Recolha
-            </button>
-
+            <button type="button" class="btn-tipo" data-tipo="entrega"><i data-lucide="truck"></i> Entrega</button>
+            <button type="button" class="btn-tipo" data-tipo="recolha"><i data-lucide="store"></i> Recolha</button>
         </section>
-
-
-
-        <!-- BARRA DE PESQUISA -->
 
         <section class="barra-pesquisa">
-
             <i data-lucide="search"></i>
-
-            <input
-                type="search"
-                id="pesquisaPedidos"
-                placeholder="Pesquisar por nome, telemóvel ou nº do pedido…"
-                autocomplete="off"
-            >
-
-            <button
-                type="button"
-                id="limparPesquisa"
-                class="btn-limpar-pesquisa"
-                aria-label="Limpar pesquisa"
-                hidden
-            >
-                <i data-lucide="x"></i>
-            </button>
-
+            <input type="search" id="pesquisaPedidos" placeholder="Pesquisar por nome, telemóvel ou nº do pedido…" autocomplete="off">
+            <button type="button" id="limparPesquisa" class="btn-limpar-pesquisa" aria-label="Limpar pesquisa" hidden><i data-lucide="x"></i></button>
         </section>
-
-
-
-        <!-- ESTATÍSTICAS POR ESTADO -->
 
         <section class="estatisticas">
-
-            <div class="estat-card" data-filtro="novo">
-                <i data-lucide="bell"></i>
-                <strong id="contNovo">0</strong>
-                <span>Novos</span>
-            </div>
-
-            <div class="estat-card" data-filtro="aceite">
-                <i data-lucide="check-circle"></i>
-                <strong id="contAceite">0</strong>
-                <span>Aceites</span>
-            </div>
-
-            <div class="estat-card" data-filtro="em_preparacao">
-                <i data-lucide="chef-hat"></i>
-                <strong id="contPreparacao">0</strong>
-                <span>Em preparação</span>
-            </div>
-
-            <div class="estat-card" data-filtro="pronto">
-                <i data-lucide="package"></i>
-                <strong id="contPronto">0</strong>
-                <span>Prontos</span>
-            </div>
-
-            <div class="estat-card" data-filtro="a_caminho">
-                <i data-lucide="bike"></i>
-                <strong id="contACaminho">0</strong>
-                <span>A caminho</span>
-            </div>
-
-            <div class="estat-card" data-filtro="entregue">
-                <i data-lucide="check-check"></i>
-                <strong id="contEntregue">0</strong>
-                <span>Entregues</span>
-            </div>
-
+            <div class="estat-card" data-filtro="novo"><i data-lucide="bell"></i><strong id="contNovo">0</strong><span>Novos</span></div>
+            <div class="estat-card" data-filtro="aceite"><i data-lucide="check-circle"></i><strong id="contAceite">0</strong><span>Aceites</span></div>
+            <div class="estat-card" data-filtro="em_preparacao"><i data-lucide="chef-hat"></i><strong id="contPreparacao">0</strong><span>Em preparação</span></div>
+            <div class="estat-card" data-filtro="pronto"><i data-lucide="package"></i><strong id="contPronto">0</strong><span>Prontos</span></div>
+            <div class="estat-card" data-filtro="a_caminho"><i data-lucide="bike"></i><strong id="contACaminho">0</strong><span>A caminho</span></div>
+            <div class="estat-card" data-filtro="entregue"><i data-lucide="check-check"></i><strong id="contEntregue">0</strong><span>Entregues</span></div>
         </section>
 
-
-
-        <!-- FILTROS POR ESTADO -->
-
         <section class="filtros">
-
             <button type="button" class="btn-filtro ativo" data-filtro="todos">Todos</button>
             <button type="button" class="btn-filtro" data-filtro="novo">Novos</button>
             <button type="button" class="btn-filtro" data-filtro="aceite">Aceites</button>
@@ -289,37 +106,70 @@
             <button type="button" class="btn-filtro" data-filtro="a_caminho">A caminho</button>
             <button type="button" class="btn-filtro" data-filtro="entregue">Entregues</button>
             <button type="button" class="btn-filtro" data-filtro="recusado">Recusados</button>
-
         </section>
 
-
-
-        <!-- LISTA DE PEDIDOS -->
+        <section class="gestao-estafetas">
+            <div class="gestao-estafetas-topo">
+                <h2 class="resumo-titulo"><i data-lucide="bike"></i> Estafetas</h2>
+                <button type="button" id="btnNovoEstafeta" class="btn-novo-estafeta">
+                    <i data-lucide="plus"></i> Adicionar estafeta
+                </button>
+            </div>
+            <div id="listaEstafetas" class="lista-estafetas">
+                <div class="sem-estafetas"><i data-lucide="inbox"></i><p>Nenhum estafeta registado.</p></div>
+            </div>
+        </section>
 
         <section id="listaPedidos" class="lista-pedidos">
-
-            <div class="sem-pedidos">
-                <i data-lucide="inbox"></i>
-                <p>A carregar pedidos…</p>
-            </div>
-
+            <div class="sem-pedidos"><i data-lucide="inbox"></i><p>A carregar pedidos…</p></div>
         </section>
-
 
     </div>
 
+    <div id="modalEstafeta" class="modal-estafeta" hidden>
+        <div class="modal-estafeta-fundo" data-fechar-estafeta></div>
+        <div class="modal-estafeta-caixa">
+            <header class="modal-estafeta-topo">
+                <h2 id="tituloModalEstafeta">Novo estafeta</h2>
+                <button type="button" class="btn-fechar" data-fechar-estafeta aria-label="Fechar"><i data-lucide="x"></i></button>
+            </header>
 
+            <form id="formEstafeta" class="form-estafeta">
+                <input type="hidden" id="estafetaId">
 
-    <!-- FIREBASE SDK -->
+                <div class="form-linha">
+                    <label for="estafetaNome">Nome completo *<input type="text" id="estafetaNome" placeholder="Ex: João Silva" required></label>
+                </div>
+
+                <div class="form-linha">
+                    <label for="estafetaTelemovel">Telemóvel *<input type="tel" id="estafetaTelemovel" placeholder="84 123 4567" required></label>
+                </div>
+
+                <div class="form-linha">
+                    <label for="estafetaPassword">Palavra-passe *<input type="text" id="estafetaPassword" placeholder="Ex: BX7K9M2P" required></label>
+                </div>
+
+                <div class="form-linha">
+                    <label for="estafetaTipo">Tipo
+                        <select id="estafetaTipo">
+                            <option value="proprio">Próprio (salário fixo)</option>
+                            <option value="opcional">Opcional (por entrega)</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="modal-estafeta-acoes">
+                    <button type="submit" class="btn-confirmar-estafeta"><i data-lucide="save"></i> Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-
     <script src="firebase-config.js"></script>
     <script src="pedidos.js"></script>
     <script src="admin.js"></script>
 
-
 </body>
-
 </html>
