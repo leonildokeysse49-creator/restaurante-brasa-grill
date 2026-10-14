@@ -22,15 +22,21 @@ if (typeof firebase !== "undefined" && firebase.auth) {
         .catch(e => console.warn("Persistência:", e));
 }
 
+/* Deteta o role baseado apenas no email autenticado */
+function obterRolePorEmail(user) {
+    if (!user || !user.email) return null;
+    const email = user.email.toLowerCase();
+
+    if (email === "admin@brasagrill.mz") return "admin";
+    if (email.startsWith("garcom.") && email.endsWith("@brasagrill.mz")) return "garcom";
+    if (email.startsWith("estafeta.") && email.endsWith("@brasagrill.mz")) return "estafeta";
+
+    return null;
+}
+
+/* Mantém a assinatura antiga por compatibilidade */
 async function obterRole(user) {
-    if (!user) return null;
-    try {
-        const doc = await db.collection("roles").doc(user.uid).get();
-        return doc.exists ? doc.data().role : null;
-    } catch (e) {
-        console.error("Erro ao obter role:", e);
-        return null;
-    }
+    return obterRolePorEmail(user);
 }
 
 async function garantirAutenticacao() {

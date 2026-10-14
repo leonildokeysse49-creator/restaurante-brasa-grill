@@ -86,16 +86,18 @@ formLogin.addEventListener("submit", async function (e) {
 
     try {
         const cred = await firebase.auth().signInWithEmailAndPassword(email, pass);
-        const role = await obterRole(cred.user);
+        const role = obterRolePorEmail(cred.user);
+
+        console.log("✅ Login OK:", cred.user.email, "| Role:", role);
 
         if (role !== "admin") {
             await firebase.auth().signOut();
-            erroLogin.textContent = "❌ Não tens permissão de administrador.";
+            erroLogin.textContent = "❌ Esta conta não tem permissão de administrador.";
             erroLogin.hidden = false;
             return;
         }
 
-        const nome = cred.user.displayName || email.split("@")[0];
+        const nome = cred.user.displayName || "Leonildo";
         mostrarBoasVindas(nome);
         setTimeout(() => entrarNoPainel(nome), 2000);
 
@@ -103,7 +105,7 @@ formLogin.addEventListener("submit", async function (e) {
         console.error("Erro login:", erro);
         let msg = "❌ Email ou palavra-passe incorretos.";
         if (erro.code === "auth/too-many-requests") msg = "⚠️ Demasiadas tentativas. Tenta mais tarde.";
-        if (erro.code === "auth/network-request-failed") msg = "⚠️ Sem ligação.";
+        if (erro.code === "auth/network-request-failed") msg = "⚠️ Sem ligação à internet.";
         erroLogin.textContent = msg;
         erroLogin.hidden = false;
         passwordInput.value = "";
@@ -153,18 +155,15 @@ firebase.auth().onAuthStateChanged(async (user) => {
         return;
     }
 
-    try {
-        const role = await obterRole(user);
-        if (role !== "admin") {
-            await firebase.auth().signOut();
-            return;
-        }
-        const nome = user.displayName || user.email.split("@")[0];
-        entrarNoPainel(nome);
-    } catch (e) {
-        console.error(e);
+    const role = obterRolePorEmail(user);
+    if (role !== "admin") {
+        await firebase.auth().signOut();
         mostrarLogin();
+        return;
     }
+
+    const nome = user.displayName || "Leonildo";
+    entrarNoPainel(nome);
 });
 
 
@@ -713,7 +712,7 @@ if (formEstafeta) {
                     ganhos_hoje: 0,
                     criadoEm: firebase.firestore.FieldValue.serverTimestamp()
                 });
-                alert(`✅ Estafeta ${nome} criado!\n\n📌 IMPORTANTE:\n\n1. Vai ao Firebase Console → Authentication → Usuários\n2. Adiciona este email: ${email}\n3. Define uma senha\n4. Copia o UID gerado\n5. Edita este estafeta aqui colando o UID como ID do documento\n\nID do documento atual: ${docRef.id}`);
+                alert(`✅ Estafeta ${nome} criado!\n\n📌 IMPORTANTE:\n\n1. Firebase Console → Authentication → Adicionar utilizador\n2. Email: ${email}\n3. Defina uma senha\n4. Copie o UID e use como ID deste documento\n\nID atual: ${docRef.id}`);
             }
             modalEstafeta.hidden = true;
         } catch (erro) {
@@ -823,7 +822,7 @@ if (formGarcom) {
                     ativo: true,
                     criadoEm: firebase.firestore.FieldValue.serverTimestamp()
                 });
-                alert(`✅ Garçom ${nome} criado!\n\n📌 IMPORTANTE:\n\n1. Vai ao Firebase Console → Authentication → Usuários\n2. Adiciona este email: ${email}\n3. Define uma senha\n4. Copia o UID gerado\n5. Edita este garçom aqui colando o UID como ID do documento\n\nID do documento atual: ${docRef.id}`);
+                alert(`✅ Garçom ${nome} criado!\n\n📌 IMPORTANTE:\n\n1. Firebase Console → Authentication → Adicionar utilizador\n2. Email: ${email}\n3. Defina uma senha\n4. Copie o UID e use como ID deste documento\n\nID atual: ${docRef.id}`);
             }
             modalGarcom.hidden = true;
         } catch (erro) {
