@@ -22,22 +22,79 @@ if (typeof firebase !== "undefined" && firebase.auth) {
         .catch(e => console.warn("Persistência:", e));
 }
 
-/* Deteta o role baseado apenas no email autenticado */
-function obterRolePorEmail(user) {
-    if (!user || !user.email) return null;
-    const email = user.email.toLowerCase();
+/* ============================================================
+   SECONDARY APP — criar contas sem perder sessão admin
+   ============================================================ */
 
-    if (email === "admin@brasagrill.mz") return "admin";
-    if (email.startsWith("garcom.") && email.endsWith("@brasagrill.mz")) return "garcom";
-    if (email.startsWith("estafeta.") && email.endsWith("@brasagrill.mz")) return "estafeta";
+let _secondaryAuth = null;
 
-    return null;
+function obterSecondaryAuth() {
+    if (_secondaryAuth) return _secondaryAuth;
+
+    let app;
+    try {
+        app = firebase.app("Secondary");
+    } catch (e) {
+        app = firebase.initializeApp(firebaseConfig, "Secondary");
+    }
+
+    _secondaryAuth = app.auth();
+    _secondaryAuth.setPersistence(firebase.auth.Auth.Persistence.NONE)
+        .catch(e => console.warn(e));
+
+    return _secondaryAuth;
 }
 
-/* Mantém a assinatura antiga por compatibilidade */
+async function criarContaUtilizador(email, password) {
+    const auth = obterSecondaryAuth();
+    const cred = await auth.createUserWithEmailAndPassword(email, password);
+    const uid = cred.user.uid;
+    await auth.signOut();
+    return uid;
+}
+
+/* ============================================================
+   GERADORES AUTOMÁTICOS
+   ============================================================ */
+
+function gerarSlug(nome) {
+    const primeiro = (nome || "").trim().split(/\s+/)[0];
+    return primeiro
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]/g, "")
+        .substring(0, 15) || "user";
+}
+
+function gerarEmailDoNome(nome) {
+    return `${gerarSlug(nome)}@brasagrill.mz`;
+}
+
+function gerarPasswordDoNome(nome) {
+    const slug = gerarSlug(nome);
+    const n = Math.floor(Math.random() * 90) + 10;
+    return `${slug}${n}`;
+}
+
+/* ============================================================
+   DETEÇÃO DE ROLE via coleção roles/{uid}
+   ============================================================ */
+
 async function obterRole(user) {
-    return obterRolePorEmail(user);
+    if (!user) return null;
+    try {
+        const doc = await db.collection("roles").doc(user.uid).get();
+        return doc.exists ? doc.data().role : null;
+    } catch (e) {
+        console.error("Erro ao obter role:", e);
+        return null;
+    }
 }
+
+/* ============================================================
+   AUTENTICAÇÃO ANÓNIMA (cliente)
+   ============================================================ */
 
 async function garantirAutenticacao() {
     if (!firebase.auth().currentUser) {
