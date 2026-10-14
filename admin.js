@@ -2,58 +2,6 @@
    BRASA GRILL — PAINEL DO RESTAURANTE (FIREBASE AUTH)
    ========================================================= */
 
-/* FUNÇÕES AUXILIARES (autocontidas) */
-
-let _secondaryAuth = null;
-
-function obterSecondaryAuth() {
-    if (_secondaryAuth) return _secondaryAuth;
-    let app;
-    try { app = firebase.app("Secondary"); }
-    catch (e) { app = firebase.initializeApp(firebaseConfig, "Secondary"); }
-    _secondaryAuth = app.auth();
-    _secondaryAuth.setPersistence(firebase.auth.Auth.Persistence.NONE).catch(e => console.warn(e));
-    return _secondaryAuth;
-}
-
-async function criarContaUtilizador(email, password) {
-    const auth = obterSecondaryAuth();
-    const cred = await auth.createUserWithEmailAndPassword(email, password);
-    const uid = cred.user.uid;
-    await auth.signOut();
-    return uid;
-}
-
-function gerarSlug(nome) {
-    const primeiro = (nome || "").trim().split(/\s+/)[0];
-    return primeiro
-        .toLowerCase()
-        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-        .replace(/[^a-z0-9]/g, "")
-        .substring(0, 15) || "user";
-}
-
-function gerarEmailDoNome(nome) {
-    return `${gerarSlug(nome)}@brasagrill.mz`;
-}
-
-function gerarPasswordDoNome(nome) {
-    const slug = gerarSlug(nome);
-    const n = Math.floor(Math.random() * 90) + 10;
-    return `${slug}${n}`;
-}
-
-async function obterRole(user) {
-    if (!user) return null;
-    try {
-        const doc = await db.collection("roles").doc(user.uid).get();
-        return doc.exists ? doc.data().role : null;
-    } catch (e) {
-        console.error("Erro ao obter role:", e);
-        return null;
-    }
-}
-
 /* ESTADO */
 
 let pedidosAtuais = [];
