@@ -2,6 +2,9 @@
    BRASA GRILL — PAINEL DO RESTAURANTE (FIREBASE AUTH)
    ========================================================= */
 
+/* UID do admin principal */
+const ADMIN_UID = "d35l2omKgieZCq77JocJLnqGxZ32";
+
 /* ESTADO */
 
 let pedidosAtuais = [];
@@ -92,9 +95,11 @@ formLogin.addEventListener("submit", async function (e) {
 
     try {
         const cred = await firebase.auth().signInWithEmailAndPassword(email, pass);
-        const role = await obterRole(cred.user);
 
-        console.log("✅ Login OK:", cred.user.email, "| Role:", role);
+        // ✅ VERIFICAÇÃO SIMPLES — UID do admin
+        const role = (cred.user.uid === ADMIN_UID) ? "admin" : await obterRole(cred.user);
+
+        console.log("✅ Login OK:", cred.user.email, "| UID:", cred.user.uid, "| Role:", role);
 
         if (role !== "admin") {
             await firebase.auth().signOut();
@@ -158,7 +163,9 @@ firebase.auth().onAuthStateChanged(async (user) => {
         return;
     }
 
-    const role = await obterRole(user);
+    // ✅ VERIFICAÇÃO SIMPLES — UID do admin
+    const role = (user.uid === ADMIN_UID) ? "admin" : await obterRole(user);
+
     if (role !== "admin") {
         await firebase.auth().signOut();
         mostrarLogin();
