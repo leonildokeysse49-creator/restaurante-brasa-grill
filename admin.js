@@ -96,7 +96,6 @@ formLogin.addEventListener("submit", async function (e) {
     try {
         const cred = await firebase.auth().signInWithEmailAndPassword(email, pass);
 
-        // ✅ VERIFICAÇÃO SIMPLES — UID do admin
         const role = (cred.user.uid === ADMIN_UID) ? "admin" : await obterRole(cred.user);
 
         console.log("✅ Login OK:", cred.user.email, "| UID:", cred.user.uid, "| Role:", role);
@@ -163,7 +162,6 @@ firebase.auth().onAuthStateChanged(async (user) => {
         return;
     }
 
-    // ✅ VERIFICAÇÃO SIMPLES — UID do admin
     const role = (user.uid === ADMIN_UID) ? "admin" : await obterRole(user);
 
     if (role !== "admin") {
@@ -785,13 +783,13 @@ function mostrarCredenciais(nome, email, password, telemovel, tipo) {
     let linkLogin, titulo;
     if (tipo === "garcom") {
         linkLogin = base + "/garcom.html";
-        titulo = "🍽️ Área do Garçom";
+        titulo = "🍽️ Brasa Grill — Área do Garçom";
     } else if (tipo === "estafeta") {
         linkLogin = base + "/estafeta.html";
-        titulo = "🛵 Área do Estafeta";
+        titulo = "🛵 Brasa Delivery — Área do Estafeta";
     } else {
         linkLogin = base;
-        titulo = "🔥 Brasa Grill — Delivery";
+        titulo = "🔥 Brasa Grill";
     }
     credenciaisAtuais = { nome, email, password, telemovel, tipo, linkLogin, titulo };
     if (credEmail) credEmail.textContent = email;
@@ -830,7 +828,25 @@ if (btnWhatsCred) {
         if (!credenciaisAtuais) return;
         let tel = credenciaisAtuais.telemovel.replace(/\D/g, "");
         if (!tel.startsWith("258")) tel = "258" + tel;
-        const msg = `Olá ${credenciaisAtuais.nome}! 👋\n\nAqui estão as tuas credenciais de acesso:\n\n${credenciaisAtuais.titulo}\n\n📧 Email:\n${credenciaisAtuais.email}\n\n🔑 Senha:\n${credenciaisAtuais.password}\n\n🌐 Link para entrar:\n${credenciaisAtuais.linkLogin}\n\n💡 Dica: Abre o link no Chrome e adiciona ao ecrã inicial para ficares com um ícone direto.\n\nBom trabalho! 🔥`;
+        const msg = 
+`Olá ${credenciaisAtuais.nome}! 👋
+
+Aqui estão as tuas credenciais de acesso:
+
+${credenciaisAtuais.titulo}
+
+📧 Email:
+${credenciaisAtuais.email}
+
+🔑 Senha:
+${credenciaisAtuais.password}
+
+🌐 Link para entrar:
+${credenciaisAtuais.linkLogin}
+
+💡 Dica: Abre o link no Chrome e adiciona ao ecrã inicial para ficares com um ícone direto.
+
+Bom trabalho! 🔥`;
         window.open(`https://wa.me/${tel}?text=${encodeURIComponent(msg)}`, "_blank");
     });
 }
@@ -852,7 +868,7 @@ btnPeriodos.forEach(btn => {
         btnPeriodos.forEach(b => b.classList.remove("ativo"));
         this.classList.add("ativo");
         renderizarResumoDia();
-        renderizarEstafetas && renderizarEstatisticas();
+        renderizarEstatisticas();
         renderizarPedidos();
     });
 });

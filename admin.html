@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#080808">
     <meta name="robots" content="noindex, nofollow">
-    <title>Painel — Brasa Grill — Delivery</title>
+    <title>Painel — Brasa Grill</title>
     <link rel="stylesheet" href="admin.css">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
@@ -18,14 +18,20 @@
             <div class="login-topo">
                 <i data-lucide="lock"></i>
                 <h1>Painel do Restaurante</h1>
-                <p>Brasa Grill — Delivery</p>
+                <p>Brasa Grill</p>
             </div>
             <form id="formLogin">
                 <div class="form-linha">
-                    <label for="emailInput">Email<input type="email" id="emailInput" placeholder="admin@brasagrill.mz" autocomplete="email" required></label>
+                    <label for="emailInput">
+                        Email
+                        <input type="email" id="emailInput" placeholder="admin@brasagrill.mz" autocomplete="email" required>
+                    </label>
                 </div>
                 <div class="form-linha">
-                    <label for="passwordInput">Palavra-passe<input type="password" id="passwordInput" placeholder="Introduza a palavra-passe" autocomplete="current-password" required></label>
+                    <label for="passwordInput">
+                        Palavra-passe
+                        <input type="password" id="passwordInput" placeholder="Introduza a palavra-passe" autocomplete="current-password" required>
+                    </label>
                 </div>
                 <p id="erroLogin" class="erro-login" hidden>❌ Credenciais incorretas</p>
                 <button type="submit" class="btn-entrar"><i data-lucide="log-in"></i> Entrar</button>
@@ -47,7 +53,7 @@
 
         <header class="painel-header">
             <div class="painel-header-info">
-                <h1><i data-lucide="flame"></i> Brasa Grill — Delivery</h1>
+                <h1><i data-lucide="flame"></i> Brasa Grill</h1>
                 <p id="saudacaoPainel">Painel de pedidos em tempo real</p>
             </div>
             <div class="painel-header-acoes">
@@ -117,7 +123,9 @@
         <section class="gestao-estafetas">
             <div class="gestao-estafetas-topo">
                 <h2 class="resumo-titulo"><i data-lucide="utensils-crossed"></i> Garçons</h2>
-                <button type="button" id="btnNovoGarcom" class="btn-novo-estafeta"><i data-lucide="plus"></i> Adicionar garçom</button>
+                <button type="button" id="btnNovoGarcom" class="btn-novo-estafeta">
+                    <i data-lucide="plus"></i> Adicionar garçom
+                </button>
             </div>
             <div id="listaGarcons" class="lista-estafetas">
                 <div class="sem-estafetas"><i data-lucide="inbox"></i><p>Nenhum garçom registado.</p></div>
@@ -127,7 +135,9 @@
         <section class="gestao-estafetas">
             <div class="gestao-estafetas-topo">
                 <h2 class="resumo-titulo"><i data-lucide="bike"></i> Estafetas</h2>
-                <button type="button" id="btnNovoEstafeta" class="btn-novo-estafeta"><i data-lucide="plus"></i> Adicionar estafeta</button>
+                <button type="button" id="btnNovoEstafeta" class="btn-novo-estafeta">
+                    <i data-lucide="plus"></i> Adicionar estafeta
+                </button>
             </div>
             <div id="listaEstafetas" class="lista-estafetas">
                 <div class="sem-estafetas"><i data-lucide="inbox"></i><p>Nenhum estafeta registado.</p></div>

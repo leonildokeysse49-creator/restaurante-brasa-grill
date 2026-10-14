@@ -60,6 +60,7 @@ a { color: inherit; text-decoration: none; }
     background: var(--preto); color: var(--texto);
     border: 1px solid var(--borda); border-radius: 8px;
     font-size: 1rem; outline: none; transition: all var(--transicao);
+    display: block;
 }
 
 #emailInput:focus, #passwordInput:focus {
