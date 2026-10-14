@@ -3,7 +3,7 @@
    ========================================================= */
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBc150AudMs3XrpQRNG2V3VvaE7-p3YJMY",
+    apiKey: "AIzaSyA6c3TkaitCJN7HSjaHd_7E5Jy_qSAtqmw",
     authDomain: "brasa-grill-a22ee.firebaseapp.com",
     projectId: "brasa-grill-a22ee",
     storageBucket: "brasa-grill-a22ee.firebasestorage.app",
