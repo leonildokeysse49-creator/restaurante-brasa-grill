@@ -613,7 +613,7 @@ if (formEstafeta) {
                 });
                 await db.collection("roles").doc(uid).set({ role: "estafeta" });
                 modalEstafeta.hidden = true;
-                mostrarCredenciais(nome, email, password, telemovel);
+                mostrarCredenciais(nome, email, password, telemovel, "estafeta");
             }
         } catch (erro) {
             console.error("Erro estafeta:", erro);
@@ -736,7 +736,7 @@ if (formGarcom) {
                 });
                 await db.collection("roles").doc(uid).set({ role: "garcom" });
                 modalGarcom.hidden = true;
-                mostrarCredenciais(nome, email, password, telemovel);
+                mostrarCredenciais(nome, email, password, telemovel, "garcom");
             }
         } catch (erro) {
             console.error("Erro garçom:", erro);
@@ -780,8 +780,20 @@ if (listaGarcons) {
 
 let credenciaisAtuais = null;
 
-function mostrarCredenciais(nome, email, password, telemovel) {
-    credenciaisAtuais = { nome, email, password, telemovel };
+function mostrarCredenciais(nome, email, password, telemovel, tipo) {
+    const base = "https://leonildokeysse49-creator.github.io/restaurante-brasa-grill";
+    let linkLogin, titulo;
+    if (tipo === "garcom") {
+        linkLogin = base + "/garcom.html";
+        titulo = "🍽️ Área do Garçom";
+    } else if (tipo === "estafeta") {
+        linkLogin = base + "/estafeta.html";
+        titulo = "🛵 Área do Estafeta";
+    } else {
+        linkLogin = base;
+        titulo = "🔥 Brasa Grill — Delivery";
+    }
+    credenciaisAtuais = { nome, email, password, telemovel, tipo, linkLogin, titulo };
     if (credEmail) credEmail.textContent = email;
     if (credSenha) credSenha.textContent = password;
     modalCredenciais.hidden = false;
@@ -798,7 +810,7 @@ document.querySelectorAll("[data-fechar-cred]").forEach(el => {
 if (btnCopiarCred) {
     btnCopiarCred.addEventListener("click", async function () {
         if (!credenciaisAtuais) return;
-        const texto = `🔥 BRASA GRILL — Credenciais de Acesso\n\n👤 Nome: ${credenciaisAtuais.nome}\n\n📧 Email:\n${credenciaisAtuais.email}\n\n🔑 Senha:\n${credenciaisAtuais.password}\n\n🌐 Link de acesso:\nhttps://leonildokeysse49-creator.github.io/restaurante-brasa-grill/`;
+        const texto = `${credenciaisAtuais.titulo}\n\n👤 Nome: ${credenciaisAtuais.nome}\n\n📧 Email:\n${credenciaisAtuais.email}\n\n🔑 Senha:\n${credenciaisAtuais.password}\n\n🌐 Link para entrar:\n${credenciaisAtuais.linkLogin}`;
         try {
             await navigator.clipboard.writeText(texto);
             btnCopiarCred.innerHTML = '<i data-lucide="check"></i> Copiado!';
@@ -818,7 +830,7 @@ if (btnWhatsCred) {
         if (!credenciaisAtuais) return;
         let tel = credenciaisAtuais.telemovel.replace(/\D/g, "");
         if (!tel.startsWith("258")) tel = "258" + tel;
-        const msg = `Olá ${credenciaisAtuais.nome}! 👋\n\nAqui estão as tuas credenciais de acesso ao sistema Brasa Grill:\n\n📧 Email:\n${credenciaisAtuais.email}\n\n🔑 Senha:\n${credenciaisAtuais.password}\n\n🌐 Link:\nhttps://leonildokeysse49-creator.github.io/restaurante-brasa-grill/\n\nBom trabalho! 🔥`;
+        const msg = `Olá ${credenciaisAtuais.nome}! 👋\n\nAqui estão as tuas credenciais de acesso:\n\n${credenciaisAtuais.titulo}\n\n📧 Email:\n${credenciaisAtuais.email}\n\n🔑 Senha:\n${credenciaisAtuais.password}\n\n🌐 Link para entrar:\n${credenciaisAtuais.linkLogin}\n\n💡 Dica: Abre o link no Chrome e adiciona ao ecrã inicial para ficares com um ícone direto.\n\nBom trabalho! 🔥`;
         window.open(`https://wa.me/${tel}?text=${encodeURIComponent(msg)}`, "_blank");
     });
 }
@@ -840,7 +852,7 @@ btnPeriodos.forEach(btn => {
         btnPeriodos.forEach(b => b.classList.remove("ativo"));
         this.classList.add("ativo");
         renderizarResumoDia();
-        renderizarEstatisticas();
+        renderizarEstafetas && renderizarEstatisticas();
         renderizarPedidos();
     });
 });
