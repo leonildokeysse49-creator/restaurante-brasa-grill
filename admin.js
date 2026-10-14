@@ -79,6 +79,8 @@ const credEmail = document.querySelector("#credEmail");
 const credSenha = document.querySelector("#credSenha");
 const btnCopiarCred = document.querySelector("#btnCopiarCred");
 const btnWhatsCred = document.querySelector("#btnWhatsCred");
+const previewEmailEstafeta = document.querySelector("#previewEmailEstafeta");
+const previewEmailGarcom = document.querySelector("#previewEmailGarcom");
 
 
 /* LOGIN COM FIREBASE AUTH */
@@ -91,7 +93,7 @@ formLogin.addEventListener("submit", async function (e) {
 
     try {
         const cred = await firebase.auth().signInWithEmailAndPassword(email, pass);
-        const role = obterRolePorEmail(cred.user);
+        const role = await obterRole(cred.user);
 
         console.log("✅ Login OK:", cred.user.email, "| Role:", role);
 
@@ -160,7 +162,7 @@ firebase.auth().onAuthStateChanged(async (user) => {
         return;
     }
 
-    const role = obterRolePorEmail(user);
+    const role = await obterRole(user);
     if (role !== "admin") {
         await firebase.auth().signOut();
         mostrarLogin();
@@ -679,6 +681,7 @@ if (btnNovoEstafeta) {
     btnNovoEstafeta.addEventListener("click", function () {
         formEstafeta.reset();
         document.querySelector("#estafetaId").value = "";
+        if (previewEmailEstafeta) previewEmailEstafeta.textContent = "—";
         tituloModalEstafeta.textContent = "Novo estafeta";
         modalEstafeta.hidden = false;
         setTimeout(() => document.querySelector("#estafetaNome").focus(), 100);
@@ -688,6 +691,19 @@ if (btnNovoEstafeta) {
 document.querySelectorAll("[data-fechar-estafeta]").forEach(el => {
     el.addEventListener("click", () => { modalEstafeta.hidden = true; });
 });
+
+
+/* PREVIEW EMAIL EM TEMPO REAL — ESTAFETA */
+
+const estafetaNomeEl = document.querySelector("#estafetaNome");
+if (estafetaNomeEl) {
+    estafetaNomeEl.addEventListener("input", function () {
+        const nome = this.value.trim();
+        if (previewEmailEstafeta) {
+            previewEmailEstafeta.textContent = nome ? gerarEmailDoNome(nome) : "—";
+        }
+    });
+}
 
 
 /* CRIAR/EDITAR ESTAFETA */
@@ -710,6 +726,7 @@ if (formEstafeta) {
 
         try {
             if (id) {
+                // Edição — só atualiza dados
                 await db.collection("estafetas").doc(id).update({
                     nome, telemovel, tipo,
                     atualizadoEm: firebase.firestore.FieldValue.serverTimestamp()
@@ -718,21 +735,22 @@ if (formEstafeta) {
                 modalEstafeta.hidden = true;
 
             } else {
-                let slug = gerarSlug(nome);
-                let email = gerarEmail("estafeta", slug);
-                const password = gerarPassword(slug, telemovel);
+                // Criar conta nova
+                let email = gerarEmailDoNome(nome);
+                let password = gerarPasswordDoNome(nome);
 
                 let uid;
                 try {
                     uid = await criarContaUtilizador(email, password);
                 } catch (err) {
                     if (err.code === "auth/email-already-in-use") {
-                        slug = slug + Math.floor(Math.random() * 99);
-                        email = gerarEmail("estafeta", slug);
+                        email = gerarSlug(nome) + Math.floor(Math.random() * 99) + "@brasagrill.mz";
+                        password = gerarPasswordDoNome(nome);
                         uid = await criarContaUtilizador(email, password);
                     } else { throw err; }
                 }
 
+                // Guarda estafeta
                 await db.collection("estafetas").doc(uid).set({
                     nome, telemovel, tipo, email,
                     estado: "offline",
@@ -741,6 +759,9 @@ if (formEstafeta) {
                     ganhos_hoje: 0,
                     criadoEm: firebase.firestore.FieldValue.serverTimestamp()
                 });
+
+                // Guarda role
+                await db.collection("roles").doc(uid).set({ role: "estafeta" });
 
                 modalEstafeta.hidden = true;
                 mostrarCredenciais(nome, email, password, telemovel);
@@ -770,6 +791,7 @@ if (listaEstafetas) {
             document.querySelector("#estafetaNome").value = est.nome || "";
             document.querySelector("#estafetaTelemovel").value = est.telemovel || "";
             document.querySelector("#estafetaTipo").value = est.tipo || "proprio";
+            if (previewEmailEstafeta) previewEmailEstafeta.textContent = est.email || "—";
             tituloModalEstafeta.textContent = "Editar estafeta";
             modalEstafeta.hidden = false;
             return;
@@ -825,6 +847,7 @@ if (btnNovoGarcom) {
     btnNovoGarcom.addEventListener("click", function () {
         formGarcom.reset();
         document.querySelector("#garcomId").value = "";
+        if (previewEmailGarcom) previewEmailGarcom.textContent = "—";
         tituloModalGarcom.textContent = "Novo garçom";
         modalGarcom.hidden = false;
         setTimeout(() => document.querySelector("#garcomNome").focus(), 100);
@@ -834,6 +857,19 @@ if (btnNovoGarcom) {
 document.querySelectorAll("[data-fechar-garcom]").forEach(el => {
     el.addEventListener("click", () => { modalGarcom.hidden = true; });
 });
+
+
+/* PREVIEW EMAIL EM TEMPO REAL — GARÇOM */
+
+const garcomNomeEl = document.querySelector("#garcomNome");
+if (garcomNomeEl) {
+    garcomNomeEl.addEventListener("input", function () {
+        const nome = this.value.trim();
+        if (previewEmailGarcom) {
+            previewEmailGarcom.textContent = nome ? gerarEmailDoNome(nome) : "—";
+        }
+    });
+}
 
 
 /* CRIAR/EDITAR GARÇOM */
@@ -863,17 +899,16 @@ if (formGarcom) {
                 modalGarcom.hidden = true;
 
             } else {
-                let slug = gerarSlug(nome);
-                let email = gerarEmail("garcom", slug);
-                const password = gerarPassword(slug, telemovel);
+                let email = gerarEmailDoNome(nome);
+                let password = gerarPasswordDoNome(nome);
 
                 let uid;
                 try {
                     uid = await criarContaUtilizador(email, password);
                 } catch (err) {
                     if (err.code === "auth/email-already-in-use") {
-                        slug = slug + Math.floor(Math.random() * 99);
-                        email = gerarEmail("garcom", slug);
+                        email = gerarSlug(nome) + Math.floor(Math.random() * 99) + "@brasagrill.mz";
+                        password = gerarPasswordDoNome(nome);
                         uid = await criarContaUtilizador(email, password);
                     } else { throw err; }
                 }
@@ -883,6 +918,8 @@ if (formGarcom) {
                     ativo: true,
                     criadoEm: firebase.firestore.FieldValue.serverTimestamp()
                 });
+
+                await db.collection("roles").doc(uid).set({ role: "garcom" });
 
                 modalGarcom.hidden = true;
                 mostrarCredenciais(nome, email, password, telemovel);
@@ -911,6 +948,7 @@ if (listaGarcons) {
             document.querySelector("#garcomId").value = g.id;
             document.querySelector("#garcomNome").value = g.nome || "";
             document.querySelector("#garcomTelemovel").value = g.telemovel || "";
+            if (previewEmailGarcom) previewEmailGarcom.textContent = g.email || "—";
             tituloModalGarcom.textContent = "Editar garçom";
             modalGarcom.hidden = false;
             return;
@@ -940,8 +978,8 @@ let credenciaisAtuais = null;
 function mostrarCredenciais(nome, email, password, telemovel) {
     credenciaisAtuais = { nome, email, password, telemovel };
 
-    credEmail.textContent = email;
-    credSenha.textContent = password;
+    if (credEmail) credEmail.textContent = email;
+    if (credSenha) credSenha.textContent = password;
 
     modalCredenciais.hidden = false;
     recriarIcones();
