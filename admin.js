@@ -2,9 +2,7 @@
    BRASA GRILL — PAINEL DO RESTAURANTE (FIREBASE AUTH)
    ========================================================= */
 
-/* =========================================================
-   FUNÇÕES AUXILIARES (autocontidas)
-   ========================================================= */
+/* FUNÇÕES AUXILIARES (autocontidas) */
 
 let _secondaryAuth = null;
 
@@ -56,10 +54,7 @@ async function obterRole(user) {
     }
 }
 
-
-/* =========================================================
-   ESTADO
-   ========================================================= */
+/* ESTADO */
 
 let pedidosAtuais = [];
 let estafetasAtuais = [];
@@ -70,7 +65,6 @@ let tipoAtual = "todos";
 let pesquisaAtual = "";
 let idsAnteriores = new Set();
 let primeiraCarga = true;
-
 
 /* AUXILIARES */
 
@@ -101,7 +95,6 @@ function saudacaoPorHora() {
     if (hora >= 12 && hora < 20) return "Boa tarde";
     return "Boa noite";
 }
-
 
 /* ELEMENTOS */
 
@@ -141,8 +134,7 @@ const btnWhatsCred = document.querySelector("#btnWhatsCred");
 const previewEmailEstafeta = document.querySelector("#previewEmailEstafeta");
 const previewEmailGarcom = document.querySelector("#previewEmailGarcom");
 
-
-/* LOGIN COM FIREBASE AUTH */
+/* LOGIN */
 
 formLogin.addEventListener("submit", async function (e) {
     e.preventDefault();
@@ -212,9 +204,6 @@ btnSair.addEventListener("click", async function () {
     location.reload();
 });
 
-
-/* VERIFICAR SESSÃO */
-
 firebase.auth().onAuthStateChanged(async (user) => {
     if (!user || user.isAnonymous) {
         mostrarLogin();
@@ -232,20 +221,16 @@ firebase.auth().onAuthStateChanged(async (user) => {
     entrarNoPainel(nome);
 });
 
-
 /* INICIAR PAINEL */
 
 function iniciarPainel() {
-
     db.collection("pedidos").orderBy("criadoEm", "desc").limit(200).onSnapshot(snapshot => {
         if (indicadorLigacao) {
             indicadorLigacao.innerHTML = '<i data-lucide="wifi"></i> Em direto';
             indicadorLigacao.classList.remove("offline");
         }
-
         const novos = [];
         snapshot.forEach(doc => novos.push({ id: doc.id, ...doc.data() }));
-
         if (!primeiraCarga) {
             novos.forEach(pedido => {
                 if (!idsAnteriores.has(pedido.id) && pedido.estado === "novo") {
@@ -254,11 +239,9 @@ function iniciarPainel() {
                 }
             });
         }
-
         idsAnteriores = new Set(novos.map(p => p.id));
         pedidosAtuais = novos;
         primeiraCarga = false;
-
         renderizarResumoDia();
         renderizarEstatisticas();
         renderizarPedidos();
@@ -283,14 +266,12 @@ function iniciarPainel() {
     });
 }
 
-
 /* FILTROS */
 
 function filtrarPorPeriodo(pedidos, periodo) {
     if (periodo === "tudo") return pedidos;
     const agora = new Date();
     const hoje = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate());
-
     return pedidos.filter(p => {
         if (!p.criadoEm) return false;
         const data = p.criadoEm.toDate ? p.criadoEm.toDate() : new Date(p.criadoEm);
@@ -341,25 +322,20 @@ function obterPedidosFiltrados() {
     return lista;
 }
 
-
 /* RESUMO */
 
 function renderizarResumoDia() {
     const hoje = new Date();
     const inicioHoje = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
-
     const pedidosHoje = pedidosAtuais.filter(p => {
         if (!p.criadoEm) return false;
         const data = p.criadoEm.toDate ? p.criadoEm.toDate() : new Date(p.criadoEm);
         return data >= inicioHoje;
     });
-
     const validos = pedidosHoje.filter(p => p.estado !== "recusado");
     const total = validos.length;
     const receita = validos.reduce((s, p) => s + (p.total || 0), 0);
-    const clientes = new Set(
-        validos.filter(p => p.tipoPedido !== "mesa").map(p => p.telemovel).filter(Boolean)
-    ).size;
+    const clientes = new Set(validos.filter(p => p.tipoPedido !== "mesa").map(p => p.telemovel).filter(Boolean)).size;
     const entregas = validos.filter(p => p.tipoPedido !== "mesa" && p.tipoEntrega === "entrega").length;
     const recolhas = validos.filter(p => p.tipoPedido !== "mesa" && p.tipoEntrega === "recolha").length;
     const mesas = validos.filter(p => p.tipoPedido === "mesa").length;
@@ -382,20 +358,14 @@ function renderizarResumoDia() {
     if (elM) elM.textContent = formatarPreco(media);
 }
 
-
 /* ESTATÍSTICAS */
 
 function renderizarEstatisticas() {
     let base = [...pedidosAtuais];
     base = filtrarPorPeriodo(base, periodoAtual);
     base = filtrarPorTipo(base, tipoAtual);
-
-    const cont = {
-        novo: 0, aceite: 0, em_preparacao: 0, pronto: 0,
-        a_caminho: 0, servido: 0, entregue: 0
-    };
+    const cont = { novo: 0, aceite: 0, em_preparacao: 0, pronto: 0, a_caminho: 0, servido: 0, entregue: 0 };
     base.forEach(p => { if (cont[p.estado] !== undefined) cont[p.estado]++; });
-
     const elN = document.querySelector("#contNovo");
     const elA = document.querySelector("#contAceite");
     const elP = document.querySelector("#contPreparacao");
@@ -403,7 +373,6 @@ function renderizarEstatisticas() {
     const elAC = document.querySelector("#contACaminho");
     const elS = document.querySelector("#contServido");
     const elE = document.querySelector("#contEntregue");
-
     if (elN) elN.textContent = cont.novo;
     if (elA) elA.textContent = cont.aceite;
     if (elP) elP.textContent = cont.em_preparacao;
@@ -413,107 +382,51 @@ function renderizarEstatisticas() {
     if (elE) elE.textContent = cont.entregue;
 }
 
-
 /* FALAR COM CLIENTE */
 
 function falarComCliente(pedidoId, motivo) {
     const pedido = pedidosAtuais.find(p => p.id === pedidoId);
     if (!pedido) return;
-
     const tel = (pedido.telemovel || "").replace(/\D/g, "");
     if (!tel) { alert("⚠️ Este pedido não tem telemóvel registado."); return; }
-
     let numeroWhats = tel;
     if (!numeroWhats.startsWith("258")) numeroWhats = "258" + numeroWhats;
-
     const listaProdutos = (pedido.produtos || []).map(p => `• ${p.quantidade}x ${p.nome}`).join("\n");
     const total = formatarPreco(pedido.total);
     const cabecalho = "*🔥 BRASA GRILL*\n";
     let mensagem = "";
 
     if (motivo === "taxa") {
-        mensagem = [
-            cabecalho, "",
-            `Olá ${pedido.nome},`, "",
-            "Recebemos o seu pedido:", "",
-            "*📦 Pedido:*", listaProdutos, "",
-            `*💰 Subtotal:* ${total}`, "",
-            "*📍 Entrega em:*", pedido.morada || "—",
-            pedido.referencia ? `Referência: ${pedido.referencia}` : "",
-            "", "Para combinarmos a entrega,", "que valor propõe?"
-        ].join("\n");
+        mensagem = [cabecalho, "", `Olá ${pedido.nome},`, "", "Recebemos o seu pedido:", "", "*📦 Pedido:*", listaProdutos, "", `*💰 Subtotal:* ${total}`, "", "*📍 Entrega em:*", pedido.morada || "—", pedido.referencia ? `Referência: ${pedido.referencia}` : "", "", "Para combinarmos a entrega,", "que valor propõe?"].join("\n");
     }
-
     if (motivo === "pronto") {
         if (pedido.tipoEntrega === "recolha") {
-            mensagem = [
-                cabecalho, "", "*✅ O seu pedido está pronto!*", "",
-                `Olá ${pedido.nome},`, "",
-                "O seu pedido já pode ser recolhido", "no nosso restaurante.", "",
-                "*📦 Pedido:*", listaProdutos, "",
-                `*💰 Total:* ${total}`, "",
-                "*📍 Recolha em:*", "Brasa Grill — Alto Maé", "",
-                "*🕒 Todos os dias, das 7h às 23h*", "",
-                "Obrigado pela preferência! 🙏"
-            ].join("\n");
+            mensagem = [cabecalho, "", "*✅ O seu pedido está pronto!*", "", `Olá ${pedido.nome},`, "", "O seu pedido já pode ser recolhido", "no nosso restaurante.", "", "*📦 Pedido:*", listaProdutos, "", `*💰 Total:* ${total}`, "", "*📍 Recolha em:*", "Brasa Grill — Alto Maé", "", "*🕒 Todos os dias, das 7h às 23h*", "", "Obrigado pela preferência! 🙏"].join("\n");
         } else {
-            mensagem = [
-                cabecalho, "", "*✅ O seu pedido está pronto!*", "",
-                `Olá ${pedido.nome},`, "",
-                "O seu pedido está preparado e", "sairá para entrega em breve.", "",
-                "*📦 Pedido:*", listaProdutos, "",
-                `*💰 Total:* ${total}`, "",
-                `*📍 Morada:* ${pedido.morada || "—"}`, "",
-                "*🛵 Aguarde a chegada do estafeta.*", "",
-                "Obrigado pela preferência! 🙏"
-            ].join("\n");
+            mensagem = [cabecalho, "", "*✅ O seu pedido está pronto!*", "", `Olá ${pedido.nome},`, "", "O seu pedido está preparado e", "sairá para entrega em breve.", "", "*📦 Pedido:*", listaProdutos, "", `*💰 Total:* ${total}`, "", `*📍 Morada:* ${pedido.morada || "—"}`, "", "*🛵 Aguarde a chegada do estafeta.*", "", "Obrigado pela preferência! 🙏"].join("\n");
         }
     }
-
     if (motivo === "a_caminho") {
-        mensagem = [
-            cabecalho, "", "*🛵 O seu pedido saiu para entrega!*", "",
-            `Olá ${pedido.nome},`, "",
-            "O estafeta está a caminho", "da sua morada.", "",
-            "*📦 Pedido:*", listaProdutos, "",
-            `*💰 Total:* ${total}`, "",
-            `*📍 Entrega em:* ${pedido.morada || "—"}`, "",
-            "*🕒 Chega dentro de momentos.*", "",
-            "Obrigado pela preferência! 🙏"
-        ].join("\n");
+        mensagem = [cabecalho, "", "*🛵 O seu pedido saiu para entrega!*", "", `Olá ${pedido.nome},`, "", "O estafeta está a caminho", "da sua morada.", "", "*📦 Pedido:*", listaProdutos, "", `*💰 Total:* ${total}`, "", `*📍 Entrega em:* ${pedido.morada || "—"}`, "", "*🕒 Chega dentro de momentos.*", "", "Obrigado pela preferência! 🙏"].join("\n");
     }
-
     const url = `https://wa.me/${numeroWhats}?text=${encodeURIComponent(mensagem)}`;
     window.open(url, "_blank");
 }
-
 
 /* RENDERIZAR PEDIDOS */
 
 function renderizarPedidos() {
     const pedidosFiltrados = obterPedidosFiltrados();
-
     if (pedidosFiltrados.length === 0) {
         listaPedidos.innerHTML = `<div class="sem-pedidos"><i data-lucide="inbox"></i><p>Nenhum pedido de momento.</p></div>`;
         recriarIcones();
         return;
     }
-
     listaPedidos.innerHTML = pedidosFiltrados.map(pedido => {
-
         const ehMesa = pedido.tipoPedido === "mesa";
         const data = formatarData(pedido.criadoEm);
-
-        const estadoTexto = {
-            novo: "🆕 Novo", aceite: "✅ Aceite", em_preparacao: "👨‍🍳 Em preparação",
-            pronto: "📦 Pronto", a_caminho: "🛵 A caminho", servido: "🍽️ Servido",
-            entregue: "✔️ Entregue", pago: "💰 Pago", recusado: "❌ Recusado"
-        }[pedido.estado] || pedido.estado;
-
-        const produtosHTML = (pedido.produtos || []).map(p => `
-            <li><span>${p.quantidade}× ${p.nome}</span><span>${formatarPreco(p.subtotal || p.preco * p.quantidade)}</span></li>
-        `).join("");
-
+        const estadoTexto = { novo: "🆕 Novo", aceite: "✅ Aceite", em_preparacao: "👨‍🍳 Em preparação", pronto: "📦 Pronto", a_caminho: "🛵 A caminho", servido: "🍽️ Servido", entregue: "✔️ Entregue", pago: "💰 Pago", recusado: "❌ Recusado" }[pedido.estado] || pedido.estado;
+        const produtosHTML = (pedido.produtos || []).map(p => `<li><span>${p.quantidade}× ${p.nome}</span><span>${formatarPreco(p.subtotal || p.preco * p.quantidade)}</span></li>`).join("");
         let infoExtra = "";
 
         if (ehMesa) {
@@ -544,10 +457,7 @@ function renderizarPedidos() {
 
         if (ehMesa) {
             if (pedido.estado === "novo") {
-                botoesHTML = `
-                    <button class="btn-acao btn-aceitar" data-acao="em_preparacao" data-id="${pedido.id}"><i data-lucide="chef-hat"></i> Preparar</button>
-                    <button class="btn-acao btn-recusar" data-acao="recusado" data-id="${pedido.id}"><i data-lucide="x"></i> Cancelar</button>
-                `;
+                botoesHTML = `<button class="btn-acao btn-aceitar" data-acao="em_preparacao" data-id="${pedido.id}"><i data-lucide="chef-hat"></i> Preparar</button><button class="btn-acao btn-recusar" data-acao="recusado" data-id="${pedido.id}"><i data-lucide="x"></i> Cancelar</button>`;
             } else if (pedido.estado === "em_preparacao") {
                 botoesHTML = `<button class="btn-acao btn-pronto" data-acao="pronto" data-id="${pedido.id}"><i data-lucide="package"></i> Pronto</button>`;
             } else if (pedido.estado === "pronto") {
@@ -559,10 +469,7 @@ function renderizarPedidos() {
             }
         } else {
             if (pedido.estado === "novo") {
-                botoesHTML = `
-                    <button class="btn-acao btn-aceitar" data-acao="aceite" data-id="${pedido.id}"><i data-lucide="check"></i> Aceitar</button>
-                    <button class="btn-acao btn-recusar" data-acao="recusado" data-id="${pedido.id}"><i data-lucide="x"></i> Recusar</button>
-                `;
+                botoesHTML = `<button class="btn-acao btn-aceitar" data-acao="aceite" data-id="${pedido.id}"><i data-lucide="check"></i> Aceitar</button><button class="btn-acao btn-recusar" data-acao="recusado" data-id="${pedido.id}"><i data-lucide="x"></i> Recusar</button>`;
                 if (pedido.tipoEntrega === "entrega") {
                     botoesHTML += `<button class="btn-acao btn-falar" data-falar="taxa" data-id="${pedido.id}"><i data-lucide="message-circle"></i> Combinar taxa</button>`;
                 }
@@ -572,28 +479,16 @@ function renderizarPedidos() {
                 botoesHTML = `<button class="btn-acao btn-pronto" data-acao="pronto" data-id="${pedido.id}"><i data-lucide="package"></i> Pronto</button>`;
             } else if (pedido.estado === "pronto") {
                 if (pedido.tipoEntrega === "recolha") {
-                    botoesHTML = `
-                        <button class="btn-acao btn-avisar" data-falar="pronto" data-id="${pedido.id}"><i data-lucide="message-circle"></i> Avisar cliente</button>
-                        <button class="btn-acao btn-entregar" data-acao="entregue" data-id="${pedido.id}"><i data-lucide="check-check"></i> Entregue</button>
-                    `;
+                    botoesHTML = `<button class="btn-acao btn-avisar" data-falar="pronto" data-id="${pedido.id}"><i data-lucide="message-circle"></i> Avisar cliente</button><button class="btn-acao btn-entregar" data-acao="entregue" data-id="${pedido.id}"><i data-lucide="check-check"></i> Entregue</button>`;
                 } else {
                     if (pedido.estafetaId) {
-                        botoesHTML = `
-                            <button class="btn-acao btn-avisar" data-falar="pronto" data-id="${pedido.id}"><i data-lucide="message-circle"></i> Avisar cliente</button>
-                            <button class="btn-acao btn-caminho" data-acao="a_caminho" data-id="${pedido.id}"><i data-lucide="bike"></i> Saiu para entrega</button>
-                        `;
+                        botoesHTML = `<button class="btn-acao btn-avisar" data-falar="pronto" data-id="${pedido.id}"><i data-lucide="message-circle"></i> Avisar cliente</button><button class="btn-acao btn-caminho" data-acao="a_caminho" data-id="${pedido.id}"><i data-lucide="bike"></i> Saiu para entrega</button>`;
                     } else {
-                        botoesHTML = `
-                            <button class="btn-acao btn-avisar" data-falar="pronto" data-id="${pedido.id}"><i data-lucide="message-circle"></i> Avisar cliente</button>
-                            <button class="btn-acao btn-atribuir" data-atribuir="${pedido.id}"><i data-lucide="user-plus"></i> Atribuir estafeta</button>
-                        `;
+                        botoesHTML = `<button class="btn-acao btn-avisar" data-falar="pronto" data-id="${pedido.id}"><i data-lucide="message-circle"></i> Avisar cliente</button><button class="btn-acao btn-atribuir" data-atribuir="${pedido.id}"><i data-lucide="user-plus"></i> Atribuir estafeta</button>`;
                     }
                 }
             } else if (pedido.estado === "a_caminho") {
-                botoesHTML = `
-                    <button class="btn-acao btn-avisar" data-falar="a_caminho" data-id="${pedido.id}"><i data-lucide="message-circle"></i> Avisar cliente</button>
-                    <button class="btn-acao btn-entregar" data-acao="entregue" data-id="${pedido.id}"><i data-lucide="check-check"></i> Entregue</button>
-                `;
+                botoesHTML = `<button class="btn-acao btn-avisar" data-falar="a_caminho" data-id="${pedido.id}"><i data-lucide="message-circle"></i> Avisar cliente</button><button class="btn-acao btn-entregar" data-acao="entregue" data-id="${pedido.id}"><i data-lucide="check-check"></i> Entregue</button>`;
             } else if (pedido.estado === "entregue" || pedido.estado === "recusado") {
                 botoesHTML = `<button class="btn-acao btn-apagar" data-acao="apagar" data-id="${pedido.id}"><i data-lucide="trash-2"></i> Apagar</button>`;
             }
@@ -605,49 +500,38 @@ function renderizarPedidos() {
                     <h3>${ehMesa ? `🍽️ Mesa ${pedido.numeroMesa}` : pedido.nome}<small>${data}</small></h3>
                     <span class="pedido-estado ${pedido.estado}">${estadoTexto}</span>
                 </div>
-
                 <div class="pedido-info">
                     ${!ehMesa ? `<div><span>Telemóvel:</span><span><a href="tel:${pedido.telemovel}" style="color:var(--amarelo);">${pedido.telemovel}</a></span></div>` : ""}
                     ${pedido.email ? `<div><span>Email:</span><span>${pedido.email}</span></div>` : ""}
                     ${infoExtra}
                 </div>
-
                 <div class="pedido-produtos">
                     <strong>Produtos</strong>
                     <ul>${produtosHTML}</ul>
                 </div>
-
                 ${pedido.observacoes ? `<div class="pedido-produtos"><strong>Observações</strong><p style="color:var(--texto); margin-top:4px;">${pedido.observacoes}</p></div>` : ""}
-
                 <div class="pedido-total">
                     <span>TOTAL</span>
                     <span>${formatarPreco(pedido.total)}</span>
                 </div>
-
                 <div class="pedido-acoes">${botoesHTML}</div>
             </article>
         `;
     }).join("");
-
     recriarIcones();
 }
 
-
-/* AÇÕES NOS PEDIDOS */
+/* AÇÕES */
 
 listaPedidos.addEventListener("click", async function (e) {
     const btnFalar = e.target.closest("[data-falar]");
     if (btnFalar) { falarComCliente(btnFalar.dataset.id, btnFalar.dataset.falar); return; }
-
     const btnAtribuir = e.target.closest("[data-atribuir]");
     if (btnAtribuir) { abrirAtribuirEstafeta(btnAtribuir.dataset.atribuir); return; }
-
     const btn = e.target.closest("[data-acao]");
     if (!btn) return;
-
     const id = btn.dataset.id;
     const acao = btn.dataset.acao;
-
     try {
         if (acao === "apagar") {
             if (!confirm("Tem a certeza que quer apagar este pedido?")) return;
@@ -661,26 +545,14 @@ listaPedidos.addEventListener("click", async function (e) {
     }
 });
 
-
-/* ATRIBUIR ESTAFETA */
-
 function abrirAtribuirEstafeta(pedidoId) {
     const disponiveis = estafetasAtuais.filter(e => e.ativo !== false);
-
-    if (disponiveis.length === 0) {
-        alert("⚠️ Nenhum estafeta registado. Vá a 'Estafetas' e adicione um.");
-        return;
-    }
-
+    if (disponiveis.length === 0) { alert("⚠️ Nenhum estafeta registado."); return; }
     const opcoes = disponiveis.map(e => `${e.nome} (${e.telemovel}) — ${e.estado || "offline"}`).join("\n");
     const escolhido = prompt(`Escolha o estafeta (escreva o nome):\n\n${opcoes}`);
-
     if (!escolhido) return;
-
     const estafeta = disponiveis.find(e => e.nome.toLowerCase() === escolhido.trim().toLowerCase());
-
     if (!estafeta) { alert("❌ Estafeta não encontrado."); return; }
-
     atribuirEstafetaAoPedido(pedidoId, estafeta);
 }
 
@@ -693,31 +565,23 @@ async function atribuirEstafetaAoPedido(pedidoId, estafeta) {
             atribuidoEm: firebase.firestore.FieldValue.serverTimestamp()
         });
         alert(`✅ Pedido atribuído a ${estafeta.nome}`);
-    } catch (erro) {
-        console.error("Erro:", erro);
-        alert("❌ Não foi possível atribuir.");
-    }
+    } catch (erro) { console.error(erro); alert("❌ Não foi possível atribuir."); }
 }
 
-
-/* GESTÃO DE ESTAFETAS */
+/* ESTAFETAS */
 
 function renderizarEstafetas() {
     if (!listaEstafetas) return;
-
     const ativos = estafetasAtuais.filter(e => e.ativo !== false);
-
     if (ativos.length === 0) {
         listaEstafetas.innerHTML = `<div class="sem-estafetas"><i data-lucide="inbox"></i><p>Nenhum estafeta registado.</p></div>`;
         recriarIcones();
         return;
     }
-
     listaEstafetas.innerHTML = ativos.map(e => {
         const tipoTexto = e.tipo === "proprio" ? "Próprio" : "Opcional";
         const estadoTexto = e.estado || "offline";
         const cores = { disponivel: "#25d366", ocupado: "#f97316", offline: "#bdbdbd" };
-
         return `
             <div class="estafeta-card" data-id="${e.id}">
                 <div class="estafeta-card-info">
@@ -732,7 +596,6 @@ function renderizarEstafetas() {
             </div>
         `;
     }).join("");
-
     recriarIcones();
 }
 
@@ -751,83 +614,55 @@ document.querySelectorAll("[data-fechar-estafeta]").forEach(el => {
     el.addEventListener("click", () => { modalEstafeta.hidden = true; });
 });
 
-
-/* PREVIEW EMAIL EM TEMPO REAL — ESTAFETA */
-
 const estafetaNomeEl = document.querySelector("#estafetaNome");
 if (estafetaNomeEl) {
     estafetaNomeEl.addEventListener("input", function () {
         const nome = this.value.trim();
-        if (previewEmailEstafeta) {
-            previewEmailEstafeta.textContent = nome ? gerarEmailDoNome(nome) : "—";
-        }
+        if (previewEmailEstafeta) previewEmailEstafeta.textContent = nome ? gerarEmailDoNome(nome) : "—";
     });
 }
-
-
-/* CRIAR/EDITAR ESTAFETA */
 
 if (formEstafeta) {
     formEstafeta.addEventListener("submit", async function (e) {
         e.preventDefault();
-
         const id = document.querySelector("#estafetaId").value;
         const nome = document.querySelector("#estafetaNome").value.trim();
         const telemovel = document.querySelector("#estafetaTelemovel").value.replace(/\D/g, "");
         const tipo = document.querySelector("#estafetaTipo").value;
-
         if (!nome || !telemovel) { alert("Preencha todos os campos."); return; }
-
         const btnGuardar = formEstafeta.querySelector("button[type=submit]");
         const textoOriginal = btnGuardar.innerHTML;
         btnGuardar.disabled = true;
         btnGuardar.innerHTML = "A criar…";
-
         try {
             if (id) {
-                await db.collection("estafetas").doc(id).update({
-                    nome, telemovel, tipo,
-                    atualizadoEm: firebase.firestore.FieldValue.serverTimestamp()
-                });
+                await db.collection("estafetas").doc(id).update({ nome, telemovel, tipo, atualizadoEm: firebase.firestore.FieldValue.serverTimestamp() });
                 alert(`✅ Estafeta ${nome} atualizado.`);
                 modalEstafeta.hidden = true;
-
             } else {
                 let email = gerarEmailDoNome(nome);
                 let password = gerarPasswordDoNome(nome);
-
                 let uid;
-                try {
-                    uid = await criarContaUtilizador(email, password);
-                } catch (err) {
+                try { uid = await criarContaUtilizador(email, password); }
+                catch (err) {
                     if (err.code === "auth/email-already-in-use") {
                         email = gerarSlug(nome) + Math.floor(Math.random() * 99) + "@brasagrill.mz";
                         password = gerarPasswordDoNome(nome);
                         uid = await criarContaUtilizador(email, password);
                     } else { throw err; }
                 }
-
                 await db.collection("estafetas").doc(uid).set({
-                    nome, telemovel, tipo, email,
-                    estado: "offline",
-                    ativo: true,
-                    entregas_hoje: 0,
-                    ganhos_hoje: 0,
+                    nome, telemovel, tipo, email, estado: "offline", ativo: true,
+                    entregas_hoje: 0, ganhos_hoje: 0,
                     criadoEm: firebase.firestore.FieldValue.serverTimestamp()
                 });
-
                 await db.collection("roles").doc(uid).set({ role: "estafeta" });
-
                 modalEstafeta.hidden = true;
                 mostrarCredenciais(nome, email, password, telemovel);
             }
-
         } catch (erro) {
             console.error("Erro estafeta:", erro);
-            let msg = "❌ Não foi possível criar a conta.";
-            if (erro.code === "auth/weak-password") msg = "❌ Senha muito fraca.";
-            if (erro.code === "auth/invalid-email") msg = "❌ Email inválido.";
-            alert(msg + "\n\n" + (erro.message || ""));
+            alert("❌ Não foi possível criar a conta.\n\n" + (erro.message || ""));
         } finally {
             btnGuardar.disabled = false;
             btnGuardar.innerHTML = textoOriginal;
@@ -851,37 +686,29 @@ if (listaEstafetas) {
             modalEstafeta.hidden = false;
             return;
         }
-
         const btnRemover = e.target.closest("[data-remover-estafeta]");
         if (btnRemover) {
             const est = estafetasAtuais.find(x => x.id === btnRemover.dataset.removerEstafeta);
             if (!est) return;
             if (!confirm(`Remover ${est.nome}?`)) return;
             try {
-                await db.collection("estafetas").doc(est.id).update({
-                    ativo: false,
-                    removidoEm: firebase.firestore.FieldValue.serverTimestamp()
-                });
+                await db.collection("estafetas").doc(est.id).update({ ativo: false, removidoEm: firebase.firestore.FieldValue.serverTimestamp() });
                 alert("✅ Estafeta removido.");
             } catch (erro) { console.error(erro); alert("❌ Erro."); }
         }
     });
 }
 
-
-/* GESTÃO DE GARÇONS */
+/* GARÇONS */
 
 function renderizarGarcons() {
     if (!listaGarcons) return;
-
     const ativos = garconsAtuais.filter(g => g.ativo !== false);
-
     if (ativos.length === 0) {
         listaGarcons.innerHTML = `<div class="sem-estafetas"><i data-lucide="inbox"></i><p>Nenhum garçom registado.</p></div>`;
         recriarIcones();
         return;
     }
-
     listaGarcons.innerHTML = ativos.map(g => `
         <div class="estafeta-card" data-id="${g.id}">
             <div class="estafeta-card-info">
@@ -894,7 +721,6 @@ function renderizarGarcons() {
             </div>
         </div>
     `).join("");
-
     recriarIcones();
 }
 
@@ -913,79 +739,53 @@ document.querySelectorAll("[data-fechar-garcom]").forEach(el => {
     el.addEventListener("click", () => { modalGarcom.hidden = true; });
 });
 
-
-/* PREVIEW EMAIL EM TEMPO REAL — GARÇOM */
-
 const garcomNomeEl = document.querySelector("#garcomNome");
 if (garcomNomeEl) {
     garcomNomeEl.addEventListener("input", function () {
         const nome = this.value.trim();
-        if (previewEmailGarcom) {
-            previewEmailGarcom.textContent = nome ? gerarEmailDoNome(nome) : "—";
-        }
+        if (previewEmailGarcom) previewEmailGarcom.textContent = nome ? gerarEmailDoNome(nome) : "—";
     });
 }
-
-
-/* CRIAR/EDITAR GARÇOM */
 
 if (formGarcom) {
     formGarcom.addEventListener("submit", async function (e) {
         e.preventDefault();
-
         const id = document.querySelector("#garcomId").value;
         const nome = document.querySelector("#garcomNome").value.trim();
         const telemovel = document.querySelector("#garcomTelemovel").value.replace(/\D/g, "");
-
         if (!nome || !telemovel) { alert("Preencha todos os campos."); return; }
-
         const btnGuardar = formGarcom.querySelector("button[type=submit]");
         const textoOriginal = btnGuardar.innerHTML;
         btnGuardar.disabled = true;
         btnGuardar.innerHTML = "A criar…";
-
         try {
             if (id) {
-                await db.collection("garcons").doc(id).update({
-                    nome, telemovel,
-                    atualizadoEm: firebase.firestore.FieldValue.serverTimestamp()
-                });
+                await db.collection("garcons").doc(id).update({ nome, telemovel, atualizadoEm: firebase.firestore.FieldValue.serverTimestamp() });
                 alert(`✅ Garçom ${nome} atualizado.`);
                 modalGarcom.hidden = true;
-
             } else {
                 let email = gerarEmailDoNome(nome);
                 let password = gerarPasswordDoNome(nome);
-
                 let uid;
-                try {
-                    uid = await criarContaUtilizador(email, password);
-                } catch (err) {
+                try { uid = await criarContaUtilizador(email, password); }
+                catch (err) {
                     if (err.code === "auth/email-already-in-use") {
                         email = gerarSlug(nome) + Math.floor(Math.random() * 99) + "@brasagrill.mz";
                         password = gerarPasswordDoNome(nome);
                         uid = await criarContaUtilizador(email, password);
                     } else { throw err; }
                 }
-
                 await db.collection("garcons").doc(uid).set({
-                    nome, telemovel, email,
-                    ativo: true,
+                    nome, telemovel, email, ativo: true,
                     criadoEm: firebase.firestore.FieldValue.serverTimestamp()
                 });
-
                 await db.collection("roles").doc(uid).set({ role: "garcom" });
-
                 modalGarcom.hidden = true;
                 mostrarCredenciais(nome, email, password, telemovel);
             }
-
         } catch (erro) {
             console.error("Erro garçom:", erro);
-            let msg = "❌ Não foi possível criar a conta.";
-            if (erro.code === "auth/weak-password") msg = "❌ Senha muito fraca.";
-            if (erro.code === "auth/invalid-email") msg = "❌ Email inválido.";
-            alert(msg + "\n\n" + (erro.message || ""));
+            alert("❌ Não foi possível criar a conta.\n\n" + (erro.message || ""));
         } finally {
             btnGuardar.disabled = false;
             btnGuardar.innerHTML = textoOriginal;
@@ -1008,34 +808,27 @@ if (listaGarcons) {
             modalGarcom.hidden = false;
             return;
         }
-
         const btnRemover = e.target.closest("[data-remover-garcom]");
         if (btnRemover) {
             const g = garconsAtuais.find(x => x.id === btnRemover.dataset.removerGarcom);
             if (!g) return;
             if (!confirm(`Remover ${g.nome}?`)) return;
             try {
-                await db.collection("garcons").doc(g.id).update({
-                    ativo: false,
-                    removidoEm: firebase.firestore.FieldValue.serverTimestamp()
-                });
+                await db.collection("garcons").doc(g.id).update({ ativo: false, removidoEm: firebase.firestore.FieldValue.serverTimestamp() });
                 alert("✅ Garçom removido.");
             } catch (erro) { console.error(erro); alert("❌ Erro."); }
         }
     });
 }
 
-
-/* MODAL DE CREDENCIAIS */
+/* CREDENCIAIS */
 
 let credenciaisAtuais = null;
 
 function mostrarCredenciais(nome, email, password, telemovel) {
     credenciaisAtuais = { nome, email, password, telemovel };
-
     if (credEmail) credEmail.textContent = email;
     if (credSenha) credSenha.textContent = password;
-
     modalCredenciais.hidden = false;
     recriarIcones();
 }
@@ -1050,20 +843,7 @@ document.querySelectorAll("[data-fechar-cred]").forEach(el => {
 if (btnCopiarCred) {
     btnCopiarCred.addEventListener("click", async function () {
         if (!credenciaisAtuais) return;
-        const texto =
-`🔥 BRASA GRILL — Credenciais de Acesso
-
-👤 Nome: ${credenciaisAtuais.nome}
-
-📧 Email:
-${credenciaisAtuais.email}
-
-🔑 Senha:
-${credenciaisAtuais.password}
-
-🌐 Link de acesso:
-https://leonildokeysse49-creator.github.io/restaurante-brasa-grill/`;
-
+        const texto = `🔥 BRASA GRILL — Credenciais de Acesso\n\n👤 Nome: ${credenciaisAtuais.nome}\n\n📧 Email:\n${credenciaisAtuais.email}\n\n🔑 Senha:\n${credenciaisAtuais.password}\n\n🌐 Link de acesso:\nhttps://leonildokeysse49-creator.github.io/restaurante-brasa-grill/`;
         try {
             await navigator.clipboard.writeText(texto);
             btnCopiarCred.innerHTML = '<i data-lucide="check"></i> Copiado!';
@@ -1073,7 +853,7 @@ https://leonildokeysse49-creator.github.io/restaurante-brasa-grill/`;
                 recriarIcones();
             }, 2000);
         } catch (e) {
-            alert("❌ Não foi possível copiar. Copia manualmente.");
+            alert("❌ Não foi possível copiar.");
         }
     });
 }
@@ -1081,32 +861,14 @@ https://leonildokeysse49-creator.github.io/restaurante-brasa-grill/`;
 if (btnWhatsCred) {
     btnWhatsCred.addEventListener("click", function () {
         if (!credenciaisAtuais) return;
-
         let tel = credenciaisAtuais.telemovel.replace(/\D/g, "");
         if (!tel.startsWith("258")) tel = "258" + tel;
-
-        const msg =
-`Olá ${credenciaisAtuais.nome}! 👋
-
-Aqui estão as tuas credenciais de acesso ao sistema Brasa Grill:
-
-📧 Email:
-${credenciaisAtuais.email}
-
-🔑 Senha:
-${credenciaisAtuais.password}
-
-🌐 Link:
-https://leonildokeysse49-creator.github.io/restaurante-brasa-grill/
-
-Bom trabalho! 🔥`;
-
+        const msg = `Olá ${credenciaisAtuais.nome}! 👋\n\nAqui estão as tuas credenciais de acesso ao sistema Brasa Grill:\n\n📧 Email:\n${credenciaisAtuais.email}\n\n🔑 Senha:\n${credenciaisAtuais.password}\n\n🌐 Link:\nhttps://leonildokeysse49-creator.github.io/restaurante-brasa-grill/\n\nBom trabalho! 🔥`;
         window.open(`https://wa.me/${tel}?text=${encodeURIComponent(msg)}`, "_blank");
     });
 }
 
-
-/* FILTROS EVENTOS */
+/* FILTROS */
 
 btnFiltros.forEach(btn => {
     btn.addEventListener("click", function () {
@@ -1164,8 +926,5 @@ if (btnLimparPesquisa) {
         renderizarPedidos();
     });
 }
-
-
-/* INICIAR */
 
 window.addEventListener("load", recriarIcones);
