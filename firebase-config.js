@@ -12,8 +12,34 @@ const firebaseConfig = {
     measurementId: "G-DHFTB0YGGY"
 };
 
-// Inicializar Firebase (versão modular via CDN)
 if (typeof firebase !== "undefined" && !firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
-    console.log("🔥 Firebase inicializado:", firebaseConfig.projectId);
+    console.log("🔥 Firebase inicializado");
+}
+
+if (typeof firebase !== "undefined" && firebase.auth) {
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+        .catch(e => console.warn("Persistência:", e));
+}
+
+async function obterRole(user) {
+    if (!user) return null;
+    try {
+        const doc = await db.collection("roles").doc(user.uid).get();
+        return doc.exists ? doc.data().role : null;
+    } catch (e) {
+        console.error("Erro ao obter role:", e);
+        return null;
+    }
+}
+
+async function garantirAutenticacao() {
+    if (!firebase.auth().currentUser) {
+        try {
+            await firebase.auth().signInAnonymously();
+            console.log("🔐 Sessão anónima ativa");
+        } catch (e) {
+            console.error("Erro auth anónima:", e);
+        }
+    }
 }

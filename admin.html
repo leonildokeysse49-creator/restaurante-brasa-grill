@@ -21,11 +21,19 @@
                 <p>Brasa Grill</p>
             </div>
             <form id="formLogin">
-                <label for="passwordInput">
-                    Palavra-passe
-                    <input type="password" id="passwordInput" placeholder="Introduza a palavra-passe" autocomplete="current-password" required>
-                </label>
-                <p id="erroLogin" class="erro-login" hidden>❌ Palavra-passe incorreta</p>
+                <div class="form-linha">
+                    <label for="emailInput">
+                        Email
+                        <input type="email" id="emailInput" placeholder="admin@brasagrill.mz" autocomplete="email" required>
+                    </label>
+                </div>
+                <div class="form-linha">
+                    <label for="passwordInput">
+                        Palavra-passe
+                        <input type="password" id="passwordInput" placeholder="Introduza a palavra-passe" autocomplete="current-password" required>
+                    </label>
+                </div>
+                <p id="erroLogin" class="erro-login" hidden>❌ Credenciais incorretas</p>
                 <button type="submit" class="btn-entrar"><i data-lucide="log-in"></i> Entrar</button>
             </form>
         </div>
@@ -62,6 +70,7 @@
                 <div class="resumo-card"><i data-lucide="users"></i><strong id="resumoClientes">0</strong><span>Clientes</span></div>
                 <div class="resumo-card"><i data-lucide="truck"></i><strong id="resumoEntregas">0</strong><span>Entregas</span></div>
                 <div class="resumo-card"><i data-lucide="store"></i><strong id="resumoRecolhas">0</strong><span>Recolhas</span></div>
+                <div class="resumo-card"><i data-lucide="utensils-crossed"></i><strong id="resumoMesas">0</strong><span>Mesas</span></div>
                 <div class="resumo-card"><i data-lucide="trending-up"></i><strong id="resumoTicket">0 MT</strong><span>Média por Pedido</span></div>
             </div>
         </section>
@@ -80,6 +89,7 @@
             <button type="button" class="btn-tipo ativo" data-tipo="todos">Todos</button>
             <button type="button" class="btn-tipo" data-tipo="entrega"><i data-lucide="truck"></i> Entrega</button>
             <button type="button" class="btn-tipo" data-tipo="recolha"><i data-lucide="store"></i> Recolha</button>
+            <button type="button" class="btn-tipo" data-tipo="mesa"><i data-lucide="utensils-crossed"></i> Mesa</button>
         </section>
 
         <section class="barra-pesquisa">
@@ -94,6 +104,7 @@
             <div class="estat-card" data-filtro="em_preparacao"><i data-lucide="chef-hat"></i><strong id="contPreparacao">0</strong><span>Em preparação</span></div>
             <div class="estat-card" data-filtro="pronto"><i data-lucide="package"></i><strong id="contPronto">0</strong><span>Prontos</span></div>
             <div class="estat-card" data-filtro="a_caminho"><i data-lucide="bike"></i><strong id="contACaminho">0</strong><span>A caminho</span></div>
+            <div class="estat-card" data-filtro="servido"><i data-lucide="utensils"></i><strong id="contServido">0</strong><span>Servidos</span></div>
             <div class="estat-card" data-filtro="entregue"><i data-lucide="check-check"></i><strong id="contEntregue">0</strong><span>Entregues</span></div>
         </section>
 
@@ -104,8 +115,21 @@
             <button type="button" class="btn-filtro" data-filtro="em_preparacao">Em preparação</button>
             <button type="button" class="btn-filtro" data-filtro="pronto">Prontos</button>
             <button type="button" class="btn-filtro" data-filtro="a_caminho">A caminho</button>
+            <button type="button" class="btn-filtro" data-filtro="servido">Servidos</button>
             <button type="button" class="btn-filtro" data-filtro="entregue">Entregues</button>
             <button type="button" class="btn-filtro" data-filtro="recusado">Recusados</button>
+        </section>
+
+        <section class="gestao-estafetas">
+            <div class="gestao-estafetas-topo">
+                <h2 class="resumo-titulo"><i data-lucide="utensils-crossed"></i> Garçons</h2>
+                <button type="button" id="btnNovoGarcom" class="btn-novo-estafeta">
+                    <i data-lucide="plus"></i> Adicionar garçom
+                </button>
+            </div>
+            <div id="listaGarcons" class="lista-estafetas">
+                <div class="sem-estafetas"><i data-lucide="inbox"></i><p>Nenhum garçom registado.</p></div>
+            </div>
         </section>
 
         <section class="gestao-estafetas">
@@ -142,11 +166,11 @@
                 </div>
 
                 <div class="form-linha">
-                    <label for="estafetaTelemovel">Telemóvel *<input type="tel" id="estafetaTelemovel" placeholder="84 123 4567" required></label>
+                    <label for="estafetaEmail">Email (login) *<input type="email" id="estafetaEmail" placeholder="estafeta.joao@brasagrill.mz" required></label>
                 </div>
 
                 <div class="form-linha">
-                    <label for="estafetaPassword">Palavra-passe *<input type="text" id="estafetaPassword" placeholder="Ex: BX7K9M2P" required></label>
+                    <label for="estafetaTelemovel">Telemóvel *<input type="tel" id="estafetaTelemovel" placeholder="84 123 4567" required></label>
                 </div>
 
                 <div class="form-linha">
@@ -165,8 +189,39 @@
         </div>
     </div>
 
+    <div id="modalGarcom" class="modal-estafeta" hidden>
+        <div class="modal-estafeta-fundo" data-fechar-garcom></div>
+        <div class="modal-estafeta-caixa">
+            <header class="modal-estafeta-topo">
+                <h2 id="tituloModalGarcom">Novo garçom</h2>
+                <button type="button" class="btn-fechar" data-fechar-garcom aria-label="Fechar"><i data-lucide="x"></i></button>
+            </header>
+
+            <form id="formGarcom" class="form-estafeta">
+                <input type="hidden" id="garcomId">
+
+                <div class="form-linha">
+                    <label for="garcomNome">Nome completo *<input type="text" id="garcomNome" placeholder="Ex: Carlos Machava" required></label>
+                </div>
+
+                <div class="form-linha">
+                    <label for="garcomEmail">Email (login) *<input type="email" id="garcomEmail" placeholder="garcom.carlos@brasagrill.mz" required></label>
+                </div>
+
+                <div class="form-linha">
+                    <label for="garcomTelemovel">Telemóvel *<input type="tel" id="garcomTelemovel" placeholder="84 123 4567" required></label>
+                </div>
+
+                <div class="modal-estafeta-acoes">
+                    <button type="submit" class="btn-confirmar-estafeta"><i data-lucide="save"></i> Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="firebase-config.js"></script>
     <script src="pedidos.js"></script>
     <script src="admin.js"></script>

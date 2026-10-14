@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-MZ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080808">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Garçom — Brasa Grill</title>
+    <link rel="stylesheet" href="garcom.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+
+<body>
+
+    <div id="ecraLogin" class="ecra-login">
+        <div class="login-caixa">
+            <div class="login-topo">
+                <i data-lucide="utensils-crossed"></i>
+                <h1>Área do Garçom</h1>
+                <p>Brasa Grill</p>
+            </div>
+
+            <form id="formLogin">
+                <div class="form-linha">
+                    <label for="emailInput">
+                        Email
+                        <input type="email" id="emailInput" placeholder="garcom@brasagrill.mz" autocomplete="email" required>
+                    </label>
+                </div>
+
+                <div class="form-linha">
+                    <label for="passwordInput">
+                        Palavra-passe
+                        <input type="password" id="passwordInput" placeholder="Introduza a palavra-passe" autocomplete="current-password" required>
+                    </label>
+                </div>
+
+                <p id="erroLogin" class="erro-login" hidden>❌ Credenciais incorretas</p>
+
+                <button type="submit" class="btn-entrar">
+                    <i data-lucide="log-in"></i> Entrar
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+    <div id="painel" class="painel" hidden>
+
+        <header class="painel-header">
+            <div class="painel-header-info">
+                <h1>
+                    <i data-lucide="utensils-crossed"></i>
+                    <span id="nomeGarcom">Garçom</span>
+                </h1>
+                <p>Gestão de mesas</p>
+            </div>
+
+            <div class="painel-header-acoes">
+                <span id="indicadorLigacao" class="indicador-ligacao">
+                    <i data-lucide="wifi"></i> A ligar…
+                </span>
+                <button id="btnSair" type="button" class="btn-sair">
+                    <i data-lucide="log-out"></i> Sair
+                </button>
+            </div>
+        </header>
+
+        <section class="resumo-dia">
+            <div class="resumo-card">
+                <i data-lucide="utensils"></i>
+                <strong id="totalMesas">0</strong>
+                <span>Mesas ativas</span>
+            </div>
+            <div class="resumo-card resumo-card--destaque">
+                <i data-lucide="banknote"></i>
+                <strong id="totalVendas">0 MT</strong>
+                <span>Vendas hoje</span>
+            </div>
+        </section>
+
+        <section class="mesas-seccao">
+            <h2 class="seccao-titulo">
+                <i data-lucide="layout-grid"></i>
+                Mesas
+            </h2>
+
+            <div id="grelhaMesas" class="grelha-mesas"></div>
+        </section>
+
+    </div>
+
+
+    <div id="modalMesa" class="modal-mesa" hidden>
+        <div class="modal-mesa-fundo" data-fechar-modal></div>
+
+        <div class="modal-mesa-caixa">
+
+            <header class="modal-mesa-topo">
+                <h2 id="tituloMesa">
+                    <i data-lucide="utensils"></i>
+                    Mesa 1
+                </h2>
+                <button type="button" class="btn-fechar" data-fechar-modal>
+                    <i data-lucide="x"></i>
+                </button>
+            </header>
+
+            <div id="estadoMesa" class="estado-mesa"></div>
+
+            <div class="mesa-produtos">
+                <strong>Produtos pedidos</strong>
+                <ul id="listaProdutosMesa">
+                    <li class="sem-itens">Nenhum produto ainda.</li>
+                </ul>
+            </div>
+
+            <div class="mesa-total">
+                <span>TOTAL</span>
+                <strong id="totalMesa">0 MT</strong>
+            </div>
+
+            <div class="mesa-acoes">
+                <button type="button" id="btnAdicionarProdutos" class="btn-mesa btn-amarelo">
+                    <i data-lucide="plus"></i> Adicionar produtos
+                </button>
+
+                <button type="button" id="btnEnviarCozinha" class="btn-mesa btn-azul" hidden>
+                    <i data-lucide="send"></i> Enviar para cozinha
+                </button>
+
+                <button type="button" id="btnServir" class="btn-mesa btn-verde" hidden>
+                    <i data-lucide="check"></i> Servir na mesa
+                </button>
+
+                <button type="button" id="btnFecharMesa" class="btn-mesa btn-vermelho" hidden>
+                    <i data-lucide="receipt"></i> Fechar mesa (pago)
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div id="modalCardapio" class="modal-cardapio" hidden>
+        <div class="modal-cardapio-fundo" data-fechar-cardapio></div>
+
+        <div class="modal-cardapio-caixa">
+
+            <header class="modal-cardapio-topo">
+                <h2>
+                    <i data-lucide="book-open"></i>
+                    Escolher produtos
+                </h2>
+                <button type="button" class="btn-fechar" data-fechar-cardapio>
+                    <i data-lucide="x"></i>
+                </button>
+            </header>
+
+            <div class="cardapio-pesquisa">
+                <i data-lucide="search"></i>
+                <input type="search" id="pesquisaProdutos" placeholder="Pesquisar produto…">
+            </div>
+
+            <div id="cardapioCategorias" class="cardapio-categorias"></div>
+
+            <div id="cardapioLista" class="cardapio-lista"></div>
+
+            <footer class="modal-cardapio-rodape">
+                <div class="carrinho-info">
+                    <span id="contadorCarrinho">0</span> itens
+                    <strong id="totalCarrinho">0 MT</strong>
+                </div>
+                <button type="button" id="btnConfirmarCarrinho" class="btn-confirmar">
+                    <i data-lucide="check-circle"></i> Adicionar à mesa
+                </button>
+            </footer>
+
+        </div>
+    </div>
+
+
+    <!-- FIREBASE -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
+    <script src="firebase-config.js"></script>
+    <script src="pedidos.js"></script>
+    <script src="catalogo.js"></script>
+    <script src="garcom.js"></script>
+
+</body>
+
+</html>
