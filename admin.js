@@ -74,6 +74,11 @@ const btnNovoGarcom = document.querySelector("#btnNovoGarcom");
 const modalGarcom = document.querySelector("#modalGarcom");
 const formGarcom = document.querySelector("#formGarcom");
 const tituloModalGarcom = document.querySelector("#tituloModalGarcom");
+const modalCredenciais = document.querySelector("#modalCredenciais");
+const credEmail = document.querySelector("#credEmail");
+const credSenha = document.querySelector("#credSenha");
+const btnCopiarCred = document.querySelector("#btnCopiarCred");
+const btnWhatsCred = document.querySelector("#btnWhatsCred");
 
 
 /* LOGIN COM FIREBASE AUTH */
@@ -684,40 +689,73 @@ document.querySelectorAll("[data-fechar-estafeta]").forEach(el => {
     el.addEventListener("click", () => { modalEstafeta.hidden = true; });
 });
 
+
+/* CRIAR/EDITAR ESTAFETA */
+
 if (formEstafeta) {
     formEstafeta.addEventListener("submit", async function (e) {
         e.preventDefault();
 
         const id = document.querySelector("#estafetaId").value;
         const nome = document.querySelector("#estafetaNome").value.trim();
-        const email = document.querySelector("#estafetaEmail").value.trim();
         const telemovel = document.querySelector("#estafetaTelemovel").value.replace(/\D/g, "");
         const tipo = document.querySelector("#estafetaTipo").value;
 
-        if (!nome || !email || !telemovel) { alert("Preencha todos os campos."); return; }
+        if (!nome || !telemovel) { alert("Preencha todos os campos."); return; }
+
+        const btnGuardar = formEstafeta.querySelector("button[type=submit]");
+        const textoOriginal = btnGuardar.innerHTML;
+        btnGuardar.disabled = true;
+        btnGuardar.innerHTML = "A criar…";
 
         try {
             if (id) {
                 await db.collection("estafetas").doc(id).update({
-                    nome, email, telemovel, tipo,
+                    nome, telemovel, tipo,
                     atualizadoEm: firebase.firestore.FieldValue.serverTimestamp()
                 });
                 alert(`✅ Estafeta ${nome} atualizado.`);
+                modalEstafeta.hidden = true;
+
             } else {
-                const docRef = await db.collection("estafetas").add({
-                    nome, email, telemovel, tipo,
+                let slug = gerarSlug(nome);
+                let email = gerarEmail("estafeta", slug);
+                const password = gerarPassword(slug, telemovel);
+
+                let uid;
+                try {
+                    uid = await criarContaUtilizador(email, password);
+                } catch (err) {
+                    if (err.code === "auth/email-already-in-use") {
+                        slug = slug + Math.floor(Math.random() * 99);
+                        email = gerarEmail("estafeta", slug);
+                        uid = await criarContaUtilizador(email, password);
+                    } else { throw err; }
+                }
+
+                await db.collection("estafetas").doc(uid).set({
+                    nome, telemovel, tipo, email,
                     estado: "offline",
                     ativo: true,
                     entregas_hoje: 0,
                     ganhos_hoje: 0,
                     criadoEm: firebase.firestore.FieldValue.serverTimestamp()
                 });
-                alert(`✅ Estafeta ${nome} criado!\n\n📌 IMPORTANTE:\n\n1. Firebase Console → Authentication → Adicionar utilizador\n2. Email: ${email}\n3. Defina uma senha\n4. Copie o UID e use como ID deste documento\n\nID atual: ${docRef.id}`);
+
+                modalEstafeta.hidden = true;
+                mostrarCredenciais(nome, email, password, telemovel);
             }
-            modalEstafeta.hidden = true;
+
         } catch (erro) {
             console.error("Erro estafeta:", erro);
-            alert("❌ Não foi possível guardar.");
+            let msg = "❌ Não foi possível criar a conta.";
+            if (erro.code === "auth/weak-password") msg = "❌ Senha muito fraca.";
+            if (erro.code === "auth/invalid-email") msg = "❌ Email inválido.";
+            alert(msg + "\n\n" + (erro.message || ""));
+        } finally {
+            btnGuardar.disabled = false;
+            btnGuardar.innerHTML = textoOriginal;
+            recriarIcones();
         }
     });
 }
@@ -730,7 +768,6 @@ if (listaEstafetas) {
             if (!est) return;
             document.querySelector("#estafetaId").value = est.id;
             document.querySelector("#estafetaNome").value = est.nome || "";
-            document.querySelector("#estafetaEmail").value = est.email || "";
             document.querySelector("#estafetaTelemovel").value = est.telemovel || "";
             document.querySelector("#estafetaTipo").value = est.tipo || "proprio";
             tituloModalEstafeta.textContent = "Editar estafeta";
@@ -798,36 +835,69 @@ document.querySelectorAll("[data-fechar-garcom]").forEach(el => {
     el.addEventListener("click", () => { modalGarcom.hidden = true; });
 });
 
+
+/* CRIAR/EDITAR GARÇOM */
+
 if (formGarcom) {
     formGarcom.addEventListener("submit", async function (e) {
         e.preventDefault();
 
         const id = document.querySelector("#garcomId").value;
         const nome = document.querySelector("#garcomNome").value.trim();
-        const email = document.querySelector("#garcomEmail").value.trim();
         const telemovel = document.querySelector("#garcomTelemovel").value.replace(/\D/g, "");
 
-        if (!nome || !email || !telemovel) { alert("Preencha todos os campos."); return; }
+        if (!nome || !telemovel) { alert("Preencha todos os campos."); return; }
+
+        const btnGuardar = formGarcom.querySelector("button[type=submit]");
+        const textoOriginal = btnGuardar.innerHTML;
+        btnGuardar.disabled = true;
+        btnGuardar.innerHTML = "A criar…";
 
         try {
             if (id) {
                 await db.collection("garcons").doc(id).update({
-                    nome, email, telemovel,
+                    nome, telemovel,
                     atualizadoEm: firebase.firestore.FieldValue.serverTimestamp()
                 });
                 alert(`✅ Garçom ${nome} atualizado.`);
+                modalGarcom.hidden = true;
+
             } else {
-                const docRef = await db.collection("garcons").add({
-                    nome, email, telemovel,
+                let slug = gerarSlug(nome);
+                let email = gerarEmail("garcom", slug);
+                const password = gerarPassword(slug, telemovel);
+
+                let uid;
+                try {
+                    uid = await criarContaUtilizador(email, password);
+                } catch (err) {
+                    if (err.code === "auth/email-already-in-use") {
+                        slug = slug + Math.floor(Math.random() * 99);
+                        email = gerarEmail("garcom", slug);
+                        uid = await criarContaUtilizador(email, password);
+                    } else { throw err; }
+                }
+
+                await db.collection("garcons").doc(uid).set({
+                    nome, telemovel, email,
                     ativo: true,
                     criadoEm: firebase.firestore.FieldValue.serverTimestamp()
                 });
-                alert(`✅ Garçom ${nome} criado!\n\n📌 IMPORTANTE:\n\n1. Firebase Console → Authentication → Adicionar utilizador\n2. Email: ${email}\n3. Defina uma senha\n4. Copie o UID e use como ID deste documento\n\nID atual: ${docRef.id}`);
+
+                modalGarcom.hidden = true;
+                mostrarCredenciais(nome, email, password, telemovel);
             }
-            modalGarcom.hidden = true;
+
         } catch (erro) {
             console.error("Erro garçom:", erro);
-            alert("❌ Não foi possível guardar.");
+            let msg = "❌ Não foi possível criar a conta.";
+            if (erro.code === "auth/weak-password") msg = "❌ Senha muito fraca.";
+            if (erro.code === "auth/invalid-email") msg = "❌ Email inválido.";
+            alert(msg + "\n\n" + (erro.message || ""));
+        } finally {
+            btnGuardar.disabled = false;
+            btnGuardar.innerHTML = textoOriginal;
+            recriarIcones();
         }
     });
 }
@@ -840,7 +910,6 @@ if (listaGarcons) {
             if (!g) return;
             document.querySelector("#garcomId").value = g.id;
             document.querySelector("#garcomNome").value = g.nome || "";
-            document.querySelector("#garcomEmail").value = g.email || "";
             document.querySelector("#garcomTelemovel").value = g.telemovel || "";
             tituloModalGarcom.textContent = "Editar garçom";
             modalGarcom.hidden = false;
@@ -860,6 +929,86 @@ if (listaGarcons) {
                 alert("✅ Garçom removido.");
             } catch (erro) { console.error(erro); alert("❌ Erro."); }
         }
+    });
+}
+
+
+/* MODAL DE CREDENCIAIS */
+
+let credenciaisAtuais = null;
+
+function mostrarCredenciais(nome, email, password, telemovel) {
+    credenciaisAtuais = { nome, email, password, telemovel };
+
+    credEmail.textContent = email;
+    credSenha.textContent = password;
+
+    modalCredenciais.hidden = false;
+    recriarIcones();
+}
+
+document.querySelectorAll("[data-fechar-cred]").forEach(el => {
+    el.addEventListener("click", () => {
+        modalCredenciais.hidden = true;
+        credenciaisAtuais = null;
+    });
+});
+
+if (btnCopiarCred) {
+    btnCopiarCred.addEventListener("click", async function () {
+        if (!credenciaisAtuais) return;
+        const texto =
+`🔥 BRASA GRILL — Credenciais de Acesso
+
+👤 Nome: ${credenciaisAtuais.nome}
+
+📧 Email:
+${credenciaisAtuais.email}
+
+🔑 Senha:
+${credenciaisAtuais.password}
+
+🌐 Link de acesso:
+https://leonildokeysse49-creator.github.io/restaurante-brasa-grill/`;
+
+        try {
+            await navigator.clipboard.writeText(texto);
+            btnCopiarCred.innerHTML = '<i data-lucide="check"></i> Copiado!';
+            recriarIcones();
+            setTimeout(() => {
+                btnCopiarCred.innerHTML = '<i data-lucide="copy"></i> Copiar credenciais';
+                recriarIcones();
+            }, 2000);
+        } catch (e) {
+            alert("❌ Não foi possível copiar. Copia manualmente.");
+        }
+    });
+}
+
+if (btnWhatsCred) {
+    btnWhatsCred.addEventListener("click", function () {
+        if (!credenciaisAtuais) return;
+
+        let tel = credenciaisAtuais.telemovel.replace(/\D/g, "");
+        if (!tel.startsWith("258")) tel = "258" + tel;
+
+        const msg =
+`Olá ${credenciaisAtuais.nome}! 👋
+
+Aqui estão as tuas credenciais de acesso ao sistema Brasa Grill:
+
+📧 Email:
+${credenciaisAtuais.email}
+
+🔑 Senha:
+${credenciaisAtuais.password}
+
+🌐 Link:
+https://leonildokeysse49-creator.github.io/restaurante-brasa-grill/
+
+Bom trabalho! 🔥`;
+
+        window.open(`https://wa.me/${tel}?text=${encodeURIComponent(msg)}`, "_blank");
     });
 }
 
